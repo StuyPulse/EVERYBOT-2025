@@ -1,3 +1,5 @@
+// Lucas, Sebastian, Daniel, Yunus
+
 package com.stuypulse.robot.subsystems.drivetrain;
 
 import com.stuypulse.robot.Robot;
@@ -25,8 +27,12 @@ public abstract class Drivetrain extends SubsystemBase {
     private SparkMax[] leftMotors;
     private SparkMax[] rightMotors;
 
+    public abstract void driveArcade(double xSpeed, double zRotation, boolean squared);
+    
+    public abstract void driveTank(double leftSpeed, double rightSpeed, boolean squared);
 
-    public Drivetrain() {
-        
+    @Override
+    public void periodic() {
+
     }
 }
