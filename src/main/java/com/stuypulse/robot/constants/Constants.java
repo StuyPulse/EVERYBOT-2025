@@ -13,5 +13,7 @@ public interface Constants{
         double EXTEND_VOLTAGE = 0.0;
         double CLIMBING_VOLTAGE = 0.0;
         double DEFAULT_VOLTAGE = 0.0;
+
+        double ANGLE_TOLERANCE = 0.0;
     }
     }

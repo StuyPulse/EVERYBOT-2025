@@ -20,7 +20,7 @@ public class ClimbImpl extends Climb {
 
     public ClimbImpl(){
         super();
-        climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
+        climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushed);
         climbEncoder = climbMotor.getAlternateEncoder();
         SparkMaxConfig climbConfig = new SparkMaxConfig();
         climbConfig.smartCurrentLimit(Settings.Climb.CLIMB_CURRENT);
@@ -44,16 +44,12 @@ public class ClimbImpl extends Climb {
             climbMotor.setVoltage(Constants.Climb.STOW_VOLTAGE);
         }
         else if (getState() == ClimbState.EXTEND) {
-            if(angleErrorDegrees < 0) { 
-                if(Math.abs(angleErrorDegrees) <  10){
-                    climbMotor.setVoltage(Constants.Climb.EXTEND_VOLTAGE);
-                }
-                else { 
-                    climbMotor.setVoltage(Constants.Climb.DEFAULT_VOLTAGE); 
-                }
+            if(angleErrorDegrees >  Constants.Climb.ANGLE_TOLERANCE){
+                climbMotor.setVoltage(Constants.Climb.EXTEND_VOLTAGE);
+            } else { 
+                climbMotor.setVoltage(Constants.Climb.DEFAULT_VOLTAGE); 
             }
-            else { climbMotor.setVoltage(0); }
-        }
+        } 
         else if (getState() == ClimbState.CLIMBING) {
             climbMotor.setVoltage(Constants.Climb.CLIMBING_VOLTAGE);
         }
