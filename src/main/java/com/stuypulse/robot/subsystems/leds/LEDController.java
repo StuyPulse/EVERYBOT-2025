@@ -7,7 +7,6 @@ import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -48,10 +47,9 @@ public class LEDController extends SubsystemBase {
     
     public void applyPattern(LEDPattern pattern) {
         pattern.applyTo(ledsBuffer);
+        leds.setData(ledsBuffer);
     }
 
     @Override
-    public void periodic() {
-        
-    }
+    public void periodic() {}
 }

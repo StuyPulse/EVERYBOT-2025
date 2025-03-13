@@ -32,7 +32,6 @@ public class LEDDeafultCommand extends Command{
         }
         else {
            leds.applyPattern(LEDPattern.solid(Color.kGreen));
-        
         }
     }
 }

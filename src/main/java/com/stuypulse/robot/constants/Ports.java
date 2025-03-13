@@ -14,6 +14,6 @@ public interface Ports {
     }
 
     public interface LED {
-        int LED_PORT = 0;
+        int LED_PORT = 3;
     }
 }

@@ -16,6 +16,6 @@ import com.stuypulse.stuylib.network.SmartNumber;
  */
 public interface Settings {
     public interface LED {
-        int LED_LENGTH = 0;
+        int LED_LENGTH = 10;
     }
 }
