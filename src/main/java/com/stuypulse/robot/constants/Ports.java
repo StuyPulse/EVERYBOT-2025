@@ -12,4 +12,12 @@ public interface Ports {
         int OPERATOR = 1;
         int DEBUGGER = 2;
     }
+
+    public interface Drivetrain{
+        public static final int LEFT_LEAD = 0; 
+        public static final int LEFT_FOLLOW = 1;
+        
+        public static final int RIGHT_LEAD = 2;
+        public static final int RIGHT_FOLLOW = 3;
+    }
 }
