@@ -10,6 +10,7 @@ public class PivotLower extends InstantCommand {
 
     public PivotLower() {
         pivot = Pivot.getInstance();
+        addRequirements(pivot);
     }
 
     public void initialize() {

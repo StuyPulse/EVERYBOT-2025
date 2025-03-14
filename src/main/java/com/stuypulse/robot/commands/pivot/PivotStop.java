@@ -9,6 +9,7 @@ public class PivotStop extends InstantCommand {
 
     public PivotStop() {
         pivot = Pivot.getInstance();
+        addRequirements(pivot);
     }
 
     public void initialize() {

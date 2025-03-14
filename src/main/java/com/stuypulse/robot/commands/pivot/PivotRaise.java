@@ -10,6 +10,7 @@ public class PivotRaise extends InstantCommand {
 
     public PivotRaise() {
         pivot = Pivot.getInstance();
+        addRequirements(pivot);
     }
 
     public void initialize() {
