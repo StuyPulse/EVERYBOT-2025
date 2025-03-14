@@ -1,12 +1,13 @@
-/************************ PROJECT PHIL ************************/
+ /************************ PROJECT PHIL ************************/
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
 package com.stuypulse.robot.constants;
 
-import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -15,6 +16,16 @@ import com.stuypulse.stuylib.network.SmartNumber;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+    
+    public interface Pivot {
+        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 0);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 0);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 0);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 0);
+
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -1);
+    }
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
