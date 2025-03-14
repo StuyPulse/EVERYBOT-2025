@@ -18,4 +18,12 @@ public interface Ports {
         int PIVOT_MOTOR = 0; // PUT REAL VALUE LATER
         int ROLLER_MOTOR = 0; // PUT REAL VALUE LATER
     }
+  
+    public interface Drivetrain{
+        public static final int LEFT_LEAD = 0; 
+        public static final int LEFT_FOLLOW = 1;
+        
+        public static final int RIGHT_LEAD = 2;
+        public static final int RIGHT_FOLLOW = 3;
+    }
 }

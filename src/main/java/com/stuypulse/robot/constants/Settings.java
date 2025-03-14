@@ -26,6 +26,9 @@ public interface Settings {
         SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
         SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -1);
     }
-    
+
+    public interface Drivetrain {
+        public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
+    }
 
 }
