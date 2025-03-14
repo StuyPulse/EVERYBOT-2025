@@ -5,20 +5,18 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
+import com.stuypulse.stuylib.input.Gamepad;
 
-public class DriveArcade extends Command {
-    private final double xSpeed;
-    private final double zRotation;
+public class DriveDefault extends Command {
+    private final Gamepad gamepad;
     private final boolean squared;
     public final Drivetrain drive;
 
-    public DriveArcade(Drivetrain driveSubsystem,
-                     double xSpeed,
-                     double zRotation,
+    public DriveDefault(Drivetrain driveSubsystem,
+                     Gamepad gamepad,
                      boolean squared) {
         this.drive = driveSubsystem;
-        this.xSpeed = xSpeed;
-        this.zRotation = zRotation;
+        this.gamepad = gamepad;
         this.squared = squared;
 
         addRequirements(this.drive);
@@ -29,7 +27,7 @@ public class DriveArcade extends Command {
 
     @Override
     public void execute() {
-        drive.driveArcade(xSpeed, zRotation, squared);
+        drive.driveArcade(gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
     }
 
     @Override

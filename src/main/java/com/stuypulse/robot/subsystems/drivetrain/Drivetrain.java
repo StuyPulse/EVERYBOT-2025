@@ -13,11 +13,7 @@ public abstract class Drivetrain extends SubsystemBase {
     private static final Drivetrain instance;
 
     static {
-        if (Robot.isReal()){
-            instance = new DrivetrainImpl();
-        } else {
-            instance = new DrivetrainSim();
-        }
+        instance = new DrivetrainImpl();
     }
 
     public static Drivetrain getInstance() {

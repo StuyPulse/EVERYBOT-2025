@@ -26,7 +26,7 @@ public class ClimbImpl extends Climb {
     private Controller controller;
 
 
-    public ClimbImpl(){
+    public ClimbImpl() {
         super();
         climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
         climbEncoder = climbMotor.getEncoder();

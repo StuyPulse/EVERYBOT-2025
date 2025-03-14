@@ -7,15 +7,12 @@ import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 
 
 public class DriveTank extends Command {
-    private final DoubleSupplier leftSpeed;
-    private final DoubleSupplier rightSpeed;
+    private final double leftSpeed;
+    private final double rightSpeed;
     private final Drivetrain drive;
-    private final BooleanSupplier squared;
+    private final boolean squared;
 
-    public DriveTank(Drivetrain driveSubsystem,
-                     DoubleSupplier leftSpeed,
-                     DoubleSupplier rightSpeed,
-                     BooleanSupplier squared) {
+    public DriveTank(Drivetrain driveSubsystem, double leftSpeed, double rightSpeed, Boolean squared) {
         this.drive = driveSubsystem;
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
@@ -29,7 +26,7 @@ public class DriveTank extends Command {
 
     @Override
     public void execute() {
-        drive.driveTank(leftSpeed.getAsDouble(), rightSpeed.getAsDouble(), squared.getAsBoolean());
+        drive.driveTank(leftSpeed, rightSpeed, squared);
     }
 
     @Override
