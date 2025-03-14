@@ -25,6 +25,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+
     public interface LEDPatterns {
         // Alliance Colors
         LEDPattern RED_ALLIANCE = LEDPattern.solid(Color.kRed);

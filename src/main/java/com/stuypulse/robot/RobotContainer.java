@@ -6,10 +6,12 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.MobilityAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
+import com.stuypulse.robot.commands.pivot.PivotCoralOut;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
@@ -75,6 +77,8 @@ public class RobotContainer {
             .whileTrue(new PivotRaise());
         driver.getLeftTriggerButton()
             .whileTrue(new PivotLower());
+        driver.getRightBumper() 
+            .whileTrue(new PivotCoralOut());
 
     }
         
@@ -84,7 +88,9 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-        autonChooser.setDefaultOption("Do Nothing", new DoNothingAuton());
+
+        autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
+        autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
