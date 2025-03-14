@@ -23,7 +23,6 @@ public abstract class Climb extends SubsystemBase{
 
     public enum ClimbState{
         STOW(Settings.Climb.STOW_ANGLE),
-        EXTEND(Settings.Climb.EXTEND_ANGLE),
         CLIMBING(Settings.Climb.CLIMBED_ANGLE);
 
         private Rotation2d targetAngle;
@@ -54,6 +53,7 @@ public abstract class Climb extends SubsystemBase{
     }
 
     public abstract Rotation2d getCurrentAngle();
+    public abstract boolean atTargetAngle();
 
     @Override
     public void periodic() {

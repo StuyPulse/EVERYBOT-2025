@@ -5,9 +5,6 @@
 
 package com.stuypulse.robot.constants;
 
-import com.stuypulse.stuylib.network.SmartBoolean;
-import com.stuypulse.stuylib.network.SmartNumber;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 
 /*-
@@ -19,9 +16,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public interface Settings {
 
 public interface Climb {
-    Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
-    Rotation2d EXTEND_ANGLE = Rotation2d.fromDegrees(0);
-    Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(0);
+    Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(90);
+    Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(180);
+    
+    Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
+
     int CLIMB_CURRENT = 0;
 }
 

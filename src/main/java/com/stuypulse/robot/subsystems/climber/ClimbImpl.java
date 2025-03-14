@@ -2,33 +2,40 @@ package com.stuypulse.robot.subsystems.climber;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.stuypulse.robot.constants.Constants;
+import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.stuylib.control.Controller;
+import com.stuypulse.stuylib.control.feedback.PIDController;
+import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
+import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimbImpl extends Climb {
 
     private SparkMax climbMotor;
     private RelativeEncoder climbEncoder;
 
+    private Controller controller;
+
 
     public ClimbImpl(){
         super();
-        climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushed);
-        climbEncoder = climbMotor.getAlternateEncoder();
-        SparkMaxConfig climbConfig = new SparkMaxConfig();
-        climbConfig.smartCurrentLimit(Settings.Climb.CLIMB_CURRENT);
-        climbMotor.configure(climbConfig, null, null);
-    }
-    
-    private Rotation2d getTargetAngle(){
-        return getState().getTargetAngle();
+        climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
+        climbEncoder = climbMotor.getEncoder();
+        SparkBaseConfig climbConfig = new SparkMaxConfig().smartCurrentLimit(Settings.Climb.CLIMB_CURRENT);
+        climbMotor.configure(climbConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+
+        controller = new MotorFeedforward(Gains.Climb.FF.kS, Gains.Climb.FF.kV, Gains.Climb.FF.kA).position()
+            .add(new ArmFeedforward(Gains.Climb.FF.kG))
+            .add(new PIDController(Gains.Climb.PID.kP, Gains.Climb.PID.kI, Gains.Climb.PID.kD));
     }
 
     @Override
@@ -37,22 +44,14 @@ public class ClimbImpl extends Climb {
     }
 
     @Override
+    public boolean atTargetAngle() {
+        return (getState().getTargetAngle().getDegrees() - getCurrentAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
+    }
+
+    @Override
     public void periodic(){
         super.periodic();
-        double angleErrorDegrees = getTargetAngle().getDegrees() - getCurrentAngle().getDegrees();
-        if (getState() == ClimbState.STOW){
-            climbMotor.setVoltage(Constants.Climb.STOW_VOLTAGE);
-        }
-        else if (getState() == ClimbState.EXTEND) {
-            if(angleErrorDegrees >  Constants.Climb.ANGLE_TOLERANCE){
-                climbMotor.setVoltage(Constants.Climb.EXTEND_VOLTAGE);
-            } else { 
-                climbMotor.setVoltage(Constants.Climb.DEFAULT_VOLTAGE); 
-            }
-        } 
-        else if (getState() == ClimbState.CLIMBING) {
-            climbMotor.setVoltage(Constants.Climb.CLIMBING_VOLTAGE);
-        }
+        climbMotor.setVoltage(controller.update(getState().getTargetAngle().getDegrees(), getCurrentAngle().getDegrees()));
     }
 
 }
