@@ -13,8 +13,17 @@ public interface Ports {
         int DEBUGGER = 2;
     }
 
+
     public interface LED {
         int LED_PORT = 3;
         int LED_LENGTH = 10;
+    }
+      
+    public interface Drivetrain {
+        public static final int LEFT_LEAD = 0; 
+        public static final int LEFT_FOLLOW = 1;
+        
+        public static final int RIGHT_LEAD = 2;
+        public static final int RIGHT_FOLLOW = 3;
     }
 }

@@ -32,4 +32,8 @@ public interface Settings {
         // Button-Related Colors
 
     }
+
+    public interface Drivetrain {
+        public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
+    }
 }
