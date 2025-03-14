@@ -11,7 +11,7 @@ public abstract class Pivot extends SubsystemBase {
     
     private static final Pivot instance;
 
-    static { // no sim
+    static { 
         instance = new PivotImpl();
     }
 
@@ -19,31 +19,13 @@ public abstract class Pivot extends SubsystemBase {
         return instance;
     }
 
-    private PivotState pivotState;
     private RollerState rollerState;
-
-    public enum PivotState {
-        STOW(Settings.Pivot.STOW_ANGLE),
-        SCORE_ANGLE(Settings.Pivot.SCORE_ANGLE);
-
-        private Rotation2d targetAngle;
-
-        private PivotState(Rotation2d targetAngle) {
-            this.targetAngle = targetAngle;
-        }
-
-        public Rotation2d getTargetAngle() {
-            return this.targetAngle;
-        }
-    }
-    
-    
-    
     
     public enum RollerState {
-        INTAKE_ALGAE(Settings.Rollers.ALGAE_INTAKE_SPEED),
-        ALGAE_STILL(Settings.Rollers.ALGAE_STAYING_STILL_SPEED),
-        SHOOT_ALGAE(Settings.Rollers.ALGAE_SHOOT_SPEED);
+        INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_SPEED),
+        ALGAE_HOLD(Settings.Pivot.ALGAE_HOLDING_SPEED),
+        SHOOT_ALGAE(Settings.Pivot.ALGAE_SHOOT_SPEED),
+        SHOOT_CORAL(Settings.Pivot.CORAL_SHOOT_SPEED);
 
         double targetSpeed;
 
@@ -54,44 +36,33 @@ public abstract class Pivot extends SubsystemBase {
         public double getTargetSpeed() {
             return this.targetSpeed;
         }
-
     }
 
-    public PivotState getPivotState() {
-        return this.pivotState;
-    }
     public RollerState getRollerState() {
         return this.rollerState;
     }
-    
-    public void setPivotState(PivotState pivotState) {
-        this.pivotState = pivotState;
-    }
+
     public void setRollerState(RollerState rollerState) {
         this.rollerState = rollerState;
     }
 
     protected Pivot() {
-        this.pivotState = PivotState.STOW;
-        this.rollerState = RollerState.ALGAE_STILL;
+        this.rollerState = RollerState.ALGAE_HOLD;
     }
 
     public abstract void rollersAcquire();
 
     public abstract void rollersDeacquire();
 
-    public abstract boolean atTargetAngle();
-
-    public abstract double getCurrentAngle();
-
-    public abstract void setRollerMotor(double targetSpeed);
+    public abstract void setRollerMotor(double speed);
 
     public abstract void setRollersStill();
 
+    public abstract void setPivotMotor(double speed);
+
     @Override
     public void periodic() {
-        SmartDashboard.putString("Pivot/State", pivotState.toString());
-        SmartDashboard.putString("Pivot/Rollers/State",rollerState.toString());
+        SmartDashboard.putString("Pivot/Roller State",rollerState.toString());
     }
     
 }
