@@ -5,6 +5,9 @@
 
 package com.stuypulse.robot.constants;
 
+
+import edu.wpi.first.math.geometry.Rotation2d;
+
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,6 +19,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+
+    public interface Climb {
+        Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(90);
+        Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(180);
+
+        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
+
+        int CLIMB_CURRENT = 0;
+    }
     
     public interface Pivot {
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 0);
@@ -30,5 +42,4 @@ public interface Settings {
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
     }
-
 }
