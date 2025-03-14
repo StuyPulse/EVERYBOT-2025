@@ -8,6 +8,11 @@ package com.stuypulse.robot.constants;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.Units.*;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
+
 /*-
  * File containing tunable settings for every subsystem on the robot.
  *
@@ -15,7 +20,16 @@ import com.stuypulse.stuylib.network.SmartNumber;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-    public interface LED {
-        int LED_LENGTH = 10;
+    public interface LEDPatterns {
+        // Alliance Colors
+        LEDPattern RED_ALLIANCE = LEDPattern.solid(Color.kRed);
+        LEDPattern BLUE_ALLIANCE = LEDPattern.solid(Color.kBlue);
+        LEDPattern NO_ALLIANCE = LEDPattern.solid(Color.kGreen);
+
+        // Robot State Colors
+        LEDPattern CLIMBED = LEDPattern.rainbow(255, 128);
+
+        // Button-Related Colors
+
     }
 }

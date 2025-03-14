@@ -1,6 +1,8 @@
 package com.stuypulse.robot.commands.leds;
 import java.util.Optional;
 
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.LEDPatterns;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -21,17 +23,18 @@ public class LEDDeafultCommand extends Command{
     
     @Override
     public void execute() {
+        // TODO: check for robot states here and assign led patterns to them
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Red) {
-                leds.applyPattern(LEDPattern.solid(Color.kRed));
+                leds.applyPattern(Settings.LEDPatterns.RED_ALLIANCE);
             }
             if (ally.get() == Alliance.Blue) {
-                leds.applyPattern(LEDPattern.solid(Color.kBlue));
+                leds.applyPattern(Settings.LEDPatterns.BLUE_ALLIANCE);
             }
         }
         else {
-           leds.applyPattern(LEDPattern.solid(Color.kGreen));
+           leds.applyPattern(Settings.LEDPatterns.NO_ALLIANCE);
         }
     }
 }

@@ -23,7 +23,7 @@ public class LEDController extends SubsystemBase {
     private final LEDPattern defaultPattern = LEDPattern.kOff;
     
     static {
-        instance = new LEDController(Ports.LED.LED_PORT, Settings.LED.LED_LENGTH);
+        instance = new LEDController(Ports.LED.LED_PORT, Ports.LED.LED_LENGTH);
     }
     
     public static LEDController getInstance(){
