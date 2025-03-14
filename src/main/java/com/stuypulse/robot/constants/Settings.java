@@ -10,7 +10,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.Units.*;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
+
 import edu.wpi.first.math.geometry.Rotation2d;
+
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -19,6 +25,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+    public interface LEDPatterns {
+        // Alliance Colors
+        LEDPattern RED_ALLIANCE = LEDPattern.solid(Color.kRed);
+        LEDPattern BLUE_ALLIANCE = LEDPattern.solid(Color.kBlue);
+        LEDPattern NO_ALLIANCE = LEDPattern.solid(Color.kGreen);
+
+        // Robot State Colors
+        LEDPattern CLIMBED = LEDPattern.rainbow(255, 128);
+
+        // Button-Related Colors
+
+    }
 
     public interface Climb {
         Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(90);
