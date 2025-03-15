@@ -5,6 +5,10 @@
 
 package com.stuypulse.robot.commands.auton;
 
+import com.stuypulse.robot.commands.leds.LEDApplyPattern;
+
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /*-
@@ -17,6 +21,7 @@ public class DoNothingAuton extends SequentialCommandGroup {
 
     public DoNothingAuton() {
         addCommands(
+            new LEDApplyPattern(LEDPattern.solid(Color.kDarkRed))
                 /** Do a whole lot of nothing */
                 );
     }
