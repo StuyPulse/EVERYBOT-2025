@@ -1,4 +1,4 @@
-// Lucas, Sebastian, Daniel, Yunus
+// Lucas O, Sebastian, Daniel, Yunus
 
 package com.stuypulse.robot.subsystems.drivetrain;
 
