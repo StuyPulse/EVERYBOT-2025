@@ -20,7 +20,6 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.climber.Climb;
 import com.stuypulse.robot.subsystems.climber.ClimbImpl;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
-import com.stuypulse.robot.subsystems.drivetrain.DrivetrainImpl;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.PivotImpl;
@@ -39,7 +38,7 @@ public class RobotContainer {
     
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
-    private final Drivetrain driveSubsystem = DrivetrainImpl.getInstance();
+    private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Climb climbSubsystem = ClimbImpl.getInstance();
     private final Pivot pivotSubsystem = PivotImpl.getInstance();
 
