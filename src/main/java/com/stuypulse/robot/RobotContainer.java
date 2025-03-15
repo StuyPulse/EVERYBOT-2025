@@ -74,15 +74,17 @@ public class RobotContainer {
             .whileTrue(new PivotCoralOut());
         driver.getLeftButton()
             .onTrue(new ClimbToClimb());
-        driver.getBottomButton()
-            .onTrue(new ClimbToStow());
         driver.getRightButton()
-            .onTrue(new PivotStop());
+            .onTrue(new ClimbToStow());
+        // driver.getRightButton()
+        //     .onTrue(new PivotStop());
 
         driver.getRightTriggerButton()
-            .whileTrue(new PivotRaise());
+            .whileTrue(new PivotRaise())
+            .onFalse(new PivotStop());
         driver.getLeftTriggerButton()
-            .whileTrue(new PivotLower());
+            .whileTrue(new PivotLower())
+            .onFalse(new PivotStop());
 
         driver.getRightBumper() 
             .whileTrue(new PivotAlgaeOutake());
