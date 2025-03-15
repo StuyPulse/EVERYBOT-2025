@@ -3,6 +3,8 @@ import java.util.Optional;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
+import com.stuypulse.robot.subsystems.climber.Climb;
+import com.stuypulse.robot.subsystems.climber.Climb.ClimbState;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -13,11 +15,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class LEDDeafultCommand extends Command{
     private final LEDController leds;
-    
+    private final Climb climb;
     
     public LEDDeafultCommand() {
         this.leds = LEDController.getInstance();
-        // TODO: When we merge, add other subsystems here
+        this.climb = Climb.getInstance();
         addRequirements(leds);
     }
     
@@ -25,14 +27,17 @@ public class LEDDeafultCommand extends Command{
     public void execute() {
         // TODO: check for robot states here and assign led patterns to them
         Optional<Alliance> ally = DriverStation.getAlliance();
-        if (ally.isPresent()) {
+        if (climb.getState() == ClimbState.CLIMBING) {
+            leds.applyPattern(Settings.LEDPatterns.CLIMBING);
+        }
+        else if (ally.isPresent()) {
             if (ally.get() == Alliance.Red) {
                 leds.applyPattern(Settings.LEDPatterns.RED_ALLIANCE);
             }
             if (ally.get() == Alliance.Blue) {
                 leds.applyPattern(Settings.LEDPatterns.BLUE_ALLIANCE);
             }
-        }
+        } 
         else {
            leds.applyPattern(Settings.LEDPatterns.NO_ALLIANCE);
         }

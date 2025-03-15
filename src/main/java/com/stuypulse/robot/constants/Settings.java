@@ -11,7 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -33,7 +33,7 @@ public interface Settings {
         LEDPattern NO_ALLIANCE = LEDPattern.solid(Color.kGreen);
 
         // Robot State Colors
-        LEDPattern CLIMBED = LEDPattern.rainbow(255, 128);
+        LEDPattern CLIMBING = LEDPattern.solid(Color.kGold).blink(Units.Seconds.of(1.5));
 
         // Button-Related Colors
 

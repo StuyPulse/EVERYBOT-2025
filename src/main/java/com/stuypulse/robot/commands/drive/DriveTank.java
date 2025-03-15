@@ -1,7 +1,5 @@
 package com.stuypulse.robot.commands.drive;
 import edu.wpi.first.wpilibj2.command.Command;
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 
