@@ -13,6 +13,8 @@ import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
+import com.stuypulse.robot.commands.pivot.PivotAlgaeIntake;
+import com.stuypulse.robot.commands.pivot.PivotAlgaeOutake;
 import com.stuypulse.robot.commands.pivot.PivotCoralOut;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
@@ -40,7 +42,6 @@ public class RobotContainer {
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
-
     private final Climb climbSubsystem = Climb.getInstance();
     private final Pivot pivotSubsystem = Pivot.getInstance();
 
@@ -69,18 +70,24 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
+        driver.getTopButton()
+            .whileTrue(new PivotCoralOut());
         driver.getLeftButton()
             .onTrue(new ClimbToClimb());
         driver.getBottomButton()
             .onTrue(new ClimbToStow());
         driver.getRightButton()
             .onTrue(new PivotStop());
+
         driver.getRightTriggerButton()
             .whileTrue(new PivotRaise());
         driver.getLeftTriggerButton()
             .whileTrue(new PivotLower());
+
         driver.getRightBumper() 
-            .whileTrue(new PivotCoralOut());
+            .whileTrue(new PivotAlgaeOutake());
+        driver.getLeftBumper()
+            .whileTrue(new PivotAlgaeIntake());
 
     }
         
