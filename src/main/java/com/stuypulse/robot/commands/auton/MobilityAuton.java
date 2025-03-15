@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
-import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
+import com.stuypulse.robot.subsystems.drivetrain.DrivetrainImpl;
 
 
 /*
@@ -24,9 +24,9 @@ public class MobilityAuton extends SequentialCommandGroup {
 
     public MobilityAuton() {
         addCommands(
-            new DriveTank(Drivetrain.getInstance(), .5, .5, true),
+            new DriveTank(DrivetrainImpl.getInstance(), .25, .25, true),
             new WaitUntilCommand(1.00),
-            new DriveTank(Drivetrain.getInstance(), 0, 0, true)
+            new DriveTank(DrivetrainImpl.getInstance(), 0, 0, true)
         );
     }
 }
