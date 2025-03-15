@@ -7,6 +7,7 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.MobilityAuton;
+import com.stuypulse.robot.commands.auton.OneL1Auton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
@@ -90,6 +91,7 @@ public class RobotContainer {
     public void configureAutons() {
 
         autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
+        autonChooser.addOption("Single L1", new OneL1Auton());
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
