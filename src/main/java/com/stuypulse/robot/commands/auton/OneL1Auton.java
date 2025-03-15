@@ -28,7 +28,7 @@ public class OneL1Auton extends SequentialCommandGroup {
         addCommands(
             new LEDApplyPattern(LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5))),
             new DriveTank(Drivetrain.getInstance(), .25, .25, true),
-            new WaitUntilCommand(10.00),
+            new WaitUntilCommand(7.00),
             new DriveTank(Drivetrain.getInstance(), 0, 0, true),
             new PivotCoralOut()
         );
