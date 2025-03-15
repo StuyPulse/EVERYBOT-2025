@@ -7,6 +7,7 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.MobilityAuton;
+import com.stuypulse.robot.commands.auton.OneL1Auton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
@@ -19,7 +20,6 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.climber.Climb;
 import com.stuypulse.robot.subsystems.climber.ClimbImpl;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
-import com.stuypulse.robot.subsystems.drivetrain.DrivetrainImpl;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.PivotImpl;
@@ -39,6 +39,7 @@ public class RobotContainer {
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
+
     private final Climb climbSubsystem = Climb.getInstance();
     private final Pivot pivotSubsystem = Pivot.getInstance();
 
@@ -90,6 +91,7 @@ public class RobotContainer {
     public void configureAutons() {
 
         autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
+        autonChooser.addOption("Single L1", new OneL1Auton());
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
