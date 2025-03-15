@@ -6,6 +6,7 @@
 package com.stuypulse.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -25,7 +26,7 @@ public class OneL1Auton extends SequentialCommandGroup {
 
     public OneL1Auton() {
         addCommands(
-            new LEDApplyPattern(LEDPattern.rainbow(250,250)),
+            new LEDApplyPattern(LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5))),
             new DriveTank(Drivetrain.getInstance(), .25, .25, true),
             new WaitUntilCommand(10.00),
             new DriveTank(Drivetrain.getInstance(), 0, 0, true),

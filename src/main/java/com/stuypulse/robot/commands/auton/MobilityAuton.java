@@ -6,6 +6,7 @@
 package com.stuypulse.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -27,7 +28,7 @@ public class MobilityAuton extends SequentialCommandGroup {
 
     public MobilityAuton() {
         addCommands(
-            new LEDApplyPattern(LEDPattern.solid(Color.kSkyBlue)),
+            new LEDApplyPattern(LEDPattern.solid(Color.kHoneydew).blink(Units.Seconds.of(1.5))),
             new DriveTank(Drivetrain.getInstance(), .25, .25, true),
             new WaitUntilCommand(1.00),
             new DriveTank(Drivetrain.getInstance(), 0, 0, true)
