@@ -8,6 +8,8 @@ package com.stuypulse.robot.constants;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 /*-
  * File containing all of the configurations that different motors require.
@@ -19,6 +21,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
  *  - The Open Loop Ramp Rate
  */
 public interface Motors {
+    
+
+    public interface ClimbConfig {
+        SparkBaseConfig CLIMB_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Climb.CLIMB_CURRENT);
+    }
+
+    public interface DrivetrainConfig {
+        SparkBaseConfig DRIVETRAIN_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Drivetrain.DRIVE_MOTOR_CURRENT_LIMIT);
+    }
 
     /** Classes to store all of the values a motor needs */
 

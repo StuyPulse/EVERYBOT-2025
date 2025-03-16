@@ -46,6 +46,11 @@ public interface Settings {
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
 
         int CLIMB_CURRENT = 0;
+
+        double STOW_VOLTAGE = 0.0;
+        double EXTEND_VOLTAGE = 0.0;
+        double CLIMBING_VOLTAGE = 0.0;
+        double DEFAULT_VOLTAGE = 0.0;
     }
     
     public interface Pivot {

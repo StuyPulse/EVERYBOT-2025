@@ -1,23 +1,21 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
+
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DrivetrainImpl extends Drivetrain {
     
     private SparkMax[] leftMotors;
     private SparkMax[] rightMotors; 
-
-    private SparkMaxConfig motorConfig;
 
 
     private final DifferentialDrive drive;
@@ -40,23 +38,20 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[0].setCANTimeout(250);
         rightMotors[1].setCANTimeout(250);
 
-        SparkMaxConfig motorConfig = new SparkMaxConfig();
-        motorConfig.smartCurrentLimit(Settings.Drivetrain.DRIVE_MOTOR_CURRENT_LIMIT);
-
         // Back wheel config
         // back left will follow front left, safe parameters will persist; config will persist across power cycles
-        motorConfig.follow(leftMotors[0]);
-        leftMotors[1].configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
+        leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
-        motorConfig.follow(rightMotors[0]);
-        rightMotors[1].configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(rightMotors[0]);
+        rightMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         // Front wheel config
-        motorConfig.disableFollowerMode();
-        rightMotors[0].configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.disableFollowerMode();
+        rightMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
-        motorConfig.inverted(true); 
-        leftMotors[0].configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.inverted(true); 
+        leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
     
     @Override
