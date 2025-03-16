@@ -7,16 +7,14 @@ import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 public class DriveTank extends Command {
     private final double leftSpeed;
     private final double rightSpeed;
-    private final Drivetrain drive;
     private final boolean squared;
 
-    public DriveTank(Drivetrain driveSubsystem, double leftSpeed, double rightSpeed, Boolean squared) {
-        this.drive = driveSubsystem;
+    public DriveTank(double leftSpeed, double rightSpeed, Boolean squared) {
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
         this.squared = squared;
 
-        addRequirements(this.drive);
+        addRequirements(Drivetrain.getInstance());
     }
 
     @Override
@@ -24,7 +22,7 @@ public class DriveTank extends Command {
 
     @Override
     public void execute() {
-        drive.driveTank(leftSpeed, rightSpeed, squared);
+        Drivetrain.getInstance().driveTank(leftSpeed, rightSpeed, squared);
     }
 
     @Override
