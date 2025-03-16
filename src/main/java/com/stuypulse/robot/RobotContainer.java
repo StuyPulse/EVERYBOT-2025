@@ -62,7 +62,7 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        driveSubsystem.setDefaultCommand(new DriveDefault(driveSubsystem, driver, true));
+        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 
     /***************/
@@ -76,7 +76,7 @@ public class RobotContainer {
             .onTrue(new ClimbToClimb());
         driver.getRightButton()
             .onTrue(new ClimbToStow());
-        // driver.getRightButton()
+        // driver.getBottomButton()
         //     .onTrue(new PivotStop());
 
         driver.getRightTriggerButton()

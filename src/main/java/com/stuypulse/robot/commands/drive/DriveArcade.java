@@ -1,6 +1,4 @@
 package com.stuypulse.robot.commands.drive;
-import java.util.function.DoubleSupplier;
-import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -10,18 +8,15 @@ public class DriveArcade extends Command {
     private final double xSpeed;
     private final double zRotation;
     private final boolean squared;
-    public final Drivetrain drive;
 
-    public DriveArcade(Drivetrain driveSubsystem,
-                     double xSpeed,
-                     double zRotation,
-                     boolean squared) {
-        this.drive = driveSubsystem;
+    public DriveArcade(double xSpeed,
+                        double zRotation,
+                        boolean squared) {
         this.xSpeed = xSpeed;
         this.zRotation = zRotation;
         this.squared = squared;
 
-        addRequirements(this.drive);
+        addRequirements(Drivetrain.getInstance());
     }
     
     @Override
@@ -29,7 +24,7 @@ public class DriveArcade extends Command {
 
     @Override
     public void execute() {
-        drive.driveArcade(xSpeed, zRotation, squared);
+        Drivetrain.getInstance().driveArcade(xSpeed, zRotation, squared);
     }
 
     @Override
