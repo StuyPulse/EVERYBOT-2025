@@ -2,8 +2,6 @@ package com.stuypulse.robot.subsystems.climber;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -15,6 +13,9 @@ import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
 import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
+
+import com.stuypulse.robot.constants.Motors.ClimbConfig;
+
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -30,8 +31,7 @@ public class ClimbImpl extends Climb {
         super();
         climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
         climbEncoder = climbMotor.getEncoder();
-        SparkBaseConfig climbConfig = new SparkMaxConfig().smartCurrentLimit(Settings.Climb.CLIMB_CURRENT);
-        climbMotor.configure(climbConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
         controller = new MotorFeedforward(Gains.Climb.FF.kS, Gains.Climb.FF.kV, Gains.Climb.FF.kA).position()
             .add(new ArmFeedforward(Gains.Climb.FF.kG))
