@@ -11,7 +11,7 @@ public class LEDApplyPattern extends Command{
     protected final LEDController leds;
     protected final Supplier<LEDPattern> pattern;
 
-    public LEDApplyPattern(Supplier<LEDPattern> pattern){
+    public LEDApplyPattern(Supplier<LEDPattern> pattern) {
         leds = LEDController.getInstance();
         this.pattern = pattern;
 
@@ -19,7 +19,7 @@ public class LEDApplyPattern extends Command{
         
     }
 
-    public LEDApplyPattern(LEDPattern pattern){
+    public LEDApplyPattern(LEDPattern pattern) {
         this(() -> pattern);
     }
 
