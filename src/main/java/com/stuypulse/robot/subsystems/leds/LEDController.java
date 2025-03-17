@@ -38,6 +38,7 @@ public class LEDController extends SubsystemBase {
     }
     
     public void applyPattern(LEDPattern pattern) {
+        SmartDashboard.putString("LEDs/LED Pattern",pattern.toString());
         pattern.applyTo(ledsBuffer);
         leds.setData(ledsBuffer);
     }
