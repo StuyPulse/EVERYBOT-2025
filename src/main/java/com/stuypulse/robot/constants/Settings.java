@@ -27,6 +27,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public interface Settings {
 
     public interface LEDPatterns {
+        // Auton Colors
+        LEDPattern DO_NOTHING_AUTON = LEDPattern.solid(Color.kWheat).blink(Units.Seconds.of(1.5));
+        LEDPattern MOBILITY_AUTON = LEDPattern.solid(Color.kHoneydew).blink(Units.Seconds.of(1.5));
+        LEDPattern SINGLE_L1_AUTON = LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5));
+        LEDPattern PUSH_BACKWARDS_SINGLE_L1_AUTON = LEDPattern.solid(Color.kSeaGreen).blink(Units.Seconds.of(1.5));
+
         // Alliance Colors
         LEDPattern RED_ALLIANCE = LEDPattern.solid(Color.kRed);
         LEDPattern BLUE_ALLIANCE = LEDPattern.solid(Color.kBlue);
