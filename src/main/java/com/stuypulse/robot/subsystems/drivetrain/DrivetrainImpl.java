@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
@@ -55,11 +56,13 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
         drive.arcadeDrive(xSpeed, zRotation, squared);
+        SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Arcade Drive");
     }
 
     @Override
     public void driveTank(double leftSpeed, double rightSpeed, boolean squared) {
         drive.tankDrive(leftSpeed, rightSpeed, squared);
+        SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
     }
 
     @Override
