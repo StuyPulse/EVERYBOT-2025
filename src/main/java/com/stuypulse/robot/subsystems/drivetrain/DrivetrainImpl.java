@@ -3,14 +3,12 @@ package com.stuypulse.robot.subsystems.drivetrain;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DrivetrainImpl extends Drivetrain {
     

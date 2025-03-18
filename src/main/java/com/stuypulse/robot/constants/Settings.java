@@ -10,12 +10,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.stuypulse.stuylib.network.SmartNumber;
 
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
-
-import edu.wpi.first.math.geometry.Rotation2d;
 
 
 /*-

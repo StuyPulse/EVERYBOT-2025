@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.pivot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.network.SmartNumber;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

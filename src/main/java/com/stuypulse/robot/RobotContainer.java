@@ -1,8 +1,3 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
-/* This work is licensed under the terms of the MIT license.  */
-/**************************************************************/
-
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
@@ -22,11 +17,9 @@ import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.climber.Climb;
-import com.stuypulse.robot.subsystems.climber.ClimbImpl;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
-import com.stuypulse.robot.subsystems.pivot.PivotImpl;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -115,4 +108,3 @@ public class RobotContainer {
     }
 }
 
-// drake drake go away rizz up kids another day daddy says its not ok drake drake go away

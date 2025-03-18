@@ -2,8 +2,6 @@
 
 package com.stuypulse.robot.subsystems.drivetrain;
 
-import com.stuypulse.robot.Robot;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Drivetrain extends SubsystemBase {
