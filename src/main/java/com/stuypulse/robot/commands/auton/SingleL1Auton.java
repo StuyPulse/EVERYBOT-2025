@@ -20,9 +20,9 @@ import com.stuypulse.robot.constants.Settings.LEDPatterns;
  * @author Sebastian Waldman
  * I hope this works first try :pray:
  */
-public class OneL1Auton extends SequentialCommandGroup {
+public class SingleL1Auton extends SequentialCommandGroup {
 
-    public OneL1Auton() {
+    public SingleL1Auton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.SINGLE_L1_AUTON),
             new DriveTank(.25, .25, true),

@@ -6,8 +6,9 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.DoubleL1Auton;
 import com.stuypulse.robot.commands.auton.MobilityAuton;
-import com.stuypulse.robot.commands.auton.OneL1Auton;
+import com.stuypulse.robot.commands.auton.SingleL1Auton;
 import com.stuypulse.robot.commands.auton.PushBackwardsL1Auton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
@@ -101,7 +102,8 @@ public class RobotContainer {
     public void configureAutons() {
 
         autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
-        autonChooser.addOption("Single L1", new OneL1Auton());
+        autonChooser.addOption("Single L1", new SingleL1Auton());
+        autonChooser.addOption("Double L1", new DoubleL1Auton());
         autonChooser.addOption("Push Backwards", new PushBackwardsL1Auton());
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 

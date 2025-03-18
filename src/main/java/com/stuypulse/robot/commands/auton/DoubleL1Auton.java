@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 /*-
  * @author sebastian waldman
  */
-public class TwoL1Auton extends SequentialCommandGroup {
+public class DoubleL1Auton extends SequentialCommandGroup {
 
-    public TwoL1Auton() {
+    public DoubleL1Auton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.TWO_L1_AUTON),
             new DriveTank(.5,.5,true),
