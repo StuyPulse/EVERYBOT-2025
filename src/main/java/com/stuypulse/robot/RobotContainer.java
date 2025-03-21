@@ -36,8 +36,6 @@ public class RobotContainer {
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
-    private final Climb climbSubsystem = Climb.getInstance();
-    private final Pivot pivotSubsystem = Pivot.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
