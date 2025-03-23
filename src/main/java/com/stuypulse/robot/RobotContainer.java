@@ -8,6 +8,8 @@ import com.stuypulse.robot.commands.auton.PushBackwardsL1Auton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
+import com.stuypulse.robot.commands.drive.DriveJoystick;
+import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotAlgaeOutake;
@@ -16,6 +18,7 @@ import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.climber.Climb;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
@@ -32,15 +35,16 @@ public class RobotContainer {
     // Gamepads
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     public final Gamepad operator = new AutoGamepad(Ports.Gamepad.OPERATOR);
+
+    public final Stick joystick = new Stick(Ports.Gamepad.JOYSTICK);
     
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
-    private final Climb climbSubsystem = Climb.getInstance();
-    private final Pivot pivotSubsystem = Pivot.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
+
 
     // Robot container
 
@@ -56,7 +60,11 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+        if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
+            driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+        } else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
+            driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
+        }
     }
 
     /***************/
@@ -64,29 +72,68 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        driver.getTopButton()
-            .whileTrue(new PivotCoralOut());
-        driver.getLeftButton()
-            .onTrue(new ClimbToClimb());
-        driver.getRightButton()
-            .onTrue(new ClimbToStow());
-        // driver.getBottomButton()
-        //     .onTrue(new PivotStop());
+        if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
+            driver.getTopButton()
+                .whileTrue(new PivotCoralOut())
+                .onTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
+                .onFalse(new LEDDeafultCommand());
+            driver.getLeftButton()
+                .onTrue(new ClimbToClimb());
+            driver.getRightButton()
+                .onTrue(new ClimbToStow());
+            // driver.getBottomButton()
+            //     .onTrue(new PivotStop());
 
-        driver.getRightTriggerButton()
-            .whileTrue(new PivotRaise())
-            .onFalse(new PivotStop());
-        driver.getLeftTriggerButton()
-            .whileTrue(new PivotLower())
-            .onFalse(new PivotStop());
+            driver.getRightTriggerButton()
+                .whileTrue(new PivotRaise())
+                .onFalse(new PivotStop());
+            driver.getLeftTriggerButton()
+                .whileTrue(new PivotLower())
+                .onFalse(new PivotStop());
 
-        driver.getRightBumper() 
-            .whileTrue(new PivotAlgaeOutake());
-        driver.getLeftBumper()
-            .whileTrue(new PivotAlgaeIntake());
+            driver.getRightBumper() 
+                .whileTrue(new PivotAlgaeOutake());
+            driver.getLeftBumper()
+                .whileTrue(new PivotAlgaeIntake());
+        }
+        else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
+            joystick.getTriggerTriggered()
+                .whileTrue(new PivotCoralOut());
+        
+            joystick.getTop_TopRightButton()
+                .onTrue(new ClimbToStow());
+            joystick.getTop_TopLeftButton()
+                .onTrue(new ClimbToStow());
+            joystick.getTop_BottomRightButton()
+                .onTrue(new ClimbToClimb());
+            joystick.getTop_BottomLeftButton()
+                .onTrue(new ClimbToClimb());
+
+            joystick.getHatUp()
+                .whileTrue(new PivotLower())
+                .onFalse(new PivotStop());
+            joystick.getHatDown()
+                .whileTrue(new PivotRaise())
+                .onFalse(new PivotStop());
+
+            joystick.getThrottleUp()
+                .whileTrue(new PivotAlgaeIntake());
+            joystick.getThrottleDown()
+                .whileTrue(new PivotAlgaeOutake());
+
+
+            /*   
+            while(joystick.triggerTriggered())                                              new PivotCoralOut();
+            if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
+            if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
+            while(joystick.getHatUp())                                                      new PivotLower();
+            while(joystick.getHatDown())                                                    new PivotRaise();
+            if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();
+            */
+        }
 
     }
-        
+    
 
     /**************/
     /*** AUTONS ***/
