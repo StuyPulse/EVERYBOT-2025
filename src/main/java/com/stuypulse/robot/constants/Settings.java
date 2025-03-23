@@ -41,7 +41,7 @@ public interface Settings {
         LEDPattern CLIMBING = LEDPattern.solid(Color.kGold).blink(Units.Seconds.of(1.5));
 
         // Button-Related Colors
-
+        LEDPattern CORAL_OUT = LEDPattern.solid(Color.kAzure).blink(Units.Seconds.of(1.5));
     }
 
     public interface Climb {
