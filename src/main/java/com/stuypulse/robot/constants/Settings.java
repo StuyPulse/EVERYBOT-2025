@@ -73,6 +73,6 @@ public interface Settings {
     }
 
     public interface DriveMode {
-        SmartString GAMEPAD = new SmartString("Drivetrain/Mode", "GAMEPAD"); // Gamepad or Joystick
+        SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
     }
 }
