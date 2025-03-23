@@ -75,8 +75,7 @@ public class RobotContainer {
         if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
             driver.getTopButton()
                 .whileTrue(new PivotCoralOut())
-                .onTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
-                .onFalse(new LEDDeafultCommand());
+                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
             driver.getRightButton()
@@ -98,7 +97,8 @@ public class RobotContainer {
         }
         else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
             joystick.getTriggerTriggered()
-                .whileTrue(new PivotCoralOut());
+                .whileTrue(new PivotCoralOut())
+                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
         
             joystick.getTop_TopRightButton()
                 .onTrue(new ClimbToStow());
