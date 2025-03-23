@@ -119,6 +119,7 @@ public class RobotContainer {
             joystick.getThrottleDown()
                 .whileTrue(new PivotAlgaeOutake());
 
+
             /*   
             while(joystick.triggerTriggered())                                              new PivotCoralOut();
             if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();

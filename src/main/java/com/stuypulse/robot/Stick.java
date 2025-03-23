@@ -11,6 +11,10 @@ public class Stick {
         this.stick = new Joystick(stick_id);
     }
 
+    public Joystick getJoystick() {
+        return stick;
+    }
+
     public double getX() {
         return -stick.getRawAxis(1);
     }
