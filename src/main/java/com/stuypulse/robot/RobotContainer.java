@@ -63,7 +63,7 @@ public class RobotContainer {
         if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
             driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
         } else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
-            driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, false));
+            driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
         }
     }
 
