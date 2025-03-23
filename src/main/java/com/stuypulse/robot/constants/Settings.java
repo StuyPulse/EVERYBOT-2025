@@ -9,6 +9,7 @@ package com.stuypulse.robot.constants;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.stuypulse.stuylib.network.SmartNumber;
+import com.stuypulse.stuylib.network.SmartString;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -69,5 +70,9 @@ public interface Settings {
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
+    }
+
+    public interface DriveMode {
+        SmartString GAMEPAD = new SmartString("Drivetrain/Mode", "GAMEPAD"); // Gamepad or Joystick
     }
 }
