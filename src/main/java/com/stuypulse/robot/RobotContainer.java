@@ -9,6 +9,7 @@ import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.DriveJoystick;
+import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotAlgaeOutake;
@@ -25,7 +26,6 @@ import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -74,7 +74,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
             driver.getTopButton()
-                .whileTrue(new PivotCoralOut());
+                .whileTrue(new PivotCoralOut())
+                .onTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
+                .onFalse(new LEDDeafultCommand());
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
             driver.getRightButton()
