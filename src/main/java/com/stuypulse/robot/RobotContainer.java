@@ -75,8 +75,7 @@ public class RobotContainer {
         if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
             driver.getTopButton()
                 .whileTrue(new PivotCoralOut())
-                .onTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
-                .onFalse(new LEDDeafultCommand());
+                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
             driver.getRightButton()
