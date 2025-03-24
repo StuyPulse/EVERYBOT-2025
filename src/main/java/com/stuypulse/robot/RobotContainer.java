@@ -5,24 +5,31 @@ import com.stuypulse.robot.commands.auton.DoubleL1Auton;
 import com.stuypulse.robot.commands.auton.MobilityAuton;
 import com.stuypulse.robot.commands.auton.SingleL1Auton;
 import com.stuypulse.robot.commands.auton.PushBackwardsL1Auton;
+
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
+
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.DriveJoystick;
+
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
+
 import com.stuypulse.robot.commands.pivot.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotAlgaeOutake;
 import com.stuypulse.robot.commands.pivot.PivotCoralOut;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
+
+import com.stuypulse.robot.commands.vision.VisionAlignToReef;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.climber.Climb;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
+
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -81,7 +88,7 @@ public class RobotContainer {
             driver.getRightButton()
                 .onTrue(new ClimbToStow());
             // driver.getBottomButton()
-            //     .onTrue(new PivotStop());
+            //     .whileTrue(new VisionAlignToReef());
 
             driver.getRightTriggerButton()
                 .whileTrue(new PivotRaise())
