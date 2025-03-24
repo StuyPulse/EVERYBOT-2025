@@ -28,7 +28,7 @@ public interface Settings {
         // Auton Colors
         LEDPattern DO_NOTHING_AUTON = LEDPattern.solid(Color.kWheat).blink(Units.Seconds.of(1.5));
         LEDPattern MOBILITY_AUTON = LEDPattern.solid(Color.kHoneydew).blink(Units.Seconds.of(1.5));
-        LEDPattern SINGLE_L1_AUTON = LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5));
+        LEDPattern SINGLE_L1_AUTON = LEDPattern.rainbow(250,250).scrollAtAbsoluteSpeed(Units.MetersPerSecond.of(1), Units.Meters.of(1 / 200.0));
         LEDPattern TWO_L1_AUTON = LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5)).reversed();
         LEDPattern PUSH_BACKWARDS_SINGLE_L1_AUTON = LEDPattern.solid(Color.kSeaGreen).blink(Units.Seconds.of(1.5));
 
@@ -41,7 +41,9 @@ public interface Settings {
         LEDPattern CLIMBING = LEDPattern.solid(Color.kGold).blink(Units.Seconds.of(1.5));
 
         // Button-Related Colors
-        LEDPattern CORAL_OUT = LEDPattern.solid(Color.kAzure).blink(Units.Seconds.of(1.5));
+        LEDPattern CORAL_OUT = LEDPattern.solid(Color.kWhite).blink(Units.Seconds.of(1.5));
+        LEDPattern ALGAE_IN = LEDPattern.solid(Color.kAqua);
+        LEDPattern ALGAE_OUT = LEDPattern.solid(Color.kAqua).blink(Units.Seconds.of(1.5));
     }
 
     public interface Climb {

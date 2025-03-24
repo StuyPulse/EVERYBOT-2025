@@ -10,6 +10,20 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Autonomous": "String Chooser"
+    },
+    "windows": {
+      "/SmartDashboard/Autonomous": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {
