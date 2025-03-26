@@ -22,20 +22,20 @@ public interface Ports {
     }
       
     public interface Climb {
-        int CLIMB_MOTOR = 5;    
-        int CLIMB_ENCODER = 6;
+        int CLIMB_MOTOR = 12;    
+        int CLIMB_ENCODER = 12;
     }
 
     public interface Pivot {
-        int PIVOT_MOTOR = 7;
-        int ROLLER_MOTOR = 8;
+        int PIVOT_MOTOR = 13;
+        int ROLLER_MOTOR = 14;
     }
   
     public interface Drivetrain {
-        public static final int LEFT_LEAD = 9; 
-        public static final int LEFT_FOLLOW = 10;
+        public static final int LEFT_LEAD = 1; 
+        public static final int LEFT_FOLLOW = 0;
         
-        public static final int RIGHT_LEAD = 11;
-        public static final int RIGHT_FOLLOW = 12;
+        public static final int RIGHT_LEAD = 3;
+        public static final int RIGHT_FOLLOW = 2;
     }
 }
