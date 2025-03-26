@@ -36,7 +36,7 @@ public class RobotContainer {
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     public final Gamepad operator = new AutoGamepad(Ports.Gamepad.OPERATOR);
 
-    public final Stick joystick = new Stick(Ports.Gamepad.JOYSTICK);
+    // public final Stick joystick = new Stick(Ports.Gamepad.JOYSTICK);
     
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
@@ -62,9 +62,9 @@ public class RobotContainer {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
         if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
             driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
-        } else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
-            driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
-        }
+        }// else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
+        //    driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
+    //    }
     }
 
     /***************/
@@ -95,42 +95,42 @@ public class RobotContainer {
             driver.getLeftBumper()
                 .whileTrue(new PivotAlgaeIntake());
         }
-        else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
-            joystick.getTriggerTriggered()
-                .whileTrue(new PivotCoralOut())
-                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
+        // else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
+        //     joystick.getTriggerTriggered()
+        //         .whileTrue(new PivotCoralOut())
+        //         .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
         
-            joystick.getTop_TopRightButton()
-                .onTrue(new ClimbToStow());
-            joystick.getTop_TopLeftButton()
-                .onTrue(new ClimbToStow());
-            joystick.getTop_BottomRightButton()
-                .onTrue(new ClimbToClimb());
-            joystick.getTop_BottomLeftButton()
-                .onTrue(new ClimbToClimb());
+        //     joystick.getTop_TopRightButton()
+        //         .onTrue(new ClimbToStow());
+        //     joystick.getTop_TopLeftButton()
+        //         .onTrue(new ClimbToStow());
+        //     joystick.getTop_BottomRightButton()
+        //         .onTrue(new ClimbToClimb());
+        //     joystick.getTop_BottomLeftButton()
+        //         .onTrue(new ClimbToClimb());
 
-            joystick.getHatUp()
-                .whileTrue(new PivotLower())
-                .onFalse(new PivotStop());
-            joystick.getHatDown()
-                .whileTrue(new PivotRaise())
-                .onFalse(new PivotStop());
+        //     joystick.getHatUp()
+        //         .whileTrue(new PivotLower())
+        //         .onFalse(new PivotStop());
+        //     joystick.getHatDown()
+        //         .whileTrue(new PivotRaise())
+        //         .onFalse(new PivotStop());
 
-            joystick.getThrottleUp()
-                .whileTrue(new PivotAlgaeIntake());
-            joystick.getThrottleDown()
-                .whileTrue(new PivotAlgaeOutake());
+        //     joystick.getThrottleUp()
+        //         .whileTrue(new PivotAlgaeIntake());
+        //     joystick.getThrottleDown()
+        //         .whileTrue(new PivotAlgaeOutake());
 
 
-            /*   
-            while(joystick.triggerTriggered())                                              new PivotCoralOut();
-            if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
-            if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
-            while(joystick.getHatUp())                                                      new PivotLower();
-            while(joystick.getHatDown())                                                    new PivotRaise();
-            if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();
-            */
-        }
+        //     /*   
+        //     while(joystick.triggerTriggered())                                              new PivotCoralOut();
+        //     if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
+        //     if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
+        //     while(joystick.getHatUp())                                                      new PivotLower();
+        //     while(joystick.getHatDown())                                                    new PivotRaise();
+        //     if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();
+        //     */
+        // }
 
     }
     

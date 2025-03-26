@@ -12,7 +12,7 @@ public interface Ports {
     public interface Gamepad {
         int DRIVER = 0;
         int OPERATOR = 1;
-        // int JOYSTICK = 3; // Should this be of another port?
+       // int JOYSTICK = 3; // Should this be of another port?
         int DEBUGGER = 2;
     }
 
