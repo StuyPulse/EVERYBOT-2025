@@ -61,7 +61,7 @@ public abstract class Pivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("Pivot/Roller State",rollerState.toString());
+        SmartDashboard.putString("Pivot/Roller State", rollerState.toString());
     }
     
 }

@@ -61,20 +61,21 @@ public interface Settings {
     }
     
     public interface Pivot {
-        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 0);
-        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 0);
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 0);
-        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 0);
+        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 1);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -1);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 1);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -1);
     }
+
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
     }
 
-    public interface DriveMode {
-        SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
-    }
+    // public interface DriveMode {
+    //     SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
+    // }
 }

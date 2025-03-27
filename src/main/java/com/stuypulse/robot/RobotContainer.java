@@ -60,9 +60,9 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
-            driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
-        }// else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
+        //if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
+        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+        //}// else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
         //    driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
     //    }
     }
@@ -72,10 +72,10 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
             driver.getTopButton()
                 .whileTrue(new PivotCoralOut())
-                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
+                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
+                .onFalse(new PivotStop());
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
             driver.getRightButton()
@@ -91,9 +91,11 @@ public class RobotContainer {
                 .onFalse(new PivotStop());
 
             driver.getRightBumper() 
-                .whileTrue(new PivotAlgaeOutake());
+                .whileTrue(new PivotAlgaeOutake())
+                .onFalse(new PivotStop());
             driver.getLeftBumper()
-                .whileTrue(new PivotAlgaeIntake());
+                .whileTrue(new PivotAlgaeIntake())
+                .onFalse(new PivotStop());
         }
         // else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
         //     joystick.getTriggerTriggered()
@@ -131,8 +133,6 @@ public class RobotContainer {
         //     if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();
         //     */
         // }
-
-    }
     
 
     /**************/
