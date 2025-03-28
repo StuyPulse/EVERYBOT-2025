@@ -57,6 +57,7 @@ public abstract class Climb extends SubsystemBase{
     @Override
     public void periodic() {
         SmartDashboard.putString("Climb/State", state.toString());
+        SmartDashboard.putNumber("Climb Angle", Climb.getInstance().getCurrentAngle().getDegrees());
     }
 
 }

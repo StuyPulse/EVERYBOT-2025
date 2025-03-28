@@ -4,6 +4,48 @@
       "window": {
         "visible": true
       }
+    },
+    "Other Devices": {
+      "SPARK MAX [1]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [2] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [3]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [4]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [5]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [7]": {
+        "header": {
+          "open": true
+        }
+      }
     }
   },
   "NTProvider": {
@@ -20,8 +62,34 @@
     }
   },
   "NetworkTables": {
+    "retained": {
+      "SmartDashboard": {
+        "Autonomous": {
+          "open": true
+        },
+        "open": true
+      }
+    },
     "transitory": {
       "SmartDashboard": {
+        "Autonomous": {
+          "open": true
+        },
+        "Climb": {
+          "open": true
+        },
+        "LEDs": {
+          "open": true
+        },
+        "Pivot": {
+          "Roller": {
+            "Target Speeds": {
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       }
     }
@@ -31,5 +99,20 @@
       "open": true
     },
     "visible": true
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332
+        }
+      ]
+    }
   }
 }

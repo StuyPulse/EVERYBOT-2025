@@ -5,6 +5,8 @@ import com.revrobotics.spark.SparkMax;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 
 public class PivotImpl extends Pivot {
@@ -46,9 +48,7 @@ public class PivotImpl extends Pivot {
     @Override
     public void periodic() {
         super.periodic();
-
-    }
-    
+    }    
     
     
 }
