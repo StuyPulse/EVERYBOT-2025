@@ -20,6 +20,10 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract void driveArcade(double xSpeed, double zRotation, boolean squared);
     
     public abstract void driveTank(double leftSpeed, double rightSpeed, boolean squared);
+    
+    public abstract double getLeftVelocity();
+
+    public abstract double getRightVelocity();
 
     @Override
     public void periodic() {}

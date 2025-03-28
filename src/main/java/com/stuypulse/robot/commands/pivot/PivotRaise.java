@@ -14,7 +14,7 @@ public class PivotRaise extends InstantCommand {
     }
 
     public void initialize() {
-        pivot.setPivotMotor(Settings.Pivot.PIVOT_RAISE_SPEED.get());
+        pivot.setPivotMotor(Settings.Pivot.PIVOT_SPEED.get());
     }
 
 }

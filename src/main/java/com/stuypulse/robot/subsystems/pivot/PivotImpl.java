@@ -1,10 +1,12 @@
 package com.stuypulse.robot.subsystems.pivot;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -13,11 +15,14 @@ public class PivotImpl extends Pivot {
 
     private SparkMax pivotMotor;
     private SparkMax rollerMotor;
+    private RelativeEncoder pivotMotorEncoder;
 
     public PivotImpl() {
         super();
         pivotMotor = new SparkMax(Ports.Pivot.PIVOT_MOTOR,MotorType.kBrushed);
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
+
+        pivotMotorEncoder = pivotMotor.getEncoder();
     }
 
     @Override

@@ -22,7 +22,6 @@ import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 
-import com.stuypulse.robot.commands.vision.VisionAlignToReef;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.climber.Climb;

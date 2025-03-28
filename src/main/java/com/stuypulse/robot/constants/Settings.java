@@ -66,16 +66,17 @@ public interface Settings {
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 1);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -1);
+        SmartNumber PIVOT_SPEED = new SmartNumber("Pivot Speed", 1);
     }
 
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
+        public static final double TRACK_WIDTH = 0.0;
+        public static final double WHEEL_CIRCUMFERENCE = 0.0;
     }
 
     // public interface DriveMode {
     //     SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
-    // }
+    // } skibidi si
 }

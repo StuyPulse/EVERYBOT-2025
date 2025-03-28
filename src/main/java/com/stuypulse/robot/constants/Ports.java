@@ -5,6 +5,8 @@
 
 package com.stuypulse.robot.constants;
 
+import com.stuypulse.robot.Stick;
+
 /** This file contains the different ports of motors, solenoids and sensors */
 public interface Ports {
     // TODO: Await CAN IDs / Device IDs from mec, put them here
@@ -32,7 +34,9 @@ public interface Ports {
     }
   
     public interface Drivetrain {
-        public static final int LEFT_LEAD = 5; 
+        public static final int GYRO = 1;
+
+        public static final int LEFT_LEAD = 5;
         public static final int LEFT_FOLLOW = 4;
         
         public static final int RIGHT_LEAD = 7;

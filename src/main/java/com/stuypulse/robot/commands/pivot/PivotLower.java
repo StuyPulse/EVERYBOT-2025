@@ -14,7 +14,7 @@ public class PivotLower extends InstantCommand {
     }
 
     public void initialize() {
-        pivot.setPivotMotor(Settings.Pivot.PIVOT_LOWER_SPEED.get());
+        pivot.setPivotMotor(-Settings.Pivot.PIVOT_SPEED.get());
     }
 
 }
