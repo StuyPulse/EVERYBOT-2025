@@ -12,8 +12,8 @@ import com.stuypulse.robot.commands.drive.DriveJoystick;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotAlgaeIntake;
-import com.stuypulse.robot.commands.pivot.PivotAlgaeOutake;
-import com.stuypulse.robot.commands.pivot.PivotCoralOut;
+import com.stuypulse.robot.commands.pivot.PivotAlgaeOuttake;
+import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
@@ -73,7 +73,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
             driver.getTopButton()
-                .whileTrue(new PivotCoralOut())
+                .whileTrue(new PivotCoralOuttake())
                 .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
                 .onFalse(new PivotStop());
             driver.getLeftButton()
@@ -91,7 +91,7 @@ public class RobotContainer {
                 .onFalse(new PivotStop());
 
             driver.getRightBumper() 
-                .whileTrue(new PivotAlgaeOutake())
+                .whileTrue(new PivotAlgaeOuttake())
                 .onFalse(new PivotStop());
             driver.getLeftBumper()
                 .whileTrue(new PivotAlgaeIntake())

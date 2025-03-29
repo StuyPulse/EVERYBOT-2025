@@ -1,19 +1,13 @@
 package com.stuypulse.robot.commands.pivot;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-
-public class PivotStop extends InstantCommand {
+public class PivotStop extends PivotToDirection {
     private Pivot pivot;
 
     public PivotStop() {
-        pivot = Pivot.getInstance();
-        addRequirements(pivot);
-    }
-
-    public void initialize() {
-        pivot.setPivotMotor(0);
+        super(Settings.Pivot.ROLLER_STOP_SPEED.getAsDouble());
     }
 
 }

@@ -5,9 +5,8 @@ import com.stuypulse.robot.subsystems.pivot.Pivot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class PivotAlgaeIntake extends PivotRollerToDirection {
-    public PivotAlgaeIntake() {
-        super(Settings.Pivot.ALGAE_INTAKE_SPEED.getAsDouble());
+public class PivotCoralOuttake extends PivotRollerToDirection {
+    public PivotCoralOuttake() {
+        super(Settings.Pivot.ROLLER_STOP_SPEED.getAsDouble());
     }
-
 }

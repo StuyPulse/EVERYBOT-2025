@@ -2,7 +2,7 @@ package com.stuypulse.robot.commands.auton;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.pivot.PivotCoralOut;
+import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -17,7 +17,7 @@ public class PushBackwardsL1Auton extends SequentialCommandGroup {
             new DriveTank(.3, .3, true),
             new WaitUntilCommand(10),
             new DriveTank(0, 0, true),
-            new PivotCoralOut()
+            new PivotCoralOuttake()
         );
     }
 }
