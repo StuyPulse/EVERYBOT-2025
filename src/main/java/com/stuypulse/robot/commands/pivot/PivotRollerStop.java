@@ -14,7 +14,7 @@ public class PivotRollerStop extends InstantCommand {
     }
 
     public void initialize() {
-        pivot.setPivotMotor(0);
+        pivot.setRollerMotor(0);
     }
 
 }
