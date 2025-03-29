@@ -73,7 +73,6 @@ public interface Settings {
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double TRACK_WIDTH = 0.0;
-        public static final double WHEEL_CIRCUMFERENCE = 0.0;
     }
 
     // public interface DriveMode {

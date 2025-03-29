@@ -27,7 +27,7 @@ public class DrivePIDToPose extends Command {
         double currentSpeed = (Drivetrain.getInstance().getRightVelocity() + Drivetrain.getInstance().getLeftVelocity())/2;
         double speedDifference = currentSpeed-xSpeed;
 
-        Drivetrain.getInstance().driveArcade(xSpeed, zRotation, squared);
+        Drivetrain.getInstance().driveTank(currentSpeed, currentSpeed, squared);
     }
 
     @Override
