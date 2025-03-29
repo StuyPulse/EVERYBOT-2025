@@ -17,6 +17,7 @@ import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
+import com.stuypulse.robot.commands.pivot.PivotRollerStop;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.climber.Climb;
@@ -75,7 +76,7 @@ public class RobotContainer {
             driver.getTopButton()
                 .whileTrue(new PivotCoralOuttake())
                 .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
-                .onFalse(new PivotStop());
+                .onFalse(new PivotRollerStop());
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
             driver.getRightButton()
@@ -92,10 +93,10 @@ public class RobotContainer {
 
             driver.getRightBumper() 
                 .whileTrue(new PivotAlgaeOuttake())
-                .onFalse(new PivotStop());
+                .onFalse(new PivotRollerStop());
             driver.getLeftBumper()
                 .whileTrue(new PivotAlgaeIntake())
-                .onFalse(new PivotStop());
+                .onFalse(new PivotRollerStop());
         }
         // else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
         //     joystick.getTriggerTriggered()

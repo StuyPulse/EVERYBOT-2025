@@ -24,7 +24,7 @@ public class DriveArcade extends Command {
 
     @Override
     public void execute() {
-        Drivetrain.getInstance().driveArcade(xSpeed, zRotation, squared);
+        Drivetrain.getInstance().driveArcade(-xSpeed, -zRotation, squared);
     }
 
     @Override

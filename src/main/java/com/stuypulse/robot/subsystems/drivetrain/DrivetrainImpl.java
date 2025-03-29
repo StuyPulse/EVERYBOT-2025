@@ -22,21 +22,15 @@ public class DrivetrainImpl extends Drivetrain {
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
-                    new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushed),
+                    new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
                     new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushed)
                 };
         rightMotors = new SparkMax[] {
-                    new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushed),
+                    new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
                     new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushed)
         };
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);
-        
-        leftMotors[0].setCANTimeout(250);
-        leftMotors[1].setCANTimeout(250);
-        rightMotors[0].setCANTimeout(250);
-        rightMotors[1].setCANTimeout(250);
-
         // Back wheel config
         // back left will follow front left, safe parameters will persist; config will persist across power cycles
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
@@ -51,6 +45,12 @@ public class DrivetrainImpl extends Drivetrain {
         
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.inverted(true); 
         leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        
+        leftMotors[0].setCANTimeout(250);
+        leftMotors[1].setCANTimeout(250);
+        rightMotors[0].setCANTimeout(250);
+        rightMotors[1].setCANTimeout(250);
+
     }
     
     @Override
