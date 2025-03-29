@@ -7,12 +7,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class PivotToDirection extends Command {
     private Pivot pivot; 
     private double pivotMotorSpeed;
-    public PivotToDirection(double d) {
+    public PivotToDirection(double pivotMotorSpeed) {
         pivot = Pivot.getInstance();
-       addRequirements(pivot); 
+        this.pivotMotorSpeed = pivotMotorSpeed;
+        addRequirements(pivot); 
     }
 
     public void initialize() {
-        pivot.setPivotMotor(pivotMotorSpeed);
+            pivot.setPivotMotor(pivotMotorSpeed);
     }
 }

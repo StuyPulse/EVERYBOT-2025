@@ -9,6 +9,7 @@ public class PivotRollerToDirection extends Command{
     private double pivotRollerSpeed;
     public PivotRollerToDirection(double pivotRollerSpeed) {
         pivot = Pivot.getInstance();
+        this.pivotRollerSpeed = pivotRollerSpeed;
         addRequirements(pivot);
     }
 
