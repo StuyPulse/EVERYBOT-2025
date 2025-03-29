@@ -9,7 +9,6 @@ package com.stuypulse.robot.constants;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.stuypulse.stuylib.network.SmartNumber;
-import com.stuypulse.stuylib.network.SmartString;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
