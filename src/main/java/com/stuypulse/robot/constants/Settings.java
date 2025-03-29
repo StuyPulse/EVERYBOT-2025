@@ -9,7 +9,6 @@ package com.stuypulse.robot.constants;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.stuypulse.stuylib.network.SmartNumber;
-import com.stuypulse.stuylib.network.SmartString;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -65,6 +64,7 @@ public interface Settings {
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", -1);
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
+        SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot Roller Stop Speed", 0);
 
         SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 1);
         SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -1);

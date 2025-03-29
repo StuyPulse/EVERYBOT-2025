@@ -3,8 +3,7 @@ package com.stuypulse.robot.commands.auton;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.pivot.PivotCoralOut;
-
+import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
@@ -19,7 +18,7 @@ public class DoubleL1Auton extends SequentialCommandGroup {
             new DriveTank(.5,.5,true),
             new WaitUntilCommand(2),
             new DriveTank(0,0,true),
-            new PivotCoralOut(),
+            new PivotCoralOuttake(),
             new DriveTank(-.5,-.5,true),
             new WaitUntilCommand(1),
             new DriveTank(.4,.5,true),
@@ -34,7 +33,7 @@ public class DoubleL1Auton extends SequentialCommandGroup {
             new DriveTank(.5,.5,true),
             new WaitUntilCommand(2),
             new DriveTank(0,0,true),
-            new PivotCoralOut()
+            new PivotCoralOuttake()
             );
     }
 }

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.pivot.PivotCoralOut;
+import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
 
@@ -28,7 +28,7 @@ public class SingleL1Auton extends SequentialCommandGroup {
             new DriveTank(.25, .25, true),
             new WaitUntilCommand(5.00),
             new DriveTank(0, 0, true),
-            new PivotCoralOut()
+            new PivotCoralOuttake()
         );
     }
 }
