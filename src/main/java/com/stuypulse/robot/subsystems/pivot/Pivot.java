@@ -18,35 +18,34 @@ public abstract class Pivot extends SubsystemBase {
         return instance;
     }
 
-    private RollerState rollerState;
+    private PivotState pivotState;
     
-    public enum RollerState {
-        INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_SPEED),
-        ALGAE_HOLD(Settings.Pivot.ALGAE_HOLDING_SPEED),
-        SHOOT_ALGAE(Settings.Pivot.ALGAE_SHOOT_SPEED),
-        SHOOT_CORAL(Settings.Pivot.CORAL_SHOOT_SPEED);
+    public enum PivotState {
+        STOW_CORAL(Settings.Pivot.CORAL_STOW_ANGLE),
+        INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_ANGLE),
+        HOLD_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE);
 
-        double targetSpeed;
+        double targetAngle;
 
-        private RollerState(SmartNumber algaeIntakeSpeed) {
-            this.targetSpeed = algaeIntakeSpeed.get();
+        private PivotState(SmartNumber pivotAngle) {
+            this.targetAngle = pivotAngle.get();
         }
 
-        public double getTargetSpeed() {
-            return this.targetSpeed;
+        public double getTargetAngle() {
+            return this.targetAngle;
         }
     }
 
-    public RollerState getRollerState() {
-        return this.rollerState;
+    public PivotState getPivotState() {
+        return this.pivotState;
     }
 
-    public void setRollerState(RollerState rollerState) {
-        this.rollerState = rollerState;
+    public void setPivotState(PivotState pivotState) {
+        this.pivotState = pivotState;
     }
 
     protected Pivot() {
-        this.rollerState = RollerState.ALGAE_HOLD;
+        this.pivotState = PivotState.STOW_CORAL;
     }
 
     public abstract void rollersAcquire();
@@ -61,7 +60,7 @@ public abstract class Pivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("Pivot/Roller State", rollerState.toString());
+        SmartDashboard.putString("Pivot/Pivot State", pivotState.toString());
     }
     
 }

@@ -64,7 +64,9 @@ public interface Settings {
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 1);
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
+
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
+        SmartNumber CORAL_STOW_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Stow Speed", 0);
 
         SmartNumber PIVOT_SPEED = new SmartNumber("Pivot Speed", 1);
     }
