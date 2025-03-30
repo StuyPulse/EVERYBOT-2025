@@ -69,6 +69,10 @@ public interface Settings {
         SmartNumber CORAL_STOW_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Stow Speed", 0);
 
         SmartNumber PIVOT_SPEED = new SmartNumber("Pivot Speed", 1);
+
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0);
+        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(75);
+        Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(45);
     }
 
 

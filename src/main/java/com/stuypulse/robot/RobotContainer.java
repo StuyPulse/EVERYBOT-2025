@@ -83,9 +83,9 @@ public class RobotContainer {
                 .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
                 .onFalse(new PivotStop());
             driver.getLeftButton()
-                .onTrue(new ClimbToClimb());
+                .whileTrue(new ClimbToClimb());
             driver.getRightButton()
-                .onTrue(new ClimbToStow());
+                .whileTrue(new ClimbToStow());
             // driver.getBottomButton()
             //     .whileTrue(new VisionAlignToReef());
 

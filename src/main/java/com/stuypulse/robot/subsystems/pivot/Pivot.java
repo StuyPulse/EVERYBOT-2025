@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.pivot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -25,13 +26,14 @@ public abstract class Pivot extends SubsystemBase {
         INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_ANGLE),
         HOLD_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE);
 
-        double targetAngle;
+        Rotation2d targetAngle;
 
-        private PivotState(SmartNumber pivotAngle) {
-            this.targetAngle = pivotAngle.get();
+        // TODO: Need to fix the following a bit...
+        private PivotState(Rotation2d coralStowAngle) {
+            this.targetAngle = coralStowAngle;
         }
 
-        public double getTargetAngle() {
+        public Rotation2d getTargetAngle() {
             return this.targetAngle;
         }
     }
