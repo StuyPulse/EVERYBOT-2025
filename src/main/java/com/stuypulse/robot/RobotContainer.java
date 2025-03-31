@@ -17,6 +17,7 @@ import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
+import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.constants.Ports;
@@ -43,6 +44,7 @@ public class RobotContainer {
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
+    private final Pivot pivot = Pivot.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -62,11 +64,9 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        //if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
-        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
-        //}// else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
-        //    driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
-    //    }
+        pivot.setDefaultCommand(new PivotHoldCoral());
+        // TODO: UNCOMMENT LATER!!!
+        //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));    
     }
 
     /***************/
@@ -77,7 +77,7 @@ public class RobotContainer {
             driver.getTopButton()
                 .whileTrue(new PivotCoralOuttake())
                 .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
-                .onFalse(new PivotRollerStop());
+                .onFalse(new PivotHoldCoral());
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
             driver.getRightButton()
@@ -94,7 +94,7 @@ public class RobotContainer {
 
             driver.getRightBumper() 
                 .whileTrue(new PivotAlgaeOuttake())
-                .onFalse(new PivotRollerStop());
+                .onFalse(new PivotHoldCoral());
             driver.getLeftBumper()
                 .whileTrue(new PivotAlgaeIntake())
                 .onFalse(new PivotRollerStop());

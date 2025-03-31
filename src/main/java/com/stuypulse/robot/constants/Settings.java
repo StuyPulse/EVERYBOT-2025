@@ -46,7 +46,7 @@ public interface Settings {
     }
 
     public interface Climb {
-        Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(90);
+        Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(180);
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
@@ -61,13 +61,16 @@ public interface Settings {
     
     public interface Pivot {
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
-        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", -1);
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
-        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 1);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", -1);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -0.75);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot Roller Stop Speed", 0);
+        SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Roller Coral Hold Speed", 0.08);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 1);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -1);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 0.1);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -0.1);
+        
+        public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
     }
 
 
