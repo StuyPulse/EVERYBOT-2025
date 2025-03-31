@@ -4,15 +4,17 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import com.stuypulse.stuylib.network.SmartNumber;
 
 
 public class PivotImpl extends Pivot {
 
     private SparkMax pivotMotor;
     private SparkMax rollerMotor;
+    double CurrentRollerSetSpeed;
+    double CurrentPivotSetSpeed;
+    // SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
+    // SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 
     public PivotImpl() {
         super();
@@ -21,27 +23,14 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
-    public void rollersAcquire() {
-        rollerMotor.set(Settings.Pivot.ALGAE_INTAKE_SPEED.get());
-    }
-
-    @Override
-    public void rollersDeacquire() {
-        rollerMotor.set(Settings.Pivot.ALGAE_SHOOT_SPEED.get());
-    }
-
-    @Override
-    public void setRollersStill() {
-        rollerMotor.set(Settings.Pivot.ALGAE_HOLDING_SPEED.get()); 
-    }
-
-    @Override
     public void setRollerMotor(double speed) {
+        CurrentRollerSetSpeed = speed;
         rollerMotor.set(speed);
     }
 
     @Override
     public void setPivotMotor(double speed) {
+        CurrentPivotSetSpeed = speed;
         pivotMotor.set(speed);
     }
 
