@@ -23,11 +23,11 @@ public class DrivetrainImpl extends Drivetrain {
         super();
         leftMotors = new SparkMax[] {
                     new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
-                    new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushed)
+                    new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
                 };
         rightMotors = new SparkMax[] {
                     new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
-                    new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushed)
+                    new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushless)
         };
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);

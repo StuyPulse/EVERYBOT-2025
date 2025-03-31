@@ -22,7 +22,7 @@ public class DriveDefault extends Command {
 
     @Override
     public void execute() {
-        Drivetrain.getInstance().driveArcade(gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
+        Drivetrain.getInstance().driveArcade(-gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
     }
 
     @Override
