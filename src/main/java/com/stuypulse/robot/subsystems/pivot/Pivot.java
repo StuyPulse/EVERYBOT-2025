@@ -49,13 +49,7 @@ public abstract class Pivot extends SubsystemBase {
         this.rollerState = RollerState.ALGAE_HOLD;
     }
 
-    public abstract void rollersAcquire();
-
-    public abstract void rollersDeacquire();
-
     public abstract void setRollerMotor(double speed);
-
-    public abstract void setRollersStill();
 
     public abstract void setPivotMotor(double speed);
 
