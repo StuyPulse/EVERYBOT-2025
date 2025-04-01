@@ -12,7 +12,7 @@ public class PivotCoralOuttake extends SequentialCommandGroup {
             new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT),
             new PivotRollerToDirection(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble()),
             new PivotToDirection(Settings.Pivot.PIVOT_LOWER_SPEED.getAsDouble()),
-            new WaitUntilCommand(1.5),
+            new WaitUntilCommand(1),
             new PivotRollerToDirection(0),
             new PivotToDirection(Settings.Pivot.PIVOT_RAISE_SPEED.getAsDouble())
         );

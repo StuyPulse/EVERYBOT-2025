@@ -11,12 +11,12 @@ import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.DriveJoystick;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
+import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
-import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
@@ -75,8 +75,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
             driver.getTopButton()
-                .whileTrue(new PivotCoralOuttake())
-                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
+                .onTrue(new PivotCoralOuttake())
                 .onFalse(new PivotHoldCoral());
             driver.getLeftButton()
                 .onTrue(new ClimbToClimb());
