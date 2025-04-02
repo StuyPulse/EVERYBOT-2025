@@ -6,10 +6,14 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import com.stuypulse.stuylib.network.SmartNumber;
 
 
@@ -32,9 +36,9 @@ public class PivotImpl extends Pivot {
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
         pivotEncoder = pivotMotor.getEncoder();
+        ArmFeedforward pivotFeedforward = new ArmFeedforward(Gains.pivot.FF.kS, Gains.pivot.FF.kV, Gains.pivot.FF.kA, Gains.pivot.FF.kG);
     }
 
-    
 
     @Override
     public void setRollerMotor(double speed) {
