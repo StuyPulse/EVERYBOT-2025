@@ -10,19 +10,26 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.PubSub;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import com.stuypulse.stuylib.network.SmartNumber;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
 
-
+import com.stuypulse.stuylib.control.feedback.PIDController;
+import com.stuypulse.stuylib.control.Controller;
+import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
+import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
 
 public class PivotImpl extends Pivot {
 
     private SparkMax pivotMotor;
     private RelativeEncoder pivotEncoder;
 
+    private Controller controller;
     private SparkMax rollerMotor;
     double CurrentRollerSetSpeed;
     double CurrentPivotSetSpeed;
@@ -36,9 +43,20 @@ public class PivotImpl extends Pivot {
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
         pivotEncoder = pivotMotor.getEncoder();
-        ArmFeedforward pivotFeedforward = new ArmFeedforward(Gains.pivot.FF.kS, Gains.pivot.FF.kV, Gains.pivot.FF.kA, Gains.pivot.FF.kG);
+        
+        controller = new MotorFeedforward(Gains.Pivot.FF.kS, Gains.Pivot.FF.kV, Gains.Pivot.FF.kA).position()
+            .add(new ArmFeedforward(Gains.Pivot.FF.kG))
+            .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
     }
-
+    
+    public SysIdRoutine getsSysIdRoutine() {
+        return SysId.getSysIdRoutine(
+            pivotMotor.toString(),
+            pivotMotor,
+            getPivotAngle(),
+            Pivot.getInstance()
+        );
+    }
 
     @Override
     public void setRollerMotor(double speed) {
@@ -50,6 +68,10 @@ public class PivotImpl extends Pivot {
     public void setPivotMotor(double speed) {
         CurrentPivotSetSpeed = speed;
         pivotMotor.set(speed);
+    }
+
+    public Rotation2d getPivotAngle() {
+        return Rotation2d.fromDegrees(((pivotEncoder.getPosition() * 360) % 360));
     }
 
     @Override

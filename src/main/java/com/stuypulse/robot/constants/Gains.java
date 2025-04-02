@@ -16,7 +16,7 @@ public class Gains {
             double kD = 0.0;
         }
     }
-    public interface pivot {
+    public interface Pivot {
         public interface FF {
             double kS = 0.0;
             double kV = 0.0;
