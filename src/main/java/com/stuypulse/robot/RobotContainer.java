@@ -15,12 +15,15 @@ import com.stuypulse.robot.commands.drive.DriveJoystick;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 
-import com.stuypulse.robot.commands.pivot.PivotAlgaeIntake;
-import com.stuypulse.robot.commands.pivot.PivotAlgaeOutake;
-import com.stuypulse.robot.commands.pivot.PivotCoralOut;
+import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotStop;
+import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
+import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
+import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -47,6 +50,7 @@ public class RobotContainer {
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
+    private final Pivot pivot = Pivot.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -66,11 +70,9 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        //if(Settings.DriveMode.GAMEPAD.toString() == "XBOX") {
-        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
-        //}// else if (Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {
-        //    driveSubsystem.setDefaultCommand(new DriveJoystick(joystick, true));
-    //    }
+        pivot.setDefaultCommand(new PivotHoldCoral());
+        // TODO: UNCOMMENT LATER!!!
+        //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));    
     }
 
     /***************/
@@ -79,9 +81,8 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
             driver.getTopButton()
-                .whileTrue(new PivotCoralOut())
-                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT))
-                .onFalse(new PivotStop());
+                .onTrue(new PivotCoralOuttake())
+                .onFalse(new PivotHoldCoral());
             driver.getLeftButton()
                 .whileTrue(new ClimbToClimb());
             driver.getRightButton()
@@ -97,11 +98,11 @@ public class RobotContainer {
                 .onFalse(new PivotStop());
 
             driver.getRightBumper() 
-                .whileTrue(new PivotAlgaeOutake())
-                .onFalse(new PivotStop());
+                .whileTrue(new PivotAlgaeOuttake())
+                .onFalse(new PivotHoldCoral());
             driver.getLeftBumper()
                 .whileTrue(new PivotAlgaeIntake())
-                .onFalse(new PivotStop());
+                .onFalse(new PivotRollerStop());
         }
         // else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
         //     joystick.getTriggerTriggered()

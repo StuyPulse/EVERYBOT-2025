@@ -50,13 +50,7 @@ public abstract class Pivot extends SubsystemBase {
         this.pivotState = PivotState.STOW_CORAL;
     }
 
-    public abstract void rollersAcquire();
-
-    public abstract void rollersDeacquire();
-
     public abstract void setRollerMotor(double speed);
-
-    public abstract void setRollersStill();
 
     public abstract void setPivotMotor(double speed);
 

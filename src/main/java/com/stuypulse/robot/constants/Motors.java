@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 /*-
  * File containing all of the configurations that different motors require.
@@ -22,13 +23,16 @@ import com.revrobotics.spark.config.SparkMaxConfig;
  */
 public interface Motors {
     
+    public interface PivotConfig {
+        SparkBaseConfig PIVOT_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
+    }
 
     public interface ClimbConfig {
         SparkBaseConfig CLIMB_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Climb.CLIMB_CURRENT);
     }
 
     public interface DrivetrainConfig {
-        SparkBaseConfig DRIVETRAIN_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Drivetrain.DRIVE_MOTOR_CURRENT_LIMIT);
+        SparkBaseConfig DRIVETRAIN_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Drivetrain.DRIVE_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
     }
 
     /** Classes to store all of the values a motor needs */

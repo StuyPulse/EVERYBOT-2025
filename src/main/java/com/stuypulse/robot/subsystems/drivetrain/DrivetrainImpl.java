@@ -49,20 +49,16 @@ public class DrivetrainImpl extends Drivetrain {
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
-                new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushed),
-                new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushed)
-        };
+
+                    new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
+                    new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
+                };
         rightMotors = new SparkMax[] {
-                new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushed),
-                new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushed)
+                    new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
+                    new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushless)
         };
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);
-
-        leftMotors[0].setCANTimeout(250);
-        leftMotors[1].setCANTimeout(250);
-        rightMotors[0].setCANTimeout(250);
-        rightMotors[1].setCANTimeout(250);
 
         // Back wheel config
         // back left will follow front left, safe parameters will persist; config will
@@ -95,10 +91,16 @@ public class DrivetrainImpl extends Drivetrain {
         controllerPosition = new MotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV, Gains.Drivetrain.FF.kA)
                 .position();
         
-        controllerRotation = new MotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV, Gains.Drivetrain.FF.kA)
-                .angle();
+        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.inverted(true); 
+        leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        
+        leftMotors[0].setCANTimeout(250);
+        leftMotors[1].setCANTimeout(250);
+        rightMotors[0].setCANTimeout(250);
+        rightMotors[1].setCANTimeout(250);
 
         SmartDashboard.putData("Field", field);
+
     }
 
     @Override

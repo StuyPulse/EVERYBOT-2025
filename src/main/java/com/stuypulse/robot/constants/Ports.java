@@ -34,12 +34,19 @@ public interface Ports {
     }
   
     public interface Drivetrain {
-        public static final int GYRO = 1;
 
-        public static final int LEFT_LEAD = 5;
-        public static final int LEFT_FOLLOW = 4;
+        // NEO
+        public static final int LEFT_LEAD = 4; 
+        // CIM
+        public static final int LEFT_FOLLOW = 5;
+
+        public static final int GYRO = 1;
         
-        public static final int RIGHT_LEAD = 7;
-        public static final int RIGHT_FOLLOW = 6;
+
+        // TODO: Right is not turning.
+        // NEO
+        public static final int RIGHT_LEAD = 6;
+        // CIM
+        public static final int RIGHT_FOLLOW = 7;
     }
 }
