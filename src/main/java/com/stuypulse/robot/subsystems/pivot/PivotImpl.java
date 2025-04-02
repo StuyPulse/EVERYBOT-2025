@@ -9,8 +9,8 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.stuypulse.stuylib.network.SmartNumber;
 
 
 
