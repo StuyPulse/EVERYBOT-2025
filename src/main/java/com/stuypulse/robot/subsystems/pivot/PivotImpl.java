@@ -16,8 +16,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.PubSub;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
 
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.control.Controller;
@@ -49,7 +47,8 @@ public class PivotImpl extends Pivot {
             .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
     }
     
-    public SysIdRoutine getsSysIdRoutine() {
+    @Override
+    public SysIdRoutine getSysIdRoutine() {
         return SysId.getSysIdRoutine(
             pivotMotor.toString(),
             pivotMotor,

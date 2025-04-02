@@ -5,6 +5,7 @@ import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Pivot extends SubsystemBase {
     
@@ -37,6 +38,7 @@ public abstract class Pivot extends SubsystemBase {
         }
     }
 
+
     public RollerState getRollerState() {
         return this.rollerState;
     }
@@ -57,5 +59,7 @@ public abstract class Pivot extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putString("Pivot/Roller State", rollerState.toString());
     }
+
+    public abstract SysIdRoutine getSysIdRoutine();
     
 }
