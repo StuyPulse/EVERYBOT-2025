@@ -1,7 +1,9 @@
 package com.stuypulse.robot.subsystems.pivot;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import com.revrobotics.spark.config.SparkBaseConfig;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -9,6 +11,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.stuypulse.stuylib.network.SmartNumber;
 
@@ -20,6 +23,7 @@ public class PivotImpl extends Pivot {
     private RelativeEncoder pivotEncoder;
 
     private SparkMax rollerMotor;
+
     double CurrentRollerSetSpeed;
     double CurrentPivotSetSpeed;
     // SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
@@ -29,6 +33,7 @@ public class PivotImpl extends Pivot {
         super();
         pivotMotor = new SparkMax(Ports.Pivot.PIVOT_MOTOR,MotorType.kBrushless);
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
+
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
         pivotEncoder = pivotMotor.getEncoder();

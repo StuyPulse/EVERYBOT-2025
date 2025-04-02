@@ -16,11 +16,11 @@ public abstract class Climb extends SubsystemBase{
         instance = new ClimbImpl();
     }
 
-    public static Climb getInstance(){
+    public static Climb getInstance() {
         return instance;
     }
 
-    public enum ClimbState{
+    public enum ClimbState {
         STOW(Settings.Climb.STOW_ANGLE),
         CLIMBING(Settings.Climb.CLIMBED_ANGLE);
 
@@ -59,5 +59,4 @@ public abstract class Climb extends SubsystemBase{
         SmartDashboard.putString("Climb/State", state.toString());
         SmartDashboard.putNumber("Climb Angle", Climb.getInstance().getCurrentAngle().getDegrees());
     }
-
 }

@@ -62,6 +62,7 @@ public interface Settings {
     public interface Pivot {
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 1);
+
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", -1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -0.75);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot Roller Stop Speed", 0);
@@ -71,14 +72,20 @@ public interface Settings {
         SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -0.1);
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
+
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0);
+        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(75);
+        Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(45);
+
     }
 
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
+        public static final double TRACK_WIDTH = 0.0;
     }
 
     // public interface DriveMode {
     //     SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
-    // }
+    // } skibidi si
 }
