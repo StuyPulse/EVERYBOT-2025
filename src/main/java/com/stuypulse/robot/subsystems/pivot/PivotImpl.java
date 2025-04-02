@@ -34,6 +34,8 @@ public class PivotImpl extends Pivot {
         pivotEncoder = pivotMotor.getEncoder();
     }
 
+    
+
     @Override
     public void setRollerMotor(double speed) {
         CurrentRollerSetSpeed = speed;
