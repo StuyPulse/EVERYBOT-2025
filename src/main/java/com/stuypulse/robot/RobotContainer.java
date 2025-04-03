@@ -64,6 +64,7 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
+        configureSysId();
     }
 
     /****************/
@@ -73,7 +74,7 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
         pivot.setDefaultCommand(new PivotHoldCoral());
-        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+        // driveSubsystem.setDefaultCommand(new DriveDefault(driver, true)); // TODO: DELETE
     }
 
     /***************/
@@ -159,7 +160,7 @@ public class RobotContainer {
         autonChooser.addOption("Pivot Dynamic Foward", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
         autonChooser.addOption("Pivot Dynamic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
         autonChooser.addOption("Pivot Quasistatic Fowards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Pivot Quasistatic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("Pivot Quasistatic Backwards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
     }
 
     public Command getAutonomousCommand() {

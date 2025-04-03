@@ -44,7 +44,8 @@ public class PivotImpl extends Pivot {
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
 
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    
+        rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         pivotEncoder = pivotMotor.getEncoder();
         
         controller = new MotorFeedforward(Gains.Pivot.FF.kS, Gains.Pivot.FF.kV, Gains.Pivot.FF.kA).position()
