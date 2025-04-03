@@ -1,7 +1,6 @@
 package com.stuypulse.robot.subsystems.pivot;
 
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +22,7 @@ public abstract class Pivot extends SubsystemBase {
     private PivotState pivotState;
     
     public enum PivotState {
+        DEFAULT(Settings.Pivot.DEFAULT_ANGLE),
         STOW_CORAL(Settings.Pivot.CORAL_STOW_ANGLE),
         INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_ANGLE),
         HOLD_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE);
@@ -37,10 +37,6 @@ public abstract class Pivot extends SubsystemBase {
         public Rotation2d getTargetAngle() {
             return this.targetAngle;
         }
-    }
-
-    public RollerState getRollerState() {
-        return this.rollerState;
     }
 
     public void setPivotState(PivotState pivotState) {

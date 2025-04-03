@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -17,6 +18,7 @@ import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
+import com.stuypulse.robot.util.SysId;
 
 import java.util.function.Consumer;
 
@@ -100,7 +102,6 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[1].setCANTimeout(250);
 
         SmartDashboard.putData("Field", field);
-
     }
 
     @Override
@@ -113,11 +114,6 @@ public class DrivetrainImpl extends Drivetrain {
     public void driveTank(double leftSpeed, double rightSpeed, boolean squared) {
         drive.tankDrive(leftSpeed, rightSpeed, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
-    }
-
-    private double getRotation() {
-        double distance = leftEncoder.getPosition() - rightEncoder.getPosition();
-        return Math.toDegrees(distance / Settings.Drivetrain.TRACK_WIDTH);
     }
 
     private void updateOdometry() {
@@ -139,7 +135,8 @@ public class DrivetrainImpl extends Drivetrain {
         return rightEncoder.getVelocity();
     }
 
-    public void configureAutoBuilder() {
+    //TODO: Configure Auton Builder
+    /*public void configureAutoBuilder() {
         AutoBuilder.configure(
             getPose(), 
             resetPose(), 
@@ -149,7 +146,7 @@ public class DrivetrainImpl extends Drivetrain {
             null, 
             null
         );
-    }
+    }*/
 
     public double getLeftDistance() {
         return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
@@ -165,6 +162,15 @@ public class DrivetrainImpl extends Drivetrain {
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
+    }
+
+    @Override
+    public SysIdRoutine getSysIdRoutine() {
+        return SysId.getSysIdRoutine(
+            getName(),
+            null,
+            null, 
+            getInstance());
     }
 
     @Override

@@ -106,42 +106,39 @@ public class RobotContainer {
                 .onFalse(new PivotRollerStop());
 
         }
-        // else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
-        //     joystick.getTriggerTriggered()
-        //         .whileTrue(new PivotCoralOut())
-        //         .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
+        /*else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
+            joystick.getTriggerTriggered()
+                .whileTrue(new PivotCoralOut())
+                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
         
-        //     joystick.getTop_TopRightButton()
-        //         .onTrue(new ClimbToStow());
-        //     joystick.getTop_TopLeftButton()
-        //         .onTrue(new ClimbToStow());
-        //     joystick.getTop_BottomRightButton()
-        //         .onTrue(new ClimbToClimb());
-        //     joystick.getTop_BottomLeftButton()
-        //         .onTrue(new ClimbToClimb());
+            joystick.getTop_TopRightButton()
+                .onTrue(new ClimbToStow());
+            joystick.getTop_TopLeftButton()
+                .onTrue(new ClimbToStow());
+            joystick.getTop_BottomRightButton()
+                .onTrue(new ClimbToClimb());
+            joystick.getTop_BottomLeftButton()
+                .onTrue(new ClimbToClimb());
 
-        //     joystick.getHatUp()
-        //         .whileTrue(new PivotLower())
-        //         .onFalse(new PivotStop());
-        //     joystick.getHatDown()
-        //         .whileTrue(new PivotRaise())
-        //         .onFalse(new PivotStop());
+            joystick.getHatUp()
+                .whileTrue(new PivotLower())
+                .onFalse(new PivotStop());
+            joystick.getHatDown()
+                .whileTrue(new PivotRaise())
+                .onFalse(new PivotStop());
 
-        //     joystick.getThrottleUp()
-        //         .whileTrue(new PivotAlgaeIntake());
-        //     joystick.getThrottleDown()
-        //         .whileTrue(new PivotAlgaeOutake());
-
-
-        //     /*   
-        //     while(joystick.triggerTriggered())                                              new PivotCoralOut();
-        //     if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
-        //     if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
-        //     while(joystick.getHatUp())                                                      new PivotLower();
-        //     while(joystick.getHatDown())                                                    new PivotRaise();
-        //     if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();
-        //     */
-        // }
+            joystick.getThrottleUp()
+                .whileTrue(new PivotAlgaeIntake());
+            joystick.getThrottleDown()
+                .whileTrue(new PivotAlgaeOutake());
+   
+            while(joystick.triggerTriggered())                                              new PivotCoralOut();
+            if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
+            if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
+            while(joystick.getHatUp())                                                      new PivotLower();
+            while(joystick.getHatDown())                                                    new PivotRaise();
+            if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();           
+        }*/
     
 
     /**************/
@@ -149,7 +146,6 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-
         autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
         autonChooser.addOption("Single L1", new SingleL1Auton());
         autonChooser.addOption("Double L1", new DoubleL1Auton());
@@ -164,8 +160,6 @@ public class RobotContainer {
         autonChooser.addOption("Pivot Dynamic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
         autonChooser.addOption("Pivot Quasistatic Fowards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
         autonChooser.addOption("Pivot Quasistatic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
-
-
     }
 
     public Command getAutonomousCommand() {

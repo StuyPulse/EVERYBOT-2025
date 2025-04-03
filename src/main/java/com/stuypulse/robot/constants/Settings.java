@@ -73,10 +73,10 @@ public interface Settings {
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
 
-        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0);
+        Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0); //TODO: FIND CORAL STOW ANGLE
         Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(75);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(45);
-
     }
 
 
