@@ -9,6 +9,7 @@ import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Drivetrain extends SubsystemBase {
 
@@ -32,6 +33,8 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract double getLeftVelocity();
 
     public abstract double getRightVelocity();
+
+    public abstract SysIdRoutine getSysIdRoutine();
 
     @Override
     public void periodic() {}
