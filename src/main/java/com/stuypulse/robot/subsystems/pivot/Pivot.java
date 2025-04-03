@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.pivot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -19,36 +20,35 @@ public abstract class Pivot extends SubsystemBase {
         return instance;
     }
 
-    private RollerState rollerState;
+    private PivotState pivotState;
     
-    public enum RollerState {
-        INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_SPEED),
-        ALGAE_HOLD(Settings.Pivot.ALGAE_HOLDING_SPEED),
-        SHOOT_ALGAE(Settings.Pivot.ALGAE_SHOOT_SPEED),
-        SHOOT_CORAL(Settings.Pivot.CORAL_SHOOT_SPEED);
+    public enum PivotState {
+        STOW_CORAL(Settings.Pivot.CORAL_STOW_ANGLE),
+        INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_ANGLE),
+        HOLD_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE);
 
-        double targetSpeed;
+        Rotation2d targetAngle;
 
-        private RollerState(SmartNumber algaeIntakeSpeed) {
-            this.targetSpeed = algaeIntakeSpeed.get();
+        // TODO: Need to fix the following a bit...
+        private PivotState(Rotation2d coralStowAngle) {
+            this.targetAngle = coralStowAngle;
         }
 
-        public double getTargetSpeed() {
-            return this.targetSpeed;
+        public Rotation2d getTargetAngle() {
+            return this.targetAngle;
         }
     }
-
 
     public RollerState getRollerState() {
         return this.rollerState;
     }
 
-    public void setRollerState(RollerState rollerState) {
-        this.rollerState = rollerState;
+    public void setPivotState(PivotState pivotState) {
+        this.pivotState = pivotState;
     }
 
     protected Pivot() {
-        this.rollerState = RollerState.ALGAE_HOLD;
+        this.pivotState = PivotState.STOW_CORAL;
     }
 
     public abstract void setRollerMotor(double speed);
@@ -57,7 +57,7 @@ public abstract class Pivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("Pivot/Roller State", rollerState.toString());
+        SmartDashboard.putString("Pivot/Pivot State", pivotState.toString());
     }
 
     public abstract SysIdRoutine getSysIdRoutine();

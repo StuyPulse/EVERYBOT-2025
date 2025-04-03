@@ -16,8 +16,10 @@ public class Gains {
             double kD = 0.0;
         }
     }
+
     public interface Pivot {
-        public interface FF {
+         public interface FF {
+
             double kS = 0.0;
             double kV = 0.0;
             double kA = 0.0;
@@ -27,7 +29,7 @@ public class Gains {
             double kP = 0.0;
             double kI = 0.0;
             double kD = 0.0;
-        }
+        }       
     }
 }
     

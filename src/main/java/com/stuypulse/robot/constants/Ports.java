@@ -5,6 +5,8 @@
 
 package com.stuypulse.robot.constants;
 
+import com.stuypulse.robot.Stick;
+
 /** This file contains the different ports of motors, solenoids and sensors */
 public interface Ports {
     // TODO: Await CAN IDs / Device IDs from mec, put them here
@@ -32,10 +34,13 @@ public interface Ports {
     }
   
     public interface Drivetrain {
+
         // NEO
         public static final int LEFT_LEAD = 4; 
         // CIM
         public static final int LEFT_FOLLOW = 5;
+
+        public static final int GYRO = 1;
         
 
         // TODO: Right is not turning.
