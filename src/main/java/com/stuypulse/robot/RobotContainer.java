@@ -1,5 +1,6 @@
 package com.stuypulse.robot;
 
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.DoubleL1Auton;
 import com.stuypulse.robot.commands.auton.MobilityAuton;
@@ -38,6 +39,7 @@ import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class RobotContainer {
 
@@ -71,8 +73,7 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
         pivot.setDefaultCommand(new PivotHoldCoral());
-        // TODO: UNCOMMENT LATER!!!
-        //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));    
+        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 
     /***************/
@@ -103,43 +104,41 @@ public class RobotContainer {
             driver.getLeftBumper()
                 .whileTrue(new PivotAlgaeIntake())
                 .onFalse(new PivotRollerStop());
+
         }
-        // else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
-        //     joystick.getTriggerTriggered()
-        //         .whileTrue(new PivotCoralOut())
-        //         .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
+        /*else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
+            joystick.getTriggerTriggered()
+                .whileTrue(new PivotCoralOut())
+                .whileTrue(new LEDApplyPattern(Settings.LEDPatterns.CORAL_OUT));
         
-        //     joystick.getTop_TopRightButton()
-        //         .onTrue(new ClimbToStow());
-        //     joystick.getTop_TopLeftButton()
-        //         .onTrue(new ClimbToStow());
-        //     joystick.getTop_BottomRightButton()
-        //         .onTrue(new ClimbToClimb());
-        //     joystick.getTop_BottomLeftButton()
-        //         .onTrue(new ClimbToClimb());
+            joystick.getTop_TopRightButton()
+                .onTrue(new ClimbToStow());
+            joystick.getTop_TopLeftButton()
+                .onTrue(new ClimbToStow());
+            joystick.getTop_BottomRightButton()
+                .onTrue(new ClimbToClimb());
+            joystick.getTop_BottomLeftButton()
+                .onTrue(new ClimbToClimb());
 
-        //     joystick.getHatUp()
-        //         .whileTrue(new PivotLower())
-        //         .onFalse(new PivotStop());
-        //     joystick.getHatDown()
-        //         .whileTrue(new PivotRaise())
-        //         .onFalse(new PivotStop());
+            joystick.getHatUp()
+                .whileTrue(new PivotLower())
+                .onFalse(new PivotStop());
+            joystick.getHatDown()
+                .whileTrue(new PivotRaise())
+                .onFalse(new PivotStop());
 
-        //     joystick.getThrottleUp()
-        //         .whileTrue(new PivotAlgaeIntake());
-        //     joystick.getThrottleDown()
-        //         .whileTrue(new PivotAlgaeOutake());
-
-
-        //     /*   
-        //     while(joystick.triggerTriggered())                                              new PivotCoralOut();
-        //     if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
-        //     if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
-        //     while(joystick.getHatUp())                                                      new PivotLower();
-        //     while(joystick.getHatDown())                                                    new PivotRaise();
-        //     if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();
-        //     */
-        // }
+            joystick.getThrottleUp()
+                .whileTrue(new PivotAlgaeIntake());
+            joystick.getThrottleDown()
+                .whileTrue(new PivotAlgaeOutake());
+   
+            while(joystick.triggerTriggered())                                              new PivotCoralOut();
+            if(joystick.getTop_TopLeftButton() || joystick.getTop_TopRightButton())         new ClimbToStow();
+            if(joystick.getTop_BottomLeftButton() || joystick.getTop_BottomRightButton())   new ClimbToClimb();
+            while(joystick.getHatUp())                                                      new PivotLower();
+            while(joystick.getHatDown())                                                    new PivotRaise();
+            if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();           
+        }*/
     
 
     /**************/
@@ -147,7 +146,6 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-
         autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
         autonChooser.addOption("Single L1", new SingleL1Auton());
         autonChooser.addOption("Double L1", new DoubleL1Auton());
@@ -155,6 +153,13 @@ public class RobotContainer {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
+    }
+    public void configureSysId() {
+        SysIdRoutine pivotSysIdRoutine = pivot.getSysIdRoutine();
+        autonChooser.addOption("Pivot Dynamic Foward", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("Pivot Dynamic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("Pivot Quasistatic Fowards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("Pivot Quasistatic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
     }
 
     public Command getAutonomousCommand() {
