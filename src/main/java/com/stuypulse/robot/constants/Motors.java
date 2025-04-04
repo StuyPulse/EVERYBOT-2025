@@ -24,6 +24,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public interface Motors {
     
     public interface PivotConfig {
+        SparkBaseConfig PIVOT_ROLLER_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_ROLLER_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
         SparkBaseConfig PIVOT_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
     }
 

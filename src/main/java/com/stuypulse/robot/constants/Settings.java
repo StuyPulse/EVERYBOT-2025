@@ -61,20 +61,21 @@ public interface Settings {
     
     public interface Pivot {
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
-        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", 1);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", -1);
 
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", -1);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -0.75);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot Roller Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Roller Coral Hold Speed", 0.08);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 0.1);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -0.1);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 0.17);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -0.17);
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
+        public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0); //TODO: FIND CORAL STOW ANGLE
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0); // TODO: FIND CORAL STOW ANGLE
         Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(75);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(45);
     }
