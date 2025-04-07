@@ -164,14 +164,6 @@ public class DrivetrainImpl extends Drivetrain {
         return odometry.getPoseMeters();
     }
 
-    // @Override
-    // public SysIdRoutine getSysIdRoutine() {
-    //     return SysId.getSysIdRoutine(
-    //         getName(),
-    //         null,
-    //         null, 
-    //         getInstance());
-    // }
 
     @Override
     public void periodic() {
