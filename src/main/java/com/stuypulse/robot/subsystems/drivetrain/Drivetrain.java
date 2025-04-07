@@ -34,7 +34,6 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract double getRightVelocity();
 
-
     @Override
     public void periodic() {}
 }
