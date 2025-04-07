@@ -6,6 +6,6 @@ public class PivotLower extends PivotToDirection {
 
     public PivotLower(double speed) {
 
-        super(speed);
+        super(speed * Settings.Pivot.PIVOT_LOWER_SPEED.doubleValue());
     }
 }
