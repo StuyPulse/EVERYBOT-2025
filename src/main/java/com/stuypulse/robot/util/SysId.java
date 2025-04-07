@@ -33,7 +33,7 @@ public class SysId {
             new SysIdRoutine.Mechanism(
                 motor::setVoltage,
                 log -> { log.motor(motorname)
-                    .angularVelocity(AngularVelocity.ofBaseUnits(motor.getEncoder().getVelocity(), RotationsPerSecond))
+                    .angularVelocity(AngularVelocity.ofBaseUnits(motor.getEncoder().getVelocity() / 60, RotationsPerSecond))
                     .voltage(Voltage.ofBaseUnits(motor.getBusVoltage(), Volts))
                     .angularPosition(mechgetrotations.getMeasure());
                 },

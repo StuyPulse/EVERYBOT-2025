@@ -78,6 +78,7 @@ public interface Settings {
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0); // TODO: FIND CORAL STOW ANGLE
         Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(75);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(45);
+        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(0); //TODO: FIND MAX HARD STOP ANGLE
     }
 
 

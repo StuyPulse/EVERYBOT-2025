@@ -92,10 +92,10 @@ public class RobotContainer {
             // driver.getBottomButton()
             //     .whileTrue(new VisionAlignToReef())
             driver.getRightTriggerButton()
-                .whileTrue(new PivotRaise(driver.getRightTrigger()))
+                .whileTrue(new PivotRaise())
                 .onFalse(new PivotStop());
             driver.getLeftTriggerButton()
-                .whileTrue(new PivotLower(driver.getLeftTrigger()))
+                .whileTrue(new PivotLower())
                 .onFalse(new PivotStop());
 
             driver.getRightBumper() 

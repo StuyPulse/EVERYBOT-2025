@@ -33,10 +33,10 @@ public class PivotImpl extends Pivot {
     private Controller controller;
     private SparkMax rollerMotor;
 
-    double CurrentRollerSetSpeed;
-    double CurrentPivotSetSpeed;
-    // SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
-    // SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
+    // double CurrentRollerSetSpeed;
+    // double CurrentPivotSetSpeed;
+    SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
+    SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 
     public PivotImpl() {
         super();
@@ -60,21 +60,21 @@ public class PivotImpl extends Pivot {
             pivotMotor,
             getPivotAngle(),
             Pivot.getInstance(),
-            1,
-            5,
+            0.5,
+            2,
             10
         );
     }
 
     @Override
     public void setRollerMotor(double speed) {
-        CurrentRollerSetSpeed = speed;
+        CurrentRollerSetSpeed.set(speed);
         rollerMotor.set(speed);
     }
 
     @Override
     public void setPivotMotor(double speed) {
-        CurrentPivotSetSpeed = speed;
+        CurrentPivotSetSpeed.set(speed);
         pivotMotor.set(speed);
     }
 

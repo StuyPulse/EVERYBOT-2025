@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.pivot;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,8 +31,12 @@ public abstract class Pivot extends SubsystemBase {
         Rotation2d targetAngle;
 
         // TODO: Either remove this or use it
-        private PivotState(Rotation2d coralStowAngle) {
-            this.targetAngle = coralStowAngle;
+        private PivotState(Rotation2d targetAngle) {
+            this.targetAngle = 
+                Rotation2d.fromDegrees(SLMath.clamp(
+                        targetAngle.getDegrees(), 
+                        Settings.Pivot.DEFAULT_ANGLE.getDegrees(), 
+                        Settings.Pivot.MAX_ANGLE.getDegrees()));
         }
 
         public Rotation2d getTargetAngle() {

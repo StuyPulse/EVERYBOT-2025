@@ -4,8 +4,8 @@ import com.stuypulse.robot.constants.Settings;
 
 public class PivotLower extends PivotToDirection {
 
-    public PivotLower(double speedModifier) {
+    public PivotLower() {
 
-        super(speedModifier * Settings.Pivot.PIVOT_LOWER_SPEED.doubleValue());
+        super(Settings.Pivot.PIVOT_LOWER_SPEED.doubleValue());
     }
 }

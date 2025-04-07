@@ -34,7 +34,6 @@ public abstract class Climb extends SubsystemBase{
         public Rotation2d getTargetAngle() {
             return this.targetAngle;
         }
-        
     }
 
     private ClimbState state;
