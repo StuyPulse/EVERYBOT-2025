@@ -168,7 +168,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     // Experimental, need confirmation that this is actually what sysId needs
     public LinearVelocity getMetersPerSecond(double velocity){
-        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60); //();
+        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60); 
     }
 
     public void resetPose() {

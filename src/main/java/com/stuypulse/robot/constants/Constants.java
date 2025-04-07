@@ -12,7 +12,6 @@ public interface Constants {
     }
 
     public interface Drivetrain {
-        //Make sure this converts the rotations to meters
-        public static final double WHEEL_CIRCUMFERENCE = 3.0;
+        public static final double WHEEL_CIRCUMFERENCE = 0.479;
     }
 }
