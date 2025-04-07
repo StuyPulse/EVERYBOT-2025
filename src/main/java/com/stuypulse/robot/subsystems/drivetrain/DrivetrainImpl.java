@@ -164,7 +164,6 @@ public class DrivetrainImpl extends Drivetrain {
         return odometry.getPoseMeters();
     }
 
-
     @Override
     public void periodic() {
         updateOdometry();
