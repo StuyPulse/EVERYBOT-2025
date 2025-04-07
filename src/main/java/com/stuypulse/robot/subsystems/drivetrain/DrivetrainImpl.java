@@ -165,15 +165,6 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     @Override
-    public SysIdRoutine getSysIdRoutine() {
-        return SysId.getSysIdRoutine(
-            getName(),
-            null,
-            null, 
-            getInstance());
-    }
-
-    @Override
     public void periodic() {
         updateOdometry();
         field.setRobotPose(odometry.getPoseMeters());

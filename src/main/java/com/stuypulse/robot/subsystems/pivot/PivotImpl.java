@@ -59,7 +59,10 @@ public class PivotImpl extends Pivot {
             pivotMotor.toString(),
             pivotMotor,
             getPivotAngle(),
-            Pivot.getInstance()
+            Pivot.getInstance(),
+            1,
+            5,
+            10
         );
     }
 
