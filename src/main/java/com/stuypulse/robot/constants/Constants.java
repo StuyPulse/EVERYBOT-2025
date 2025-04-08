@@ -12,6 +12,6 @@ public interface Constants {
     }
 
     public interface Drivetrain {
-        public static final double WHEEL_CIRCUMFERENCE = 0.0;
+        public static final double WHEEL_CIRCUMFERENCE = 0.479;
     }
 }

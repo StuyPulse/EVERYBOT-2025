@@ -32,6 +32,16 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.units.LinearVelocityUnit;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Voltage;
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
+
 public class DrivetrainImpl extends Drivetrain {
 
     private final AHRS gyro = new AHRS();
@@ -156,6 +166,11 @@ public class DrivetrainImpl extends Drivetrain {
         return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
     }
 
+    // Experimental, need confirmation that this is actually what sysId needs
+    public LinearVelocity getMetersPerSecond(double velocity){
+        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60); 
+    }
+
     public void resetPose() {
         odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), field.getRobotPose());
     }
@@ -163,6 +178,32 @@ public class DrivetrainImpl extends Drivetrain {
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
+
+@Override
+    public SysIdRoutine getSysIdRoutine() {
+        return new SysIdRoutine(
+            new SysIdRoutine.Config(),
+            new SysIdRoutine.Mechanism(
+                voltage -> {
+                leftMotors[0].setVoltage(voltage);
+                rightMotors[0].setVoltage(voltage);   
+                },         
+                log -> {
+                    log.motor("drive-left")
+                        .voltage(Voltage.ofBaseUnits(leftMotors[0].getBusVoltage(), Volts))
+                        .linearPosition(Meters.ofBaseUnits(getLeftDistance()))
+                        .linearVelocity(getMetersPerSecond(getLeftVelocity()));
+                        
+                    log.motor("drive-right")
+                        .voltage(Voltage.ofBaseUnits(rightMotors[0].getBusVoltage(), Volts))
+                        .linearPosition(Meters.ofBaseUnits(getRightDistance()))
+                        .linearVelocity(getMetersPerSecond(getRightVelocity())); 
+                }, 
+                this     
+            )
+        );
+    }
+
 
     @Override
     public void periodic() {
