@@ -74,7 +74,7 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
         pivot.setDefaultCommand(new PivotHoldCoral());
-        // driveSubsystem.setDefaultCommand(new DriveDefault(driver, true)); // TODO: DELETE
+        //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 
     /***************/
@@ -90,13 +90,12 @@ public class RobotContainer {
             driver.getRightButton()
                 .whileTrue(new ClimbToStow());
             // driver.getBottomButton()
-            //     .whileTrue(new VisionAlignToReef());
-
+            //     .whileTrue(new VisionAlignToReef())
             driver.getRightTriggerButton()
-                .whileTrue(new PivotRaise())
+                .whileTrue(new PivotRaise(driver.getRightTrigger()))
                 .onFalse(new PivotStop());
             driver.getLeftTriggerButton()
-                .whileTrue(new PivotLower())
+                .whileTrue(new PivotLower(driver.getLeftTrigger()))
                 .onFalse(new PivotStop());
 
             driver.getRightBumper() 

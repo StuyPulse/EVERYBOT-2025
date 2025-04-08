@@ -178,6 +178,7 @@ public class DrivetrainImpl extends Drivetrain {
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
+
 @Override
     public SysIdRoutine getSysIdRoutine() {
         return new SysIdRoutine(
