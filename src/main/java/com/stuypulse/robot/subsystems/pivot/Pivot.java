@@ -30,8 +30,8 @@ public abstract class Pivot extends SubsystemBase {
         Rotation2d targetAngle;
 
         // TODO: Either remove this or use it
-        private PivotState(Rotation2d coralStowAngle) {
-            this.targetAngle = coralStowAngle;
+        private PivotState(Rotation2d targetAngle) {
+            this.targetAngle = targetAngle;
         }
 
         public Rotation2d getTargetAngle() {
