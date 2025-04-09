@@ -8,9 +8,12 @@ package com.stuypulse.robot.constants;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.spark.config.AlternateEncoderConfig;
+import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.stuypulse.robot.constants.Ports;
 
 /*-
  * File containing all of the configurations that different motors require.
@@ -26,6 +29,10 @@ public interface Motors {
     public interface PivotConfig {
         SparkBaseConfig PIVOT_ROLLER_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_ROLLER_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
         SparkBaseConfig PIVOT_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
+        
+        // SparkMaxConfig PIVOT_ENCODER_CONFIG = new SparkMaxConfig();
+
+        // AlternateEncoderConfig PIVOT_ENCODER_CONFIG = new AlternateEncoderConfig().positionConversionFactor(Settings.Pivot.PIVOT_MOTOR_GEAR_RATIO * Settings.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR).setSparkMaxDataPortConfig();
     }
 
     public interface ClimbConfig {

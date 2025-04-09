@@ -72,8 +72,8 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        pivot.setDefaultCommand(new PivotHoldCoral());
+        //ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
+        //pivot.setDefaultCommand(new PivotHoldCoral());
         //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 

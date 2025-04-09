@@ -42,8 +42,6 @@ public interface Ports {
 
         public static final int GYRO = 1;
         
-
-        // TODO: Right is not turning.
         // NEO
         public static final int RIGHT_LEAD = 6;
         // CIM

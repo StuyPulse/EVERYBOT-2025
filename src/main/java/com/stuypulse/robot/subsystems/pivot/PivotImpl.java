@@ -3,7 +3,7 @@ package com.stuypulse.robot.subsystems.pivot;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import com.revrobotics.spark.config.SparkBaseConfig;
-
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -43,13 +43,15 @@ public class PivotImpl extends Pivot {
         pivotMotor = new SparkMax(Ports.Pivot.PIVOT_MOTOR,MotorType.kBrushless);
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
 
+        Motors.PivotConfig.PIVOT_MOTOR_CONFIG.encoder
+            .positionConversionFactor(Settings.Pivot.PIVOT_MOTOR_GEAR_RATIO * Settings.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);  
+        
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        pivotEncoder = pivotMotor.getEncoder();
         
+        pivotEncoder = pivotMotor.getEncoder();
+
         controller = new MotorFeedforward(Gains.Pivot.FF.kS, Gains.Pivot.FF.kV, Gains.Pivot.FF.kA).position()
-            .add(new ArmFeedforward(Gains.Pivot.FF.kG))
             .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
     }
     
@@ -82,10 +84,11 @@ public class PivotImpl extends Pivot {
         return Rotation2d.fromDegrees(((pivotEncoder.getPosition() * 360) % 360));
     }
 
+
     @Override
     public void periodic() {
         super.periodic();
-        
-        SmartDashboard.putNumber("Pivot/Current Angle", (pivotEncoder.getPosition() * 360) % 360);
+        SmartDashboard.putNumber("Pivot/Number of Rotations", pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Pivot/Current Angle", getPivotAngle().getDegrees());
     }       
 }
