@@ -140,7 +140,6 @@ public class RobotContainer {
             if(!joystick.getHatUp() && !joystick.getHatDown())                              new PivotStop();           
         }*/
     
-
     /**************/
     /*** AUTONS ***/
     /**************/
@@ -160,10 +159,15 @@ public class RobotContainer {
         autonChooser.addOption("Pivot Dynamic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
         autonChooser.addOption("Pivot Quasistatic Fowards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
         autonChooser.addOption("Pivot Quasistatic Backwards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
+
+        SysIdRoutine driveSysIdRoutine = driveSubsystem.getSysIdRoutine();
+        autonChooser.addOption("Drive Dynamic Forward", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("Drive Dynamic Backwards", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("Drive Quasistatic Forward", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("Drive Quasistatic Backwards", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
     }
 
     public Command getAutonomousCommand() {
         return autonChooser.getSelected();
     }
 }
-
