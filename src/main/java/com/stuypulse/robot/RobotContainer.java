@@ -19,6 +19,7 @@ import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
+import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
@@ -91,6 +92,7 @@ public class RobotContainer {
                 .whileTrue(new ClimbToStow());
             // driver.getBottomButton()
             //     .whileTrue(new VisionAlignToReef())
+
             driver.getRightTriggerButton()
                 .whileTrue(new PivotRaise())
                 .onFalse(new PivotStop());
@@ -105,6 +107,8 @@ public class RobotContainer {
                 .whileTrue(new PivotAlgaeIntake())
                 .onFalse(new PivotRollerStop());
 
+            driver.getDPadUp()
+                .onTrue(new PivotResetAngle());
         }
         /*else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
             joystick.getTriggerTriggered()
@@ -166,4 +170,3 @@ public class RobotContainer {
         return autonChooser.getSelected();
     }
 }
-

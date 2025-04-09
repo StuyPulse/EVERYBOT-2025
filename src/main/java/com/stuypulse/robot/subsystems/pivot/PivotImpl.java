@@ -84,6 +84,12 @@ public class PivotImpl extends Pivot {
         return Rotation2d.fromDegrees(((pivotEncoder.getPosition() * 360) % 360));
     }
 
+    @Override
+    public void ResetPivotEncoder() {
+        pivotEncoder
+    }
+
+
 
     @Override
     public void periodic() {

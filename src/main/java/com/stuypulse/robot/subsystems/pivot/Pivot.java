@@ -55,6 +55,9 @@ public abstract class Pivot extends SubsystemBase {
     public abstract void setRollerMotor(double speed);
 
     public abstract void setPivotMotor(double speed);
+    public abstract void ResetPivotEncoder();
+
+
 
     @Override
     public void periodic() {

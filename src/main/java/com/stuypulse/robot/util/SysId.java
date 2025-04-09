@@ -3,10 +3,14 @@ package com.stuypulse.robot.util;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Rotations;
 
 import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.units.measure.Velocity;
@@ -35,7 +39,7 @@ public class SysId {
                 log -> { log.motor(motorname)
                     .angularVelocity(AngularVelocity.ofBaseUnits(motor.getEncoder().getVelocity() / 60, RotationsPerSecond))
                     .voltage(Voltage.ofBaseUnits(motor.getBusVoltage(), Volts))
-                    .angularPosition(mechgetrotations.getMeasure());
+                    .angularPosition((Angle.ofBaseUnits(motor.getEncoder().getPosition(), Rotations)));
                 },
                 subsysteminstance
             )
