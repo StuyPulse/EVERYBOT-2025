@@ -86,7 +86,7 @@ public class PivotImpl extends Pivot {
 
     @Override
     public void ResetPivotEncoder() {
-        pivotEncoder
+        pivotEncoder.setPosition(0);
     }
 
 

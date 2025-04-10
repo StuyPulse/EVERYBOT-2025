@@ -6,7 +6,7 @@ import com.stuypulse.robot.commands.auton.DoubleL1Auton;
 import com.stuypulse.robot.commands.auton.MobilityAuton;
 import com.stuypulse.robot.commands.auton.SingleL1Auton;
 import com.stuypulse.robot.commands.auton.PushBackwardsL1Auton;
-
+import com.stuypulse.robot.commands.auton.PushForwardsAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 
@@ -149,20 +149,21 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-        autonChooser.setDefaultOption("Mobility Auton", new MobilityAuton());
-        autonChooser.addOption("Single L1", new SingleL1Auton());
-        autonChooser.addOption("Double L1", new DoubleL1Auton());
-        autonChooser.addOption("Push Backwards", new PushBackwardsL1Auton());
+        autonChooser.setDefaultOption("Mobility", new MobilityAuton());
+        autonChooser.addOption("1xL1", new SingleL1Auton());
+        autonChooser.addOption("2xL1", new DoubleL1Auton());
+        autonChooser.addOption("Push Forwards", new PushForwardsAuton());
+        autonChooser.addOption("Push Backwards + L1", new PushBackwardsL1Auton());
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
     public void configureSysId() {
         SysIdRoutine pivotSysIdRoutine = pivot.getSysIdRoutine();
-        autonChooser.addOption("Pivot Dynamic Foward", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Pivot Dynamic Backwards", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
-        autonChooser.addOption("Pivot Quasistatic Fowards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Pivot Quasistatic Backwards", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("Pivot Dynamic Up (Forwards)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("Pivot Dynamic Down (Backwards)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("Pivot Quasistatic Up (Forwards)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("Pivot Quasistatic Down (Backwards)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
 
         SysIdRoutine driveSysIdRoutine = driveSubsystem.getSysIdRoutine();
         autonChooser.addOption("Drive Dynamic Forward", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
@@ -175,4 +176,3 @@ public class RobotContainer {
         return autonChooser.getSelected();
     }
 }
-
