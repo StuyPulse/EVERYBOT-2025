@@ -19,6 +19,7 @@ import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
+import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
@@ -72,8 +73,8 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        pivot.setDefaultCommand(new PivotHoldCoral());
+        //ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
+        //pivot.setDefaultCommand(new PivotHoldCoral());
         //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 
@@ -91,11 +92,12 @@ public class RobotContainer {
                 .whileTrue(new ClimbToStow());
             // driver.getBottomButton()
             //     .whileTrue(new VisionAlignToReef())
+
             driver.getRightTriggerButton()
-                .whileTrue(new PivotRaise(driver.getRightTrigger()))
+                .whileTrue(new PivotRaise())
                 .onFalse(new PivotStop());
             driver.getLeftTriggerButton()
-                .whileTrue(new PivotLower(driver.getLeftTrigger()))
+                .whileTrue(new PivotLower())
                 .onFalse(new PivotStop());
 
             driver.getRightBumper() 
@@ -105,6 +107,8 @@ public class RobotContainer {
                 .whileTrue(new PivotAlgaeIntake())
                 .onFalse(new PivotRollerStop());
 
+            driver.getDPadUp()
+                .onTrue(new PivotResetAngle());
         }
         /*else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
             joystick.getTriggerTriggered()
@@ -171,3 +175,4 @@ public class RobotContainer {
         return autonChooser.getSelected();
     }
 }
+

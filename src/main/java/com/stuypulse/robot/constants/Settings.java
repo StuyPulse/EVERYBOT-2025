@@ -74,10 +74,14 @@ public interface Settings {
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
 
+        public static final double PIVOT_MOTOR_GEAR_RATIO = 1.0/27.0;
+        public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
+
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(0); // TODO: FIND CORAL STOW ANGLE
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-4); 
         Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(75);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(45);
+        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(0); //TODO: FIND MAX HARD STOP ANGLE
     }
 
 
