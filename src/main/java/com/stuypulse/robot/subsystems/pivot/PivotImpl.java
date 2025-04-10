@@ -97,8 +97,9 @@ public class PivotImpl extends Pivot {
     public void periodic() {
         super.periodic();
 
-        if (pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT) {
-            
+        if (stallDetector.getAsBoolean()){
+            // Maybe make this a state? Pivot stalled?
+            setPivotMotor(0);
         }
 
         SmartDashboard.putNumber("Pivot/Number of Rotations", pivotEncoder.getPosition());
