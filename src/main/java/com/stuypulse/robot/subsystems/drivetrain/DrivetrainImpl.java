@@ -57,7 +57,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     private final Field2d field = new Field2d();
     
-
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
@@ -128,11 +127,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     private void updateOdometry() {
         odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(), rightEncoder.getPosition());
-
-        // Without Gyro:
-        // odometry.update(Rotation2d.fromDegrees(getRotation()),
-        // leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE,
-        // rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
     @Override
@@ -203,7 +197,6 @@ public class DrivetrainImpl extends Drivetrain {
             )
         );
     }
-
 
     @Override
     public void periodic() {
