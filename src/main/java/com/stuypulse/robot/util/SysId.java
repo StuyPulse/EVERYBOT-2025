@@ -22,7 +22,7 @@ public class SysId {
     public static SysIdRoutine getSysIdRoutine(
         String motorname,
         SparkMax motor,
-        Rotation2d mechgetrotations,
+        Rotation2d mechGetRotations,
         Subsystem subsysteminstance,
         double quasistaticRampVoltage,  //1V by default
         double dynamicStepVoltage,      //7V by default

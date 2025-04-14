@@ -51,8 +51,8 @@ public class PivotImpl extends Pivot {
         
         pivotEncoder = pivotMotor.getEncoder();
 
-        controller = new MotorFeedforward(Gains.Pivot.FF.kS, Gains.Pivot.FF.kV, Gains.Pivot.FF.kA).position()
-            .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
+        controller = new ArmFeedforward(Gains.Pivot.FF.kG)
+                .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
     }
     
     @Override
@@ -60,10 +60,10 @@ public class PivotImpl extends Pivot {
         return SysId.getSysIdRoutine(
             pivotMotor.toString(),
             pivotMotor,
-            getPivotAngle(),
+            getPivotRotation(),
             Pivot.getInstance(),
             0.5,
-            2,
+            .5,
             10
         );
     }
@@ -80,21 +80,29 @@ public class PivotImpl extends Pivot {
         pivotMotor.set(speed);
     }
 
-    public Rotation2d getPivotAngle() {
-        return Rotation2d.fromDegrees(((pivotEncoder.getPosition() * 360) % 360));
+    public Rotation2d getPivotRotation() {
+        return Rotation2d.fromRotations(pivotEncoder.getPosition());
     }
 
     @Override
     public void ResetPivotEncoder() {
-        pivotEncoder.setPosition(0);
+        pivotMotor.getEncoder().setPosition(0);
+        pivotEncoder.setPosition(0); //SmartDashboard.putString("Pivot/Successful reset", );
     }
 
+    @Override
+    public void setPivotState(PivotState pivotState) { this.pivotState = pivotState; }
 
+    @Override
+    public PivotState getPivotState() { return pivotState; }
 
     @Override
     public void periodic() {
         super.periodic();
-        SmartDashboard.putNumber("Pivot/Number of Rotations", pivotEncoder.getPosition());
-        SmartDashboard.putNumber("Pivot/Current Angle", getPivotAngle().getDegrees());
+
+        pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+
+        SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
+        SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
     }       
 }

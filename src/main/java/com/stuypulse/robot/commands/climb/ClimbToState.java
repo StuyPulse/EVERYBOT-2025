@@ -10,7 +10,6 @@ public abstract class ClimbToState extends InstantCommand{
   private final Climb climb;
   private final ClimbState state;
   
-
   public ClimbToState(ClimbState state){
     this.climb = Climb.getInstance();
     this.state = state;
@@ -22,4 +21,3 @@ public abstract class ClimbToState extends InstantCommand{
     climb.setState(state);
   }
 }
-
