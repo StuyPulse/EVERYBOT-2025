@@ -11,7 +11,7 @@ public class Gains {
         }
 
         public interface PID {
-            double kP = 0.2;
+            double kP = 0.0;
             double kI = 0.0;
             double kD = 0.0;
         }
@@ -19,15 +19,14 @@ public class Gains {
 
     public interface Pivot {
          public interface FF {
-
             double kS = 0.0;
             double kV = 0.0;
             double kA = 0.0;
-            double kG = 0.0;
+            double kG = 0.21;
         }
         public interface PID {
-            double kP = 0.0;
-            double kI = 0.0;
+            double kP = 0.08;
+            double kI = 0.01;
             double kD = 0.0;
         }       
     }

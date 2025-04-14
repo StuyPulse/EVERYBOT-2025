@@ -15,7 +15,6 @@ import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
-
 /*
  * Move for RP; thats it bruh
  *

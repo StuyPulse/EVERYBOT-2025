@@ -15,14 +15,16 @@ import com.stuypulse.robot.commands.drive.DriveJoystick;
 
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
-
-import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotStop;
+import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
+import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
+import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
+import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
@@ -74,8 +76,8 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         //ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
-        //pivot.setDefaultCommand(new PivotHoldCoral());
-        //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+        pivot.setDefaultCommand(new PivotHoldCoral());
+        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 
     /***************/
@@ -84,7 +86,8 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
             driver.getTopButton()
-                .onTrue(new PivotCoralOuttake())
+                .whileTrue(new PivotRollerStop())
+                .whileTrue(new PivotCoralOuttake())
                 .onFalse(new PivotHoldCoral());
             driver.getLeftButton()
                 .whileTrue(new ClimbToClimb());
@@ -108,7 +111,14 @@ public class RobotContainer {
                 .onFalse(new PivotRollerStop());
 
             driver.getDPadUp()
-                .onTrue(new PivotResetAngle());
+                .onTrue(new PivotToCoralStow());
+    
+            driver.getDPadRight()
+                .onTrue(new PivotToAlgaeStow());
+
+            driver.getDPadDown()
+                .onTrue(new PivotToAlgaeIntake());
+
         }
         /*else if(Settings.DriveMode.GAMEPAD.toString() == "JOYSTICK") {     
             joystick.getTriggerTriggered()
