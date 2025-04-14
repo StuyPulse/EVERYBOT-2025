@@ -1,20 +1,18 @@
 package com.stuypulse.robot;
 
-import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
-import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.DoubleL1Auton;
-import com.stuypulse.robot.commands.auton.MobilityAuton;
-import com.stuypulse.robot.commands.auton.SingleL1Auton;
-import com.stuypulse.robot.commands.auton.PushBackwardsL1Auton;
-import com.stuypulse.robot.commands.auton.PushForwardsAuton;
+import com.stuypulse.robot.commands.auton.Combinations.PushBackwardsL1Auton;
+
+import com.stuypulse.robot.commands.auton.CoralOnly.DoubleCoralAuton;
+import com.stuypulse.robot.commands.auton.CoralOnly.SingleCoralAuton;
+
+import com.stuypulse.robot.commands.auton.Misc.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.Misc.MobilityAuton;
+
+import com.stuypulse.robot.commands.auton.PushOnly.PushBackwardsAuton;
+import com.stuypulse.robot.commands.auton.PushOnly.PushForwardsAuton;
+
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
-
-import com.stuypulse.robot.commands.drive.DriveDefault;
-import com.stuypulse.robot.commands.drive.DriveJoystick;
-
-import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 
 import com.stuypulse.robot.commands.pivot.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
@@ -24,12 +22,9 @@ import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
-import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.climber.Climb;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
@@ -149,27 +144,31 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-        autonChooser.setDefaultOption("Mobility", new MobilityAuton());
-        autonChooser.addOption("1xL1", new SingleL1Auton());
-        autonChooser.addOption("2xL1", new DoubleL1Auton());
-        autonChooser.addOption("Push Forwards", new PushForwardsAuton());
-        autonChooser.addOption("Push Backwards + L1", new PushBackwardsL1Auton());
-        autonChooser.addOption("Do Nothing", new DoNothingAuton());
+        autonChooser.setDefaultOption("Auton - Mobility", new MobilityAuton());
+
+        autonChooser.addOption("Auton - Coral - Single", new SingleCoralAuton());
+        autonChooser.addOption("Auton - Coral - Single - With Push", new PushBackwardsL1Auton());
+        autonChooser.addOption("Auton - Coral - Double", new DoubleCoralAuton());
+
+        autonChooser.addOption("Auton - Push - Forwards", new PushForwardsAuton());
+        autonChooser.addOption("Auton - Push - Backwards", new PushBackwardsAuton());
+
+        autonChooser.addOption("Auton - Stay Still", new DoNothingAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
     public void configureSysId() {
         SysIdRoutine pivotSysIdRoutine = pivot.getSysIdRoutine();
-        autonChooser.addOption("Pivot Dynamic Up (Forwards)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Pivot Dynamic Down (Backwards)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
-        autonChooser.addOption("Pivot Quasistatic Up (Forwards)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Pivot Quasistatic Down (Backwards)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("SysID - Pivot - Dynamic Forwards (Up)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("SysID - Pivot - Dynamic Backwards (Down)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("SysID - Pivot - Quasistatic Forwards (Up)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("SysID - Pivot - Quasistatic Backwards (Down)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
 
         SysIdRoutine driveSysIdRoutine = driveSubsystem.getSysIdRoutine();
-        autonChooser.addOption("Drive Dynamic Forward", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Drive Dynamic Backwards", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
-        autonChooser.addOption("Drive Quasistatic Forward", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("Drive Quasistatic Backwards", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("SysID - Drive - Dynamic Forward", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("SysID - Drive - Dynamic Backwards", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("SysID - Drive - Quasistatic Forward", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("SysID - Drive - Quasistatic Backwards", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
     }
 
     public Command getAutonomousCommand() {

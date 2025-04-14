@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.CoralOnly;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 /*-
  * @author sebastian waldman
  */
-public class DoubleL1Auton extends SequentialCommandGroup {
+public class DoubleCoralAuton extends SequentialCommandGroup {
 
-    public DoubleL1Auton() {
+    public DoubleCoralAuton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.TWO_L1_AUTON),
             new DriveTank(.5,.5,true),

@@ -25,12 +25,21 @@ public interface Settings {
 
     public interface LEDPatterns {
         // Auton Colors
+        
+        // MISC
         LEDPattern DO_NOTHING_AUTON = LEDPattern.solid(Color.kWheat).blink(Units.Seconds.of(1.5));
         LEDPattern MOBILITY_AUTON = LEDPattern.solid(Color.kHoneydew).blink(Units.Seconds.of(1.5));
+
+        // CORAL ONLY
         LEDPattern SINGLE_L1_AUTON = LEDPattern.rainbow(250,250).scrollAtAbsoluteSpeed(Units.MetersPerSecond.of(1), Units.Meters.of(1 / 200.0));
         LEDPattern TWO_L1_AUTON = LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5)).reversed();
-        LEDPattern PUSH_BACKWARDS_SINGLE_L1_AUTON = LEDPattern.solid(Color.kSeaGreen).blink(Units.Seconds.of(1.5));
+
+        // PUSH ONLY
         LEDPattern PUSH_FORWARDS_AUTON = LEDPattern.solid(Color.kLawnGreen).blink(Units.Seconds.of(1.5));
+        LEDPattern PUSH_BACKWARDS_AUTON = LEDPattern.solid(Color.kDarkSeaGreen).blink(Units.Seconds.of(1.5));
+
+        // COMBINATIONS
+        LEDPattern PUSH_BACKWARDS_SINGLE_L1_AUTON = LEDPattern.solid(Color.kSeaGreen).blink(Units.Seconds.of(1.5));
 
         // Alliance Colors
         LEDPattern RED_ALLIANCE = LEDPattern.solid(Color.kRed);
