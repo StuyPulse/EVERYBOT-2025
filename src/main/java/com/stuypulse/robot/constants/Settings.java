@@ -6,10 +6,9 @@
 package com.stuypulse.robot.constants;
 
 
-import edu.wpi.first.math.geometry.Rotation2d;
-
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
@@ -77,6 +76,9 @@ public interface Settings {
 
         public static final double PIVOT_MOTOR_GEAR_RATIO = 1.0/27.0;
         public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
+
+        public static final double PIVOT_STALL_CURRENT = 1; // Replace with actual voltage spike when stalled.
+        public static final double PIVOT_STALL_DEBOUNCE = .25; // Placeholder
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3); 

@@ -1,29 +1,25 @@
 package com.stuypulse.robot.subsystems.pivot;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
-
+import com.stuypulse.stuylib.control.Controller;
+import com.stuypulse.stuylib.control.feedback.PIDController;
+import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.stuylib.network.SmartNumber;
+import com.stuypulse.stuylib.streams.booleans.BStream;
+import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
+
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.networktables.PubSub;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
-import com.stuypulse.stuylib.control.feedback.PIDController;
-import com.stuypulse.stuylib.control.Controller;
-import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
-import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
 
 public class PivotImpl extends Pivot {
 
@@ -32,6 +28,8 @@ public class PivotImpl extends Pivot {
 
     private Controller controller;
     private SparkMax rollerMotor;
+    
+    private BStream stallDetector;
 
     // double CurrentRollerSetSpeed;
     // double CurrentPivotSetSpeed;
@@ -50,9 +48,12 @@ public class PivotImpl extends Pivot {
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         pivotEncoder = pivotMotor.getEncoder();
-
+      
         controller = new ArmFeedforward(Gains.Pivot.FF.kG)
                 .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
+
+        stallDetector = BStream.create(() -> pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT)
+            .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
     }
     
     @Override
@@ -99,10 +100,16 @@ public class PivotImpl extends Pivot {
     @Override
     public void periodic() {
         super.periodic();
+      
+        if (stallDetector.getAsBoolean()){
+            // Maybe make this a state? Pivot stalled?
+            setPivotMotor(0);
+        }
 
-        pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
-
+         pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+      
         SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
         SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
+        SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
     }       
 }
