@@ -6,5 +6,4 @@ public class PivotStop extends PivotToDirection {
     public PivotStop() {
         super(Settings.Pivot.ROLLER_STOP_SPEED.getAsDouble());
     }
-
 }
