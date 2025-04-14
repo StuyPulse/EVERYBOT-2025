@@ -3,7 +3,7 @@
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.Misc;
 
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

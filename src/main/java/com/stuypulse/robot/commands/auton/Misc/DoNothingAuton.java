@@ -3,7 +3,7 @@
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.Misc;
 
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
