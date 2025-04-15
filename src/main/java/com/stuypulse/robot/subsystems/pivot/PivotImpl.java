@@ -5,14 +5,15 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.SysId;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
-import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
+import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
 import com.stuypulse.stuylib.network.SmartNumber;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class PivotImpl extends Pivot {
-
     private SparkMax pivotMotor;
     private RelativeEncoder pivotEncoder;
 
@@ -33,6 +33,7 @@ public class PivotImpl extends Pivot {
 
     // double CurrentRollerSetSpeed;
     // double CurrentPivotSetSpeed;
+    
     SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
     SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 

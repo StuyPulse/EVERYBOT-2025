@@ -10,11 +10,10 @@ import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
-/*-
- * @author sebastian waldman
+/**
+ * @author Sebastian Waldman
  */
 public class DoubleCoralAuton extends SequentialCommandGroup {
-
     public DoubleCoralAuton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.TWO_L1_AUTON),
@@ -45,6 +44,6 @@ public class DoubleCoralAuton extends SequentialCommandGroup {
             new WaitUntilCommand(1),
             new PivotRollerToDirection(0),
             new PivotToDirection(Settings.Pivot.PIVOT_RAISE_SPEED.getAsDouble())
-            );
+        );
     }
 }

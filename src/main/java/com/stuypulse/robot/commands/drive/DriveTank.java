@@ -1,8 +1,8 @@
 package com.stuypulse.robot.commands.drive;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
-
 
 public class DriveTank extends Command {
     private final double leftSpeed;
@@ -18,15 +18,9 @@ public class DriveTank extends Command {
     }
 
     @Override
-    public void initialize() {}
-
-    @Override
     public void execute() {
         Drivetrain.getInstance().driveTank(leftSpeed, rightSpeed, squared);
     }
-
-    @Override
-    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

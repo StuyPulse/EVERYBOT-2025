@@ -16,17 +16,11 @@ public class DriveDefault extends Command {
 
         addRequirements(Drivetrain.getInstance());
     }
-    
-    @Override
-    public void initialize() {}
 
     @Override
     public void execute() {
         Drivetrain.getInstance().driveArcade(-gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
     }
-
-    @Override
-    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

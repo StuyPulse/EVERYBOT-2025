@@ -24,3 +24,5 @@ public class PivotCoralOuttake extends PivotRollerToDirection {
         super(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble());
     }
 }
+
+//TODO: retest coral outtake

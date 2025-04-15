@@ -1,4 +1,5 @@
 package com.stuypulse.robot.commands.leds;
+
 import java.util.Optional;
 
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
@@ -17,6 +18,7 @@ public class LEDDeafultCommand extends Command{
     public LEDDeafultCommand() {
         this.leds = LEDController.getInstance();
         this.climb = Climb.getInstance();
+
         addRequirements(leds);
     }
     
@@ -24,18 +26,16 @@ public class LEDDeafultCommand extends Command{
     public void execute() {
         // TODO: check for robot states here and assign led patterns to them
         Optional<Alliance> ally = DriverStation.getAlliance();
+        
         if (climb.getState() == ClimbState.CLIMBING) {
             leds.applyPattern(LEDPatterns.CLIMBING);
-        }
-        else if (ally.isPresent()) {
+        } else if (ally.isPresent()) {
             if (ally.get() == Alliance.Red) {
                 leds.applyPattern(LEDPatterns.RED_ALLIANCE);
-            }
-            if (ally.get() == Alliance.Blue) {
+            } else if (ally.get() == Alliance.Blue) {
                 leds.applyPattern(LEDPatterns.BLUE_ALLIANCE);
             }
-        } 
-        else {
+        } else {
            leds.applyPattern(LEDPatterns.NO_ALLIANCE);
         }
     }

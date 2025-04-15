@@ -2,9 +2,7 @@
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
-
 package com.stuypulse.robot.constants;
-
 
 import com.stuypulse.stuylib.network.SmartNumber;
 
@@ -13,15 +11,13 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 
-
-/*-
+/**
  * File containing tunable settings for every subsystem on the robot.
- *
+ * 
  * We use StuyLib's SmartNumber / SmartBoolean in order to have tunable
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-
     public interface LEDPatterns {
         // Auton Colors
     
@@ -32,7 +28,6 @@ public interface Settings {
         // CORAL ONLY
         LEDPattern SINGLE_L1_AUTON = LEDPattern.rainbow(250,250).scrollAtAbsoluteSpeed(Units.MetersPerSecond.of(1), Units.Meters.of(1 / 200.0));
         LEDPattern TWO_L1_AUTON = LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5)).reversed();
-        LEDPattern PUSH_BACKWARDS_SINGLE_L1_AUTON = LEDPattern.solid(Color.kSeaGreen).blink(Units.Seconds.of(1.5));
 
         // PUSH ONLY
         LEDPattern PUSH_FORWARDS_AUTON = LEDPattern.solid(Color.kLawnGreen).blink(Units.Seconds.of(1.5));
@@ -105,5 +100,5 @@ public interface Settings {
 
     // public interface DriveMode {
     //     SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
-    // } skibidi si
+    // }
 }

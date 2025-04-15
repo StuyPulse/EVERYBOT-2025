@@ -2,15 +2,12 @@
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
-
 package com.stuypulse.robot.constants;
-
-import com.stuypulse.robot.Stick;
 
 /** This file contains the different ports of motors, solenoids and sensors */
 public interface Ports {
     // TODO: Await CAN IDs / Device IDs from mec, put them here
-
+    
     public interface Gamepad {
         int DRIVER = 0;
         int OPERATOR = 1;
@@ -34,17 +31,12 @@ public interface Ports {
     }
   
     public interface Drivetrain {
-
-        // NEO
-        public static final int LEFT_LEAD = 4; 
-        // CIM
-        public static final int LEFT_FOLLOW = 5;
-
         public static final int GYRO = 1;
+
+        public static final int LEFT_LEAD = 4; 
+        public static final int LEFT_FOLLOW = 5;
         
-        // NEO
         public static final int RIGHT_LEAD = 6;
-        // CIM
         public static final int RIGHT_FOLLOW = 7;
     }
 }

@@ -16,17 +16,11 @@ public class DriveJoystick extends Command {
 
         addRequirements(Drivetrain.getInstance());
     }
-    
-    @Override
-    public void initialize() {}
 
     @Override
     public void execute() {
         Drivetrain.getInstance().driveArcade(joystick.getY(), joystick.getX(), squared);
     }
-
-    @Override
-    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

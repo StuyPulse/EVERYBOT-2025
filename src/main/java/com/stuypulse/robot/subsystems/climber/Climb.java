@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Climb extends SubsystemBase{
-
     private static final Climb instance;
     
     static {

@@ -2,8 +2,7 @@
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
-
-package com.stuypulse.robot.commands.auton.Misc;
+package com.stuypulse.robot.commands.auton.OnlyCoral;
 
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -15,13 +14,12 @@ import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
-/*
- *
- * @author Sebastian Waldman
+/**
  * I hope this works first try :pray:
+ * 
+ * @author Sebastian Waldman
  */
 public class SingleCoralAuton extends SequentialCommandGroup {
-
     public SingleCoralAuton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.SINGLE_L1_AUTON),

@@ -2,7 +2,6 @@
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
-
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
@@ -40,7 +39,6 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         new LEDApplyPattern(LEDPattern.solid(Color.kFirstRed).blink(Units.Seconds.of(.5)));
-
     }
 
     @Override

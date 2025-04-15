@@ -1,15 +1,5 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.angle.AngleController;
@@ -21,7 +11,6 @@ import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.util.SysId;
 
 import java.util.function.Consumer;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -32,10 +21,18 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.LinearVelocityUnit;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Voltage;
+
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
@@ -43,7 +40,6 @@ import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Seconds;
 
 public class DrivetrainImpl extends Drivetrain {
-
     private final AHRS gyro = new AHRS();
 
     private final SparkMax[] leftMotors;

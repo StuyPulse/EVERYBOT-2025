@@ -1,11 +1,11 @@
 package com.stuypulse.robot.util;
 
+import com.revrobotics.spark.SparkMax;
+
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Rotations;
-
-import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
@@ -23,9 +23,7 @@ public class SysId {
         Subsystem subsysteminstance,
         double quasistaticRampVoltage,  //1V by default
         double dynamicStepVoltage,      //7V by default
-        double timeoutSec               //10s by default
-    )
-    {
+        double timeoutSec) {            //10s by default
         return new SysIdRoutine(
             new SysIdRoutine.Config(
                 Voltage.ofBaseUnits(quasistaticRampVoltage, Volts).per(Seconds),
@@ -33,10 +31,11 @@ public class SysId {
                 Time.ofBaseUnits(timeoutSec, Seconds)),
             new SysIdRoutine.Mechanism(
                 motor::setVoltage,
-                log -> { log.motor(motorname)
-                    .angularVelocity(AngularVelocity.ofBaseUnits(motor.getEncoder().getVelocity() / 60, RotationsPerSecond))
-                    .voltage(Voltage.ofBaseUnits(motor.getBusVoltage(), Volts))
-                    .angularPosition((Angle.ofBaseUnits(motor.getEncoder().getPosition(), Rotations)));
+                log -> { 
+                    log.motor(motorname)
+                        .angularVelocity(AngularVelocity.ofBaseUnits(motor.getEncoder().getVelocity() / 60, RotationsPerSecond))
+                        .voltage(Voltage.ofBaseUnits(motor.getBusVoltage(), Volts))
+                        .angularPosition((Angle.ofBaseUnits(motor.getEncoder().getPosition(), Rotations)));
                 },
                 subsysteminstance
             )

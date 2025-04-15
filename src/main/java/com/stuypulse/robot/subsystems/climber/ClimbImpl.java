@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Ports;
@@ -13,19 +14,15 @@ import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
 import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
-
 import com.stuypulse.robot.constants.Motors.ClimbConfig;
-
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class ClimbImpl extends Climb {
-
     private SparkMax climbMotor;
     private RelativeEncoder climbEncoder;
 
     private Controller controller;
-
 
     public ClimbImpl() {
         super();
@@ -53,5 +50,4 @@ public class ClimbImpl extends Climb {
         super.periodic();
         climbMotor.setVoltage(controller.update(getState().getTargetAngle().getDegrees(), getCurrentAngle().getDegrees()));
     }
-
 }

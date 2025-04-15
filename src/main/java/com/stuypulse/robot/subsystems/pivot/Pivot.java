@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Pivot extends SubsystemBase {
-    
     private static final Pivot instance;
 
     static { 

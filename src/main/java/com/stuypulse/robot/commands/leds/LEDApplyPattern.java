@@ -15,8 +15,7 @@ public class LEDApplyPattern extends Command{
         leds = LEDController.getInstance();
         this.pattern = pattern;
 
-        addRequirements(leds);
-        
+        addRequirements(leds); 
     }
 
     public LEDApplyPattern(LEDPattern pattern) {
@@ -27,5 +26,4 @@ public class LEDApplyPattern extends Command{
     public void execute(){
         leds.applyPattern(pattern.get());
     }
-
 }
