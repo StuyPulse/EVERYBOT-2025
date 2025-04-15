@@ -3,11 +3,11 @@
 StuyPulse's code for the Everybot designed by 118.
 
 ## Mechanisms
-- Algae from Ground to Processor
-- LEDs to assert dominance
-- Coral from Station to L1
+- ALGAE from Ground to PROCESSOR
+- LEDs to make driving more user-friendly
+- CORAL from Coral Station to L1
 - Deep Climb
-- Limelight 2 for Vision
+- Limelight 2 for vision and alignment
 
 ## Specifications
 [Here](https://robonauts-everybot.github.io/Everybot-Docs/manual/the-everybot/) is the official documentation of the 2025 Everybot. 
