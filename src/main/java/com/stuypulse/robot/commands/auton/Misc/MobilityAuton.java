@@ -11,6 +11,12 @@ import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
+/**
+ * Move for the Ranking Point
+ * 
+ * @author Sebastian Waldman
+ */
+
 public class MobilityAuton extends SequentialCommandGroup {
     public MobilityAuton() {
         addCommands(

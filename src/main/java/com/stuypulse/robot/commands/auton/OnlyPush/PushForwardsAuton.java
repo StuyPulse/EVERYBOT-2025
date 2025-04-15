@@ -7,6 +7,12 @@ import com.stuypulse.robot.constants.Settings.LEDPatterns;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
+/**
+ * Push alliance partner forwards for the Ranking Point
+ * 
+ * @author Sebastian Waldman
+ */
+
 public class PushForwardsAuton extends SequentialCommandGroup {
     public PushForwardsAuton() {
         addCommands(
