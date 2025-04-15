@@ -7,6 +7,11 @@ import com.stuypulse.robot.constants.Settings.LEDPatterns;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
+/**
+ * Push alliance partner backwards for the Ranking Point
+ * 
+ * @author Sebastian Waldman
+ */
 public class PushBackwardsAuton extends SequentialCommandGroup {
     public PushBackwardsAuton() {
         addCommands(

@@ -15,6 +15,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
 /**
+ * attempts to score one coral
  * I hope this works first try :pray:
  * 
  * @author Sebastian Waldman

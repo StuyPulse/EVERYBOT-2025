@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
+ * attempt to score two coral
+ * 
  * @author Sebastian Waldman
  */
 public class DoubleCoralAuton extends SequentialCommandGroup {
