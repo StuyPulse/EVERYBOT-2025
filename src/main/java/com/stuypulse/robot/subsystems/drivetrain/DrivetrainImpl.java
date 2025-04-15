@@ -67,9 +67,10 @@ public class DrivetrainImpl extends Drivetrain {
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);
 
-        // Back wheel config
-        // back left will follow front left, safe parameters will persist; config will
-        // persist across power cycles
+        /* Back wheel config:
+        *  back left will follow front left, safe parameters will persist; config will
+        *  persist across power cycles */
+
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);

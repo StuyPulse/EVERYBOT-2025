@@ -92,13 +92,8 @@ public interface Settings {
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
     }
 
-
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double TRACK_WIDTH = 0.0;
     }
-
-    // public interface DriveMode {
-    //     SmartString GAMEPAD = new SmartString("Drivetrain/Controller/Mode", "GAMEPAD"); // Gamepad or Joystick
-    // }
 }
