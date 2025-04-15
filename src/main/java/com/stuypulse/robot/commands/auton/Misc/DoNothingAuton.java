@@ -2,7 +2,7 @@
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
-package com.stuypulse.robot.commands.auton.Misc;
+package com.stuypulse.robot.commands.auton.misc;
 
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 

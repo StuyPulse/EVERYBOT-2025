@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton.OnlyPush;
+package com.stuypulse.robot.commands.auton.push;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;

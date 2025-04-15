@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * @author Lucas Ou (lucas01b0x)
+ */
 public class LEDController extends SubsystemBase {
     private static final LEDController instance;
     private final LEDPattern defaultPattern = LEDPattern.kOff;

@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton.OnlyCoral;
+package com.stuypulse.robot.commands.auton.coral;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
