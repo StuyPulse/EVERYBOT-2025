@@ -1,5 +1,4 @@
 //LimelightHelpers v1.11 (REQUIRES LLOS 2025.0 OR LATER)
-
 package com.stuypulse.robot.util.vision;
 
 import edu.wpi.first.networktables.DoubleArrayEntry;
@@ -7,8 +6,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.TimestampedDoubleArray;
-// import com.stuypulse.robot.LimelightHelpers.LimelightResults;
-// import com.stuypulse.robot.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -37,7 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * This library supports all Limelight features including AprilTag tracking, Neural Networks, and standard color/retroreflective tracking.
  */
 public class LimelightHelpers {
-
     private static final Map<String, DoubleArrayEntry> doubleArrayEntries = new ConcurrentHashMap<>();
 
     /**

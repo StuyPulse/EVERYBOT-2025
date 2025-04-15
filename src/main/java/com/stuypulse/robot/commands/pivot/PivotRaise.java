@@ -4,6 +4,6 @@ import com.stuypulse.robot.constants.Settings;
 
 public class PivotRaise extends PivotToDirection {
     public PivotRaise() {
-        super(Settings.Pivot.PIVOT_RAISE_SPEED.getAsDouble());
+        super(Settings.Pivot.PIVOT_RAISE_SPEED.doubleValue());
     }
 }

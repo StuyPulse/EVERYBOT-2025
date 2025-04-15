@@ -10,16 +10,14 @@ public abstract class ClimbToState extends InstantCommand{
   private final Climb climb;
   private final ClimbState state;
   
-
-  public ClimbToState(ClimbState state){
+  public ClimbToState(ClimbState state) {
     this.climb = Climb.getInstance();
     this.state = state;
     addRequirements(climb);
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     climb.setState(state);
   }
 }
-

@@ -6,7 +6,6 @@ import edu.wpi.first.math.util.Units;
 
 /** This interface stores information about each camera. */
 public interface Cameras {
-
     public Camera[] LimelightCameras = new Camera[] {
         new Camera("limelight", new Pose3d(Units.inchesToMeters(0), Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(0)))),  
     };
@@ -27,6 +26,5 @@ public interface Cameras {
         public Pose3d getLocation() {
             return location;
         }
-
     }
 }

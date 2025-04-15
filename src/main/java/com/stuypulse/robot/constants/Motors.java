@@ -2,7 +2,6 @@
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
-
 package com.stuypulse.robot.constants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -12,7 +11,7 @@ import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-/*-
+/**
  * File containing all of the configurations that different motors require.
  *
  * Such configurations include:
@@ -22,8 +21,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
  *  - The Open Loop Ramp Rate
  */
 public interface Motors {
-    
     public interface PivotConfig {
+        SparkBaseConfig PIVOT_ROLLER_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_ROLLER_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
         SparkBaseConfig PIVOT_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Pivot.PIVOT_MOTOR_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
     }
 

@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.OnlyCoral;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
@@ -10,12 +10,11 @@ import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
-/*-
- * @author sebastian waldman
+/**
+ * @author Sebastian Waldman
  */
-public class DoubleL1Auton extends SequentialCommandGroup {
-
-    public DoubleL1Auton() {
+public class DoubleCoralAuton extends SequentialCommandGroup {
+    public DoubleCoralAuton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.TWO_L1_AUTON),
             new DriveTank(.5,.5,true),
@@ -45,6 +44,6 @@ public class DoubleL1Auton extends SequentialCommandGroup {
             new WaitUntilCommand(1),
             new PivotRollerToDirection(0),
             new PivotToDirection(Settings.Pivot.PIVOT_RAISE_SPEED.getAsDouble())
-            );
+        );
     }
 }

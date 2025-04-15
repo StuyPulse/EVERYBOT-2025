@@ -1,14 +1,5 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.angle.AngleController;
@@ -17,9 +8,9 @@ import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
+import com.stuypulse.robot.util.SysId;
 
 import java.util.function.Consumer;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -30,8 +21,25 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.SparkMax;
 
-public class DrivetrainImpl extends Drivetrain {
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.units.LinearVelocityUnit;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Voltage;
 
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
+
+public class DrivetrainImpl extends Drivetrain {
     private final AHRS gyro = new AHRS();
 
     private final SparkMax[] leftMotors;
@@ -45,7 +53,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     private final Field2d field = new Field2d();
     
-
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
@@ -60,9 +67,10 @@ public class DrivetrainImpl extends Drivetrain {
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);
 
-        // Back wheel config
-        // back left will follow front left, safe parameters will persist; config will
-        // persist across power cycles
+        /* Back wheel config:
+        *  back left will follow front left, safe parameters will persist; config will
+        *  persist across power cycles */
+
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
@@ -100,7 +108,6 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[1].setCANTimeout(250);
 
         SmartDashboard.putData("Field", field);
-
     }
 
     @Override
@@ -115,18 +122,8 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
     }
 
-    private double getRotation() {
-        double distance = leftEncoder.getPosition() - rightEncoder.getPosition();
-        return Math.toDegrees(distance / Settings.Drivetrain.TRACK_WIDTH);
-    }
-
     private void updateOdometry() {
         odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(), rightEncoder.getPosition());
-
-        // Without Gyro:
-        // odometry.update(Rotation2d.fromDegrees(getRotation()),
-        // leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE,
-        // rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
     @Override
@@ -139,7 +136,8 @@ public class DrivetrainImpl extends Drivetrain {
         return rightEncoder.getVelocity();
     }
 
-    public void configureAutoBuilder() {
+    //TODO: Configure Auton Builder
+    /*public void configureAutoBuilder() {
         AutoBuilder.configure(
             getPose(), 
             resetPose(), 
@@ -149,7 +147,7 @@ public class DrivetrainImpl extends Drivetrain {
             null, 
             null
         );
-    }
+    }*/
 
     public double getLeftDistance() {
         return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
@@ -159,12 +157,42 @@ public class DrivetrainImpl extends Drivetrain {
         return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
     }
 
+    // Experimental, need confirmation that this is actually what sysId needs
+    public LinearVelocity getMetersPerSecond(double velocity){
+        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60); 
+    }
+
     public void resetPose() {
         odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), field.getRobotPose());
     }
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
+    }
+
+    @Override
+    public SysIdRoutine getSysIdRoutine() {
+        return new SysIdRoutine(
+            new SysIdRoutine.Config(),
+            new SysIdRoutine.Mechanism(
+                voltage -> {
+                leftMotors[0].setVoltage(voltage);
+                rightMotors[0].setVoltage(voltage);   
+                },         
+                log -> {
+                    log.motor("drive-left")
+                        .voltage(Voltage.ofBaseUnits(leftMotors[0].getBusVoltage(), Volts))
+                        .linearPosition(Meters.ofBaseUnits(getLeftDistance()))
+                        .linearVelocity(getMetersPerSecond(getLeftVelocity()));
+                        
+                    log.motor("drive-right")
+                        .voltage(Voltage.ofBaseUnits(rightMotors[0].getBusVoltage(), Volts))
+                        .linearPosition(Meters.ofBaseUnits(getRightDistance()))
+                        .linearVelocity(getMetersPerSecond(getRightVelocity())); 
+                }, 
+                this     
+            )
+        );
     }
 
     @Override

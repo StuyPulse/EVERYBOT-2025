@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class PivotHoldCoral extends Command {
     private Pivot pivot;
+
     public PivotHoldCoral() {
         pivot = Pivot.getInstance();
         addRequirements(pivot);
@@ -16,9 +17,6 @@ public class PivotHoldCoral extends Command {
     public void execute() {
         pivot.setRollerMotor(Settings.Pivot.ROLLER_ROTISSERIE_SPEED.getAsDouble());
     }
-
-    @Override
-    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

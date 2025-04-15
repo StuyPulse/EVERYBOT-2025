@@ -18,17 +18,11 @@ public class DriveArcade extends Command {
 
         addRequirements(Drivetrain.getInstance());
     }
-    
-    @Override
-    public void initialize() {}
 
     @Override
     public void execute() {
         Drivetrain.getInstance().driveArcade(-xSpeed, -zRotation, squared);
     }
-
-    @Override
-    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
