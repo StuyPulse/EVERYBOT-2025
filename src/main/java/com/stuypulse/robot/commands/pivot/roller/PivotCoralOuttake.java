@@ -1,10 +1,5 @@
 package com.stuypulse.robot.commands.pivot.roller;
-import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.constants.Settings;
-
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-
 /*public class PivotCoralOuttake extends SequentialCommandGroup {
     public PivotCoralOuttake() {
         addCommands(
