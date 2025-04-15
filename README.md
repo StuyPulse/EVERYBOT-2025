@@ -7,7 +7,7 @@ StuyPulse's code for the Everybot designed by 118.
 - LEDs to assert dominance
 - Coral from Station to L1
 - Deep Climb
-- Limelight (2?) for Vision
+- Limelight 2 for Vision
 
 ## Specifications
 [Here](https://robonauts-everybot.github.io/Everybot-Docs/manual/the-everybot/) is the official documentation of the 2025 Everybot. 
