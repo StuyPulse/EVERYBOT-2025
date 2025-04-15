@@ -16,7 +16,6 @@ import com.stuypulse.robot.constants.Settings.LEDPatterns;
  * 
  * @author Sebastian Waldman
  */
-
 public class MobilityAuton extends SequentialCommandGroup {
     public MobilityAuton() {
         addCommands(

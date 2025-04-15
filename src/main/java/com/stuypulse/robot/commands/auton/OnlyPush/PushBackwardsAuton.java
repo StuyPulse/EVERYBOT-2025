@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
  * 
  * @author Sebastian Waldman
  */
-
 public class PushBackwardsAuton extends SequentialCommandGroup {
     public PushBackwardsAuton() {
         addCommands(
