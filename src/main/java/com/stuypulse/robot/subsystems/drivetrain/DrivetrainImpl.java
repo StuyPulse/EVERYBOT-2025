@@ -162,10 +162,12 @@ public class DrivetrainImpl extends Drivetrain {
         return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60); 
     }
 
+    @Override
     public void resetPose() {
         odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), field.getRobotPose());
     }
 
+    @Override
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
