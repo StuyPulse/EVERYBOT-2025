@@ -18,6 +18,7 @@ import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
+import com.stuypulse.robot.commands.pivot.SetPivotStateMode;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
@@ -102,12 +103,14 @@ public class RobotContainer {
             .onFalse(new PivotRollerStop());
 
         //DPAD
-        driver.getDPadUp()
-            .onTrue(new PivotToCoralStow());
         driver.getDPadRight()
-            .onTrue(new PivotToAlgaeStow());
+            .onTrue(new SetPivotStateMode(true))
+            .onTrue(new PivotToAlgaeStow())
+            .whileFalse(new SetPivotStateMode(false));
         driver.getDPadDown()
-            .onTrue(new PivotToAlgaeIntake());
+            .onTrue(new SetPivotStateMode(true))
+            .onTrue(new PivotToAlgaeIntake())
+            .whileFalse(new SetPivotStateMode(false));
     }
 
     /**************/

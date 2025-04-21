@@ -31,6 +31,8 @@ public class PivotImpl extends Pivot {
     
     private BStream stallDetector;
 
+    public boolean PivotStateModeEnabled;
+
     // double CurrentRollerSetSpeed;
     // double CurrentPivotSetSpeed;
     
@@ -93,10 +95,19 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
-    public void setPivotState(PivotState pivotState) { this.pivotState = pivotState; }
+    public void setPivotState(PivotState pivotState) { 
+        this.pivotState = pivotState; 
+    }
 
     @Override
-    public PivotState getPivotState() { return pivotState; }
+    public PivotState getPivotState() { 
+        return pivotState;
+    }
+
+    @Override
+    public void SetPivotStateMode(boolean SetPivotStateMode) {
+        PivotStateModeEnabled = SetPivotStateMode;
+    }
 
     @Override
     public void periodic() {
@@ -106,11 +117,13 @@ public class PivotImpl extends Pivot {
             // Maybe make this a state? Pivot stalled?
             setPivotMotor(0);
         }
-
+        if (PivotStateModeEnabled) {
          pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+        }
       
         SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
         SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
+        SmartDashboard.putBoolean("pivot state mode", PivotStateModeEnabled);
     }       
 }
