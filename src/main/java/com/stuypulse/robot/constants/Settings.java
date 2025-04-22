@@ -5,6 +5,7 @@
 package com.stuypulse.robot.constants;
 
 import com.stuypulse.stuylib.network.SmartNumber;
+import com.stuypulse.stuylib.network.SmartString;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
@@ -65,16 +66,16 @@ public interface Settings {
     }
     
     public interface Pivot {
-        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", 1);
-        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Intake Speed", -1);
+        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 1);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -1);
 
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Algae Shoot Speed", 1);
-        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Target Speeds/Rollers not spinning", -0.25);
-        SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot Roller Stop Speed", 0);
-        SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Roller Coral Hold Speed", 0.08);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.25);
+        SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
+        SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot Raise Speed", 0.09);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot Lower Speed", -0.09);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.09);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.09);
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
@@ -84,6 +85,9 @@ public interface Settings {
 
         public static final double PIVOT_STALL_CURRENT = 1; // Replace with actual voltage spike when stalled.
         public static final double PIVOT_STALL_DEBOUNCE = .25; // Placeholder
+        
+        public static final String CTRLMODE_MANUAL = "MANUAL";
+        public static final String CTRLMODE_STATES = "STATES";
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3); 

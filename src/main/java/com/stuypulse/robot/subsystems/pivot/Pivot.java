@@ -20,9 +20,11 @@ public abstract class Pivot extends SubsystemBase {
     }
 
     protected PivotState pivotState;
+    protected PivotControlMode pivotControlMode;
     
     protected Pivot() {
         this.pivotState = PivotState.STOW_CORAL;
+        this.pivotControlMode = PivotControlMode.MANUAL;
     }
     
     public enum PivotState {
@@ -46,6 +48,21 @@ public abstract class Pivot extends SubsystemBase {
         }
     }
 
+    public enum PivotControlMode {
+        MANUAL(Settings.Pivot.CTRLMODE_MANUAL),
+        USING_STATES(Settings.Pivot.CTRLMODE_STATES);
+
+        String controlMode;
+
+        private PivotControlMode(String controlMode) {
+            this.controlMode = controlMode;
+        }
+
+        public String getPivotControlMode() {
+            return this.controlMode;
+        }
+    }
+
     public abstract void setPivotState(PivotState pivotState);
 
     public abstract PivotState getPivotState();
@@ -56,7 +73,7 @@ public abstract class Pivot extends SubsystemBase {
     
     public abstract void ResetPivotEncoder();
 
-    public abstract void SetPivotStateMode(boolean SetPivotStateMode);
+    public abstract void SetPivotControlMode(PivotControlMode SetPivotStateMode);
 
 
     @Override

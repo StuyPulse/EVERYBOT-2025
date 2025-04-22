@@ -18,7 +18,7 @@ import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
-import com.stuypulse.robot.commands.pivot.SetPivotStateMode;
+import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
@@ -28,6 +28,7 @@ import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
+import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
 import com.stuypulse.robot.constants.Ports;
 
 import com.stuypulse.stuylib.input.Gamepad;
@@ -104,13 +105,13 @@ public class RobotContainer {
 
         //DPAD
         driver.getDPadRight()
-            .onTrue(new SetPivotStateMode(true))
+            .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
             .onTrue(new PivotToAlgaeStow())
-            .whileFalse(new SetPivotStateMode(false));
+            .whileFalse(new SetPivotControlMode(PivotControlMode.MANUAL));
         driver.getDPadDown()
-            .onTrue(new SetPivotStateMode(true))
+            .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
             .onTrue(new PivotToAlgaeIntake())
-            .whileFalse(new SetPivotStateMode(false));
+            .whileFalse(new SetPivotControlMode(PivotControlMode.MANUAL));
     }
 
     /**************/

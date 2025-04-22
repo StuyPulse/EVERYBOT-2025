@@ -30,14 +30,9 @@ public class PivotImpl extends Pivot {
     private SparkMax rollerMotor;
     
     private BStream stallDetector;
-
-    public boolean PivotStateModeEnabled;
-
-    // double CurrentRollerSetSpeed;
-    // double CurrentPivotSetSpeed;
     
-    SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
-    SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
+    private SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
+    private SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 
     public PivotImpl() {
         super();
@@ -105,8 +100,8 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
-    public void SetPivotStateMode(boolean SetPivotStateMode) {
-        PivotStateModeEnabled = SetPivotStateMode;
+    public void SetPivotControlMode(PivotControlMode pivotControlMode) {
+        this.pivotControlMode = pivotControlMode;
     }
 
     @Override
@@ -117,13 +112,14 @@ public class PivotImpl extends Pivot {
             // Maybe make this a state? Pivot stalled?
             setPivotMotor(0);
         }
-        if (PivotStateModeEnabled) {
-         pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+
+        if (pivotControlMode == PivotControlMode.MANUAL) {
+            pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       
         SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
         SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
-        SmartDashboard.putBoolean("pivot state mode", PivotStateModeEnabled);
+        SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
     }       
 }
