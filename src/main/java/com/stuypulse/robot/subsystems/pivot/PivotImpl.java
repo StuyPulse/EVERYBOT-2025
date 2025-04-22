@@ -113,7 +113,7 @@ public class PivotImpl extends Pivot {
             setPivotMotor(0);
         }
 
-        if (pivotControlMode == PivotControlMode.MANUAL) {
+        if (pivotControlMode == PivotControlMode.USING_STATES) {
             pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       

@@ -18,6 +18,7 @@ import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
+import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
@@ -89,14 +90,17 @@ public class RobotContainer {
 
         //TRIGGERS
         driver.getRightTriggerButton()
-            .whileTrue(new PivotRaise())
-            .onFalse(new PivotRollerStop());
+        .whileTrue(new PivotRaise())
+        .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+            .onFalse(new PivotToDirection(0));
         driver.getLeftTriggerButton()
-            .whileTrue(new PivotLower())
-            .onFalse(new PivotRollerStop());
+        .whileTrue(new PivotLower())
+        .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+        .onFalse(new PivotToDirection(0));
+        
 
         //BUMPERS
-        driver.getRightBumper() 
+        driver.getRightBumper()
             .whileTrue(new PivotAlgaeOuttake())
             .onFalse(new PivotHoldCoral());
         driver.getLeftBumper()
@@ -106,12 +110,11 @@ public class RobotContainer {
         //DPAD
         driver.getDPadRight()
             .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-            .onTrue(new PivotToAlgaeStow())
-            .whileFalse(new SetPivotControlMode(PivotControlMode.MANUAL));
+            .onTrue(new PivotToAlgaeStow());
         driver.getDPadDown()
             .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-            .onTrue(new PivotToAlgaeIntake())
-            .whileFalse(new SetPivotControlMode(PivotControlMode.MANUAL));
+            .onTrue(new PivotToAlgaeIntake());
+            
     }
 
     /**************/
