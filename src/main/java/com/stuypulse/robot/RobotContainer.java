@@ -1,10 +1,10 @@
 package com.stuypulse.robot;
 
-import com.stuypulse.robot.commands.auton.Combinations.PushBackwardsCoralAuton;
+import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.DoubleCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.SingleCoralAuton;
-import com.stuypulse.robot.commands.auton.Misc.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.Misc.MobilityAuton;
+import com.stuypulse.robot.commands.auton.misc.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.misc.MobilityAuton;
 import com.stuypulse.robot.commands.auton.push.PushBackwardsAuton;
 import com.stuypulse.robot.commands.auton.push.PushForwardsAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
