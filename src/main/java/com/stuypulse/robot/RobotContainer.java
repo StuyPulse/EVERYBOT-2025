@@ -15,6 +15,7 @@ import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotResetAngle;
+import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
@@ -90,14 +91,13 @@ public class RobotContainer {
 
         //TRIGGERS
         driver.getRightTriggerButton()
-        .whileTrue(new PivotRaise())
-        .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-            .onFalse(new PivotToDirection(0));
+            .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+            .whileTrue(new PivotRaise())
+            .onFalse(new PivotStop());
         driver.getLeftTriggerButton()
-        .whileTrue(new PivotLower())
-        .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-        .onFalse(new PivotToDirection(0));
-        
+            .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+            .whileTrue(new PivotLower())
+            .onFalse(new PivotStop());
 
         //BUMPERS
         driver.getRightBumper()

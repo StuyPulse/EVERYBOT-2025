@@ -3,7 +3,6 @@ package com.stuypulse.robot.commands.pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class SetPivotControlMode extends InstantCommand {
@@ -16,7 +15,6 @@ public class SetPivotControlMode extends InstantCommand {
 
     @Override
     public void initialize() {
-        pivot.SetPivotControlMode(pivotControlMode);
-        SmartDashboard.putBoolean("Pivot/States Changing", true);
+        pivot.setPivotControlMode(pivotControlMode);
     }
 }
