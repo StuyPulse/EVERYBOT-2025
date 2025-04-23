@@ -71,10 +71,11 @@ public abstract class Pivot extends SubsystemBase {
 
     public abstract void setPivotMotor(double speed);
     
-    public abstract void ResetPivotEncoder();
+    public abstract void resetPivotEncoder(double newEncoderPosition);
 
-    public abstract void SetPivotControlMode(PivotControlMode SetPivotStateMode);
+    public abstract void setPivotControlMode(PivotControlMode SetPivotStateMode);
 
+    public abstract Rotation2d getPivotRotation();
 
     @Override
     public void periodic() {

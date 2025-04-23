@@ -1,5 +1,6 @@
 package com.stuypulse.robot.commands.pivot;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -14,7 +15,7 @@ public class PivotResetAngle extends InstantCommand {
 
     @Override
     public void initialize() {
-        pivot.ResetPivotEncoder();
+        pivot.resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
         addRequirements(pivot);
     }
 }

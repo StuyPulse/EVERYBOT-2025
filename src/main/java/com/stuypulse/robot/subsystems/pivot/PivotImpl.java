@@ -24,10 +24,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class PivotImpl extends Pivot {
     private SparkMax pivotMotor;
+    private SparkMax rollerMotor;
     private RelativeEncoder pivotEncoder;
 
     private Controller controller;
-    private SparkMax rollerMotor;
     
     private BStream stallDetector;
     
@@ -79,14 +79,14 @@ public class PivotImpl extends Pivot {
         pivotMotor.set(speed);
     }
 
+    @Override
     public Rotation2d getPivotRotation() {
         return Rotation2d.fromRotations(pivotEncoder.getPosition());
     }
 
     @Override
-    public void ResetPivotEncoder() {
-        pivotMotor.getEncoder().setPosition(0);
-        pivotEncoder.setPosition(0); //SmartDashboard.putString("Pivot/Successful reset", );
+    public void resetPivotEncoder(double newEncoderPosition) {
+        pivotEncoder.setPosition(newEncoderPosition);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
-    public void SetPivotControlMode(PivotControlMode pivotControlMode) {
+    public void setPivotControlMode(PivotControlMode pivotControlMode) {
         this.pivotControlMode = pivotControlMode;
     }
 
@@ -109,11 +109,14 @@ public class PivotImpl extends Pivot {
         super.periodic();
       
         if (stallDetector.getAsBoolean()){
-            // Maybe make this a state? Pivot stalled?
-            setPivotMotor(0);
+            if(rollerMotor.get() > 0) { //Check Stalling Direction: Check if hitting top hard stop
+                resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
+            } else if(rollerMotor.get() < 0) { //Check Stalling Direction: Check if hitting bottom hard stop
+                resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
+            }
         }
 
-        if (pivotControlMode == PivotControlMode.MANUAL) {
+        if (pivotControlMode == PivotControlMode.USING_STATES) {
             pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       

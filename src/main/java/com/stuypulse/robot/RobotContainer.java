@@ -15,9 +15,11 @@ import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotResetAngle;
+import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
+import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
@@ -84,19 +86,26 @@ public class RobotContainer {
             .whileTrue(new ClimbToClimb());
         driver.getRightButton()
             .whileTrue(new ClimbToStow());
+        driver.getBottomButton()
+            .whileTrue(new PivotAlgaeOuttake())
+            .onFalse(new PivotRollerStop());
+        driver.getRightMenuButton()
+            .onTrue(new PivotResetAngle());
         // driver.getBottomButton()
         //     .whileTrue(new VisionAlignToReef())
 
         //TRIGGERS
         driver.getRightTriggerButton()
+            .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
             .whileTrue(new PivotRaise())
-            .onFalse(new PivotRollerStop());
+            .onFalse(new PivotStop());
         driver.getLeftTriggerButton()
+            .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
             .whileTrue(new PivotLower())
-            .onFalse(new PivotRollerStop());
+            .onFalse(new PivotStop());
 
         //BUMPERS
-        driver.getRightBumper() 
+        driver.getRightBumper()
             .whileTrue(new PivotAlgaeOuttake())
             .onFalse(new PivotHoldCoral());
         driver.getLeftBumper()
@@ -106,12 +115,11 @@ public class RobotContainer {
         //DPAD
         driver.getDPadRight()
             .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-            .onTrue(new PivotToAlgaeStow())
-            .whileFalse(new SetPivotControlMode(PivotControlMode.MANUAL));
+            .onTrue(new PivotToAlgaeStow());
         driver.getDPadDown()
             .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-            .onTrue(new PivotToAlgaeIntake())
-            .whileFalse(new SetPivotControlMode(PivotControlMode.MANUAL));
+            .onTrue(new PivotToAlgaeIntake());
+            
     }
 
     /**************/
