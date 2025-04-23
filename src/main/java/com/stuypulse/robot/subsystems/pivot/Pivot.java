@@ -75,6 +75,7 @@ public abstract class Pivot extends SubsystemBase {
 
     public abstract void setPivotControlMode(PivotControlMode SetPivotStateMode);
 
+    public abstract Rotation2d getPivotRotation();
 
     @Override
     public void periodic() {
