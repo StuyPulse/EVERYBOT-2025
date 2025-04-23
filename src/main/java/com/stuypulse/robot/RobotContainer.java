@@ -86,6 +86,11 @@ public class RobotContainer {
             .whileTrue(new ClimbToClimb());
         driver.getRightButton()
             .whileTrue(new ClimbToStow());
+        driver.getBottomButton()
+            .whileTrue(new PivotAlgaeOuttake())
+            .onFalse(new PivotRollerStop());
+        driver.getRightMenuButton()
+            .onTrue(new PivotResetAngle());
         // driver.getBottomButton()
         //     .whileTrue(new VisionAlignToReef())
 
