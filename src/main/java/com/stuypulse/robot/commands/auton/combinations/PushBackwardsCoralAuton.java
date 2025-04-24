@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton.Combinations;
+package com.stuypulse.robot.commands.auton.combinations;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;

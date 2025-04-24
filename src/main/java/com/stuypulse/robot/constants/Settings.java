@@ -91,8 +91,8 @@ public interface Settings {
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3); 
-        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-15);
-        Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-55);
+        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-25);
+        Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
     }
 
