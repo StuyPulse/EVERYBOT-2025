@@ -50,11 +50,12 @@ public abstract class Climb extends SubsystemBase{
     }
 
     public abstract Rotation2d getCurrentAngle();
+
     public abstract boolean atTargetAngle();
 
     @Override
     public void periodic() {
         SmartDashboard.putString("Climb/State", state.toString());
-        SmartDashboard.putNumber("Climb Angle", Climb.getInstance().getCurrentAngle().getDegrees());
+        SmartDashboard.putNumber("Climb/Angle", Climb.getInstance().getCurrentAngle().getDegrees());
     }
 }

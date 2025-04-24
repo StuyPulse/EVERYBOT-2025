@@ -59,9 +59,9 @@ public interface Settings {
 
         int CLIMB_CURRENT = 0;
 
-        double STOW_VOLTAGE = 0.0;
+        double STOW_VOLTAGE = -1.0;
         double EXTEND_VOLTAGE = 0.0;
-        double CLIMBING_VOLTAGE = 0.0;
+        double CLIMBING_VOLTAGE = 1.0;
         double DEFAULT_VOLTAGE = 0.0;
     }
     

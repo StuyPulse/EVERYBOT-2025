@@ -1,8 +1,7 @@
 package com.stuypulse.robot.commands.climb;
 
+import com.stuypulse.robot.subsystems.climber.Climb;
 import com.stuypulse.robot.subsystems.climber.Climb.ClimbState;
-
-import com.stuypulse.robot.subsystems.climber.*;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 

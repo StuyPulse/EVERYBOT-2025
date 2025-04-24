@@ -30,10 +30,10 @@ public class ClimbImpl extends Climb {
         climbEncoder = climbMotor.getEncoder();
         climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        controller = new MotorFeedforward(Gains.Climb.FF.kS, Gains.Climb.FF.kV, Gains.Climb.FF.kA).position()
-            .add(new ArmFeedforward(Gains.Climb.FF.kG))
-            .add(new PIDController(Gains.Climb.PID.kP, Gains.Climb.PID.kI, Gains.Climb.PID.kD));
-    }
+    //     controller = new MotorFeedforward(Gains.Climb.FF.kS, Gains.Climb.FF.kV, Gains.Climb.FF.kA).position()
+    //         .add(new ArmFeedforward(Gains.Climb.FF.kG))
+    //         .add(new PIDController(Gains.Climb.PID.kP, Gains.Climb.PID.kI, Gains.Climb.PID.kD));
+     }
 
     @Override
     public Rotation2d getCurrentAngle(){
@@ -42,12 +42,17 @@ public class ClimbImpl extends Climb {
 
     @Override
     public boolean atTargetAngle() {
-        return (getState().getTargetAngle().getDegrees() - getCurrentAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
+        return (getCurrentAngle().getDegrees() - getState().getTargetAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
     }
 
     @Override
     public void periodic(){
         super.periodic();
-        climbMotor.setVoltage(controller.update(getState().getTargetAngle().getDegrees(), getCurrentAngle().getDegrees()));
+        // climbMotor.setVoltage(controller.update(getState().getTargetAngle().getDegrees(), getCurrentAngle().getDegrees()));
+        if (this.getState()==ClimbState.CLIMBING && atTargetAngle() == false) {
+            climbMotor.setVoltage(Settings.Climb.CLIMBING_VOLTAGE);
+        } else {
+            climbMotor.set(0);
+        }
     }
 }
