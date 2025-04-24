@@ -2,6 +2,11 @@
 
 StuyPulse's code for the Everybot designed by 118.
 
+## Our Changes from the 118 Everybot
+- Replaced Drivetrain and Pivot motors with NEOs so we can have encoders
+- Add LEDS
+- Add LimeLight 2 for alignment to HP station/reef
+
 ## Mechanisms
 - ALGAE from Ground to PROCESSOR
 - LEDs to make driving more user-friendly
