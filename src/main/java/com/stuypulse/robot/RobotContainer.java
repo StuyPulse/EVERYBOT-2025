@@ -45,7 +45,7 @@ public class RobotContainer {
     // Gamepads
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     public final Gamepad operator = new AutoGamepad(Ports.Gamepad.OPERATOR);
-    
+
     // Subsystem
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
@@ -67,7 +67,7 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        //ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
+        // ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
         pivot.setDefaultCommand(new PivotHoldCoral());
         driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
@@ -77,49 +77,50 @@ public class RobotContainer {
     /***********************/
 
     private void configureButtonBindings() {
-        //BUTTONS
+        // BUTTONS
         driver.getTopButton()
-            .whileTrue(new PivotRollerStop())
-            .whileTrue(new PivotCoralOuttake())
-            .onFalse(new PivotHoldCoral());
+                .whileTrue(new PivotRollerStop())
+                .whileTrue(new PivotCoralOuttake())
+                .onFalse(new PivotHoldCoral());
         driver.getLeftButton()
-            .whileTrue(new ClimbToClimb());
+                .whileTrue(new ClimbToClimb());
         driver.getRightButton()
-            .whileTrue(new ClimbToStow());
+                .whileTrue(new ClimbToStow());
         driver.getBottomButton()
-            .whileTrue(new PivotAlgaeOuttake())
-            .onFalse(new PivotRollerStop());
-        driver.getRightMenuButton()
-            .onTrue(new PivotResetAngle());
+                .whileTrue(new PivotAlgaeOuttake())
+                .onFalse(new PivotRollerStop());
         // driver.getBottomButton()
-        //     .whileTrue(new VisionAlignToReef())
+        // .whileTrue(new VisionAlignToReef())
 
-        //TRIGGERS
+        // TRIGGERS
         driver.getRightTriggerButton()
-            .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-            .whileTrue(new PivotRaise())
-            .onFalse(new PivotStop());
+                .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+                .whileTrue(new PivotRaise())
+                .onFalse(new PivotStop());
         driver.getLeftTriggerButton()
-            .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-            .whileTrue(new PivotLower())
-            .onFalse(new PivotStop());
+                .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+                .whileTrue(new PivotLower())
+                .onFalse(new PivotStop());
 
-        //BUMPERS
+        // BUMPERS
         driver.getRightBumper()
-            .whileTrue(new PivotAlgaeOuttake())
-            .onFalse(new PivotHoldCoral());
+                .whileTrue(new PivotAlgaeOuttake())
+                .onFalse(new PivotHoldCoral());
         driver.getLeftBumper()
-            .whileTrue(new PivotAlgaeIntake())
-            .onFalse(new PivotRollerStop());
+                .whileTrue(new PivotAlgaeIntake())
+                .onFalse(new PivotRollerStop());
 
-        //DPAD
+        // DPAD
         driver.getDPadRight()
-            .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-            .onTrue(new PivotToAlgaeStow());
+                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+                .onTrue(new PivotToAlgaeStow());
         driver.getDPadDown()
-            .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-            .onTrue(new PivotToAlgaeIntake());
-            
+                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+                .onTrue(new PivotToAlgaeIntake());
+
+        // MENU BUTTONS
+        driver.getRightMenuButton()
+                .onTrue(new PivotResetAngle());
     }
 
     /**************/
@@ -129,13 +130,13 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.setDefaultOption("Misc - Mobility", new MobilityAuton());
         autonChooser.addOption("Misc - Do Nothing", new DoNothingAuton());
- 
+
         autonChooser.addOption("Coral Only - Single", new SingleCoralAuton());
         autonChooser.addOption("Coral Only - Double", new DoubleCoralAuton());
- 
+
         autonChooser.addOption("Push Only - Forwards", new PushForwardsAuton());
         autonChooser.addOption("Push Only - Backwards", new PushBackwardsAuton());
- 
+
         autonChooser.addOption("Combination - Coral w/ Push", new PushBackwardsCoralAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
@@ -144,16 +145,24 @@ public class RobotContainer {
     public void configureSysId() {
         SysIdRoutine pivotSysIdRoutine = pivot.getSysIdRoutine();
         SysIdRoutine driveSysIdRoutine = driveSubsystem.getSysIdRoutine();
-        
-        autonChooser.addOption("z-SysID - Pivot - Dynamic Forwards (Up)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("z-SysID - Pivot - Dynamic Backwards (Down)", pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
-        autonChooser.addOption("z-SysID - Pivot - Quasistatic Forwards (Up)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("z-SysID - Pivot - Quasistatic Backwards (Down)", pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
 
-        autonChooser.addOption("z-SysID - Drive - Dynamic Forward", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("z-SysID - Drive - Dynamic Backwards", driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
-        autonChooser.addOption("z-SysID - Drive - Quasistatic Forward", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
-        autonChooser.addOption("z-SysID - Drive - Quasistatic Backwards", driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("z-SysID - Pivot - Dynamic Forwards (Up)",
+                pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("z-SysID - Pivot - Dynamic Backwards (Down)",
+                pivotSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("z-SysID - Pivot - Quasistatic Forwards (Up)",
+                pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("z-SysID - Pivot - Quasistatic Backwards (Down)",
+                pivotSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
+
+        autonChooser.addOption("z-SysID - Drive - Dynamic Forward",
+                driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("z-SysID - Drive - Dynamic Backwards",
+                driveSysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse));
+        autonChooser.addOption("z-SysID - Drive - Quasistatic Forward",
+                driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward));
+        autonChooser.addOption("z-SysID - Drive - Quasistatic Backwards",
+                driveSysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse));
     }
 
     public Command getAutonomousCommand() {
