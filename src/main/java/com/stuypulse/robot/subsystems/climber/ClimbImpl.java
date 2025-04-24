@@ -47,6 +47,6 @@ public class ClimbImpl extends Climb {
     @Override
     public void periodic(){
         super.periodic();
-        climbMotor.setVoltage(climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
+        climbMotor.setVoltage(climbController.calculate(climbEncoder.getPosition(), getState().getTargetAngle().getDegrees()));
     }
 }
