@@ -1,39 +1,38 @@
 package com.stuypulse.robot.subsystems.climber;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Motors.ClimbConfig;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.feedback.PIDController;
-import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
-import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
-import com.stuypulse.robot.constants.Motors.ClimbConfig;
 
+import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class ClimbImpl extends Climb {
     private SparkMax climbMotor;
     private RelativeEncoder climbEncoder;
 
-    private Controller controller;
+    private BangBangController climbController;
 
     public ClimbImpl() {
         super();
         climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
         climbEncoder = climbMotor.getEncoder();
         climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        Motors.ClimbConfig.CLIMB_MOTOR_CONFIG.encoder
+            .positionConversionFactor(Settings.Climb.CLIMB_MOTOR_GEAR_RATIO * Settings.Climb.CLIMB_MOTOR_REDUCTION_FACTOR);
 
-    //     controller = new MotorFeedforward(Gains.Climb.FF.kS, Gains.Climb.FF.kV, Gains.Climb.FF.kA).position()
-    //         .add(new ArmFeedforward(Gains.Climb.FF.kG))
-    //         .add(new PIDController(Gains.Climb.PID.kP, Gains.Climb.PID.kI, Gains.Climb.PID.kD));
-     }
+        climbController = new BangBangController();
+    }
 
     @Override
     public Rotation2d getCurrentAngle(){
@@ -48,11 +47,6 @@ public class ClimbImpl extends Climb {
     @Override
     public void periodic(){
         super.periodic();
-        // climbMotor.setVoltage(controller.update(getState().getTargetAngle().getDegrees(), getCurrentAngle().getDegrees()));
-        if (this.getState()==ClimbState.CLIMBING && atTargetAngle() == false) {
-            climbMotor.setVoltage(Settings.Climb.CLIMBING_VOLTAGE);
-        } else {
-            climbMotor.set(0);
-        }
+        climbMotor.setVoltage(climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
     }
 }
