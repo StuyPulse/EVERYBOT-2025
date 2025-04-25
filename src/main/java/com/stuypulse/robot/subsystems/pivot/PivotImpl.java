@@ -109,9 +109,9 @@ public class PivotImpl extends Pivot {
         super.periodic();
       
         if (stallDetector.getAsBoolean()){
-            if(rollerMotor.get() > 0) { //Check Stalling Direction: Check if hitting top hard stop
+            if(getPivotRotation().getDegrees()>-15) { //Check Stalling Direction: Check if hitting top hard stop
                 resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
-            } else if(rollerMotor.get() < 0) { //Check Stalling Direction: Check if hitting bottom hard stop
+            } else if(getPivotRotation().getDegrees()<-60) { //Check Stalling Direction: Check if hitting bottom hard stop
                 resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
             }
         }
