@@ -64,7 +64,7 @@ public interface Settings {
         double DEFAULT_VOLTAGE = 0.0;
 
         double CLIMB_MOTOR_GEAR_RATIO = 1/100;
-        double CLIMB_MOTOR_REDUCTION_FACTOR = 0;
+        double CLIMB_MOTOR_REDUCTION_FACTOR = 1/1;
     }
     
     public interface Pivot {
