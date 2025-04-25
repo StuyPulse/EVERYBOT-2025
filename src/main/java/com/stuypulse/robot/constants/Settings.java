@@ -5,7 +5,6 @@
 package com.stuypulse.robot.constants;
 
 import com.stuypulse.stuylib.network.SmartNumber;
-import com.stuypulse.stuylib.network.SmartString;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
@@ -87,17 +86,16 @@ public interface Settings {
         public static final double PIVOT_STALL_DEBOUNCE = .25; // Placeholder
         
         public static final String CTRLMODE_MANUAL = "MANUAL";
-        public static final String CTRLMODE_STATES = "STATES";
+        public static final String CTRLMODE_STATES = "USING_STATES";
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3); 
-        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-25);
+        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-45);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
     }
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
-        public static final double TRACK_WIDTH = 0.0;
     }
 }
