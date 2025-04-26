@@ -26,27 +26,31 @@ public class ClimbImpl extends Climb {
         climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
 
         Motors.ClimbConfig.CLIMB_MOTOR_CONFIG.encoder
-            .positionConversionFactor(Settings.Climb.CLIMB_MOTOR_GEAR_RATIO * Settings.Climb.CLIMB_MOTOR_REDUCTION_FACTOR);
+                .positionConversionFactor(
+                        Settings.Climb.CLIMB_MOTOR_GEAR_RATIO * Settings.Climb.CLIMB_MOTOR_REDUCTION_FACTOR);
 
-        climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
         climbEncoder = climbMotor.getEncoder();
 
         climbController = new BangBangController();
     }
 
     @Override
-    public Rotation2d getCurrentAngle(){
+    public Rotation2d getCurrentAngle() {
         return Rotation2d.fromRotations(climbEncoder.getPosition() - Constants.Climb.CLIMBER_OFFSET.getRotations());
     }
 
     @Override
     public boolean atTargetAngle() {
-        return (getCurrentAngle().getDegrees() - getState().getTargetAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
+        return (getCurrentAngle().getDegrees()
+                - getState().getTargetAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         super.periodic();
-        climbMotor.setVoltage(climbController.calculate(climbEncoder.getPosition(), getState().getTargetAngle().getDegrees()));
+        climbMotor.setVoltage(
+                climbController.calculate(getCurrentAngle().getDegrees(), getState().getTargetAngle().getDegrees()));
     }
 }

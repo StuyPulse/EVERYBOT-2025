@@ -19,8 +19,7 @@ import edu.wpi.first.wpilibj.util.Color;
  */
 public interface Settings {
     public interface LEDPatterns {
-        // Auton Colors
-    
+        // AUTON COLORS    
         // MISC
         LEDPattern DO_NOTHING_AUTON = LEDPattern.solid(Color.kWheat).blink(Units.Seconds.of(1.5));
         LEDPattern MOBILITY_AUTON = LEDPattern.solid(Color.kHoneydew).blink(Units.Seconds.of(1.5));
