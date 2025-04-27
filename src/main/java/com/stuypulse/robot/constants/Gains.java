@@ -38,9 +38,16 @@ public class Gains {
             double kG = 0.0;
         }
         public interface PID {
-            double kP = 0.0;
-            double kI = 0.0;
-            double kD = 0.0;
+            public interface left {
+                double kP = 0.0;
+                double kI = 0.0;
+                double kD = 0.0;
+            }
+            public interface right {
+                double kP = 0.0;
+                double kI = 0.0;
+                double kD = 0.0;
+            }
         }
     }
 }

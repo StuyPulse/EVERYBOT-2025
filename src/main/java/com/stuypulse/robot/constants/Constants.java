@@ -11,7 +11,24 @@ public interface Constants {
         Rotation2d CLIMBER_OFFSET = Rotation2d.fromDegrees(0.0 - 0.0);
     }
 
+    public interface Pivot {
+        public static final double PIVOT_MOTOR_GEAR_RATIO = 1.0/27.0;
+        public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
+    }
+
     public interface Drivetrain {
         public static final double WHEEL_CIRCUMFERENCE = 0.479; //TODO: RECHECK WHEEL CIRCUMFERENCE, SHOULD BE IN INCHES
+        public static final double TRACK_WIDTH = 0.0; //TODO: GET TRACK WIDTH (DISTANCE B/W CENTER OF 2 WHEELS)
+
+        //TODO: GET DRIVETRAIN GEAR RATIOS
+        public static final double DRIVETRAIN_GEAR_RATIO = 1.0/1.0;
+
+        public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE / (42.0 * DRIVETRAIN_GEAR_RATIO); //42.0 represents the pulse per motor shaft reduction (42 for NEO)
+    }
+
+    public interface Autonomous {
+        //TODO: FIND AUTONOMOUS SPEED CONSTRAINTS
+        public static final double MAX_SPEED_METERS_PER_SECOND = 0.0; 
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 0.0;
     }
 }

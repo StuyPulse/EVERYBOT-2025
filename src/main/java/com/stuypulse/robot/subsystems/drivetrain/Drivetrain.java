@@ -3,7 +3,9 @@ package com.stuypulse.robot.subsystems.drivetrain;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.angle.AngleController;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -22,7 +24,7 @@ public abstract class Drivetrain extends SubsystemBase {
     }
 
     public abstract void driveArcade(double xSpeed, double zRotation, boolean squared);
-    
+
     public abstract void driveTank(double leftSpeed, double rightSpeed, boolean squared);
     
     public abstract double getLeftVelocity();
@@ -34,11 +36,6 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract void resetPose();
 
     public abstract Pose2d getPose();
-
-
-
-    
-
 
     @Override
     public void periodic() {}

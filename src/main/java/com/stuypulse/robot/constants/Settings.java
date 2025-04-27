@@ -79,9 +79,6 @@ public interface Settings {
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
 
-        public static final double PIVOT_MOTOR_GEAR_RATIO = 1.0/27.0;
-        public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
-
         public static final double PIVOT_STALL_CURRENT = 1; // Replace with actual voltage spike when stalled.
         public static final double PIVOT_STALL_DEBOUNCE = .25; // Placeholder
         

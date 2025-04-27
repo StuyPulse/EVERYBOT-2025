@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -40,7 +41,7 @@ public class PivotImpl extends Pivot {
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
 
         Motors.PivotConfig.PIVOT_MOTOR_CONFIG.encoder
-            .positionConversionFactor(Settings.Pivot.PIVOT_MOTOR_GEAR_RATIO * Settings.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);  
+            .positionConversionFactor(Constants.Pivot.PIVOT_MOTOR_GEAR_RATIO * Constants.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);  
         
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
