@@ -27,7 +27,7 @@ public interface Motors {
     }
 
     public interface ClimbConfig {
-        SparkBaseConfig CLIMB_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Climb.CLIMB_CURRENT).idleMode(IdleMode.kBrake);
+        SparkBaseConfig CLIMB_MOTOR_CONFIG = new SparkMaxConfig().smartCurrentLimit(Settings.Climb.CLIMB_CURRENT_LIMIT).idleMode(IdleMode.kBrake);
     }
 
     public interface DrivetrainConfig {
