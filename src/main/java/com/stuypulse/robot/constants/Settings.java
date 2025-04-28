@@ -55,7 +55,7 @@ public interface Settings {
 
         public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
 
-        int CLIMB_CURRENT = 60;
+        int CLIMB_CURRENT_LIMIT = 60;
 
         public static final double STOW_VOLTAGE = -2.0;
         public static final double EXTEND_VOLTAGE = 0.0;

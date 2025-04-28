@@ -14,6 +14,7 @@ import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbImpl extends Climb {
     private SparkMax climbMotor;
@@ -51,6 +52,10 @@ public class ClimbImpl extends Climb {
     public void periodic() {
         super.periodic();
         climbMotor.setVoltage(
-                climbController.calculate(getCurrentAngle().getDegrees(), getState().getTargetAngle().getDegrees()));
+                climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees())
+        );
+        SmartDashboard.putNumber("climber output", climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
+        SmartDashboard.putNumber("Climb target angle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("climb encoder rate", climbEncoder.getVelocity());
     }
 }
