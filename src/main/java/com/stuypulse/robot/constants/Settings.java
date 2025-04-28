@@ -51,20 +51,20 @@ public interface Settings {
     }
 
     public interface Climb {
-        Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(482);
-        Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(180);
+        public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
+        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(180);
 
-        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
+        public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
 
-        int CLIMB_CURRENT = 0;
+        public static final int CLIMB_CURRENT = 0;
 
-        double STOW_VOLTAGE = -2.0;
-        double EXTEND_VOLTAGE = 0.0;
-        double CLIMBING_VOLTAGE = 2.0;
-        double DEFAULT_VOLTAGE = 0.0;
+        public static final double STOW_VOLTAGE = -2.0;
+        public static final double EXTEND_VOLTAGE = 0.0;
+        public static final double CLIMBING_VOLTAGE = 2.0;
+        public static final double DEFAULT_VOLTAGE = 0.0;
 
-        double CLIMB_MOTOR_GEAR_RATIO = 1/100;
-        double CLIMB_MOTOR_REDUCTION_FACTOR = 1/1;
+        public static final double CLIMB_MOTOR_GEAR_RATIO = 1.0/100.0;
+        public static final double CLIMB_MOTOR_REDUCTION_FACTOR = 1.0/1.0;
     }
     
     public interface Pivot {
