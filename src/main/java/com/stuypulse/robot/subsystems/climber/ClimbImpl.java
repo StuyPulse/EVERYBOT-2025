@@ -44,19 +44,28 @@ public class ClimbImpl extends Climb {
 
     @Override
     public boolean atTargetAngle() {
-        return (getCurrentAngle().getDegrees()
-                - getState().getTargetAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
+        return Math.abs(getCurrentAngle().getDegrees()
+                - getState().getTargetAngle().getDegrees()) < Settings.Climb.ANGLE_TOLERANCE.getDegrees();
     }
 
     @Override
     public void periodic() {
         super.periodic();
-        climbMotor.setVoltage(
-                climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees())
-                * Settings.Climb.CLIMB_SPEED_MODIFIER
-        );
-        SmartDashboard.putNumber("climber output", climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
-        SmartDashboard.putNumber("Climb target angle", getState().getTargetAngle().getDegrees());
-        SmartDashboard.putNumber("climb encoder rate", climbEncoder.getVelocity());
+            if (getState()==ClimbState.CLIMBING && !atTargetAngle()) {
+                climbMotor.set(Settings.Climb.CLIMBING_VOLTAGE);
+            } else if(getState() == ClimbState.STOW && !atTargetAngle()) {
+                climbMotor.set(Settings.Climb.STOW_VOLTAGE);
+            }
+            else {
+            climbMotor.set(0.0);
+            }
+        // climbMotor.setVoltage(
+        //         climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees())
+        //         * Settings.Climb.CLIMB_SPEED_MODIFIER
+        // );
+        // SmartDashboard.putNumber("climber output", climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
+        SmartDashboard.putNumber("Climb/target angle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("climb/encoder rate", climbEncoder.getVelocity());
+        SmartDashboard.putBoolean("Climb/at target angle", atTargetAngle());
     }
 }
