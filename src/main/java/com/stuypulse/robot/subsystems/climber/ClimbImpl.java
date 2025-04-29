@@ -12,15 +12,12 @@ import com.stuypulse.robot.constants.Motors.ClimbConfig;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
-import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbImpl extends Climb {
     private SparkMax climbMotor;
     private RelativeEncoder climbEncoder;
-
-    private BangBangController climbController;
 
     public ClimbImpl() {
         super();
@@ -33,13 +30,11 @@ public class ClimbImpl extends Climb {
         climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters,
                 PersistMode.kNoPersistParameters);
         climbEncoder = climbMotor.getEncoder();
-
-        climbController = new BangBangController();
     }
 
     @Override
     public Rotation2d getCurrentAngle() {
-        return Rotation2d.fromRotations(climbEncoder.getPosition() - Constants.Climb.CLIMBER_OFFSET.getRotations());
+        return Rotation2d.fromRotations(climbEncoder.getPosition());
     }
 
     @Override
@@ -51,21 +46,16 @@ public class ClimbImpl extends Climb {
     @Override
     public void periodic() {
         super.periodic();
-            if (getState()==ClimbState.CLIMBING && !atTargetAngle()) {
-                climbMotor.set(Settings.Climb.CLIMBING_VOLTAGE);
-            } else if(getState() == ClimbState.STOW && !atTargetAngle()) {
-                climbMotor.set(Settings.Climb.STOW_VOLTAGE);
-            }
-            else {
+
+        if (!atTargetAngle()) {
+            climbMotor.set(getState().getTargetMotorSpeed());
+        } else {
             climbMotor.set(0.0);
-            }
-        // climbMotor.setVoltage(
-        //         climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees())
-        //         * Settings.Climb.CLIMB_SPEED_MODIFIER
-        // );
-        // SmartDashboard.putNumber("climber output", climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
-        SmartDashboard.putNumber("Climb/target angle", getState().getTargetAngle().getDegrees());
-        SmartDashboard.putNumber("climb/encoder rate", climbEncoder.getVelocity());
-        SmartDashboard.putBoolean("Climb/at target angle", atTargetAngle());
+        }
+
+        SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
+        SmartDashboard.putNumber("Climb/Current Angle", getCurrentAngle().getDegrees());
+        SmartDashboard.putNumber("Climb/Target angle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putBoolean("Climb/At target angle", atTargetAngle());
     }
 }
