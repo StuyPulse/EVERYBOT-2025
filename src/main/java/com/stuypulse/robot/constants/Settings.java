@@ -95,6 +95,7 @@ public interface Settings {
         public static final Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-45);
         public static final Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
         public static final Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
+
     }
 
     public interface Drivetrain {

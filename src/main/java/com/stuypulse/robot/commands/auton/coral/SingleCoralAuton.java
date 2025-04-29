@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.pivot.PivotToDirection;
-import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
-import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
 /**
@@ -25,13 +23,9 @@ public class SingleCoralAuton extends SequentialCommandGroup {
         addCommands(
             new LEDApplyPattern(LEDPatterns.SINGLE_L1_AUTON),
             new DriveTank(.25, .25, true),
-            new WaitUntilCommand(5.00),
+            new WaitUntilCommand(7.00),
             new DriveTank(0, 0, true),
-            new PivotRollerToDirection(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble()),
-            new PivotToDirection(Settings.Pivot.PIVOT_LOWER_SPEED.getAsDouble()),
-            new WaitUntilCommand(1),
-            new PivotRollerToDirection(0),
-            new PivotToDirection(Settings.Pivot.PIVOT_RAISE_SPEED.getAsDouble())
+            new PivotCoralOuttake()
         );
     }
 }
