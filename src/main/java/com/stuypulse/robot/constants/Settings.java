@@ -64,6 +64,8 @@ public interface Settings {
 
         double CLIMB_MOTOR_GEAR_RATIO = 1.0/100.0;
         double CLIMB_MOTOR_REDUCTION_FACTOR = 1/1;
+
+        public double CLIMB_SPEED_MODIFIER = 1;
     }
     
     public interface Pivot {

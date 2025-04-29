@@ -53,6 +53,7 @@ public class ClimbImpl extends Climb {
         super.periodic();
         climbMotor.setVoltage(
                 climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees())
+                * Settings.Climb.CLIMB_SPEED_MODIFIER
         );
         SmartDashboard.putNumber("climber output", climbController.calculate(climbEncoder.getVelocity(), getState().getTargetAngle().getDegrees()));
         SmartDashboard.putNumber("Climb target angle", getState().getTargetAngle().getDegrees());
