@@ -19,10 +19,7 @@ import com.stuypulse.robot.constants.Settings.LEDPatterns;
 public class MobilityAuton extends SequentialCommandGroup {
     public MobilityAuton() {
         addCommands(
-            new LEDApplyPattern(LEDPatterns.MOBILITY_AUTON),
-            new DriveTank(.25, .25, true),
-            new WaitUntilCommand(1.00),
-            new DriveTank(0, 0, true)
+            new DriveTank(.25, .25, true)
         );
     }
 }

@@ -21,6 +21,7 @@ import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
@@ -79,8 +80,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // BUTTONS
         driver.getTopButton()
-                .whileTrue(new PivotRollerStop())
-                .whileTrue(new PivotCoralOuttake())
+                .onTrue(new PivotCoralScore().withTimeout(3))
                 .onFalse(new PivotHoldCoral());
         driver.getLeftButton()
                 .whileTrue(new ClimbToClimb());
@@ -136,7 +136,6 @@ public class RobotContainer {
 
         autonChooser.addOption("Push Only - Forwards", new PushForwardsAuton());
         autonChooser.addOption("Push Only - Backwards", new PushBackwardsAuton());
-
         autonChooser.addOption("Combination - Coral w/ Push", new PushBackwardsCoralAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
