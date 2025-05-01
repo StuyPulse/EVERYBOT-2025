@@ -6,9 +6,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public interface Constants {
     public interface Climb {
         Rotation2d MIN_ANGLE = Rotation2d.kZero;
-        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(0.0);
-
-        Rotation2d CLIMBER_OFFSET = Rotation2d.fromDegrees(0.0 - 0.0);
+        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(87.5);
     }
 
     public interface Drivetrain {

@@ -35,11 +35,6 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract Pose2d getPose();
 
-
-
-    
-
-
     @Override
     public void periodic() {}
 }
