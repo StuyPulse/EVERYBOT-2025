@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.pivot.PivotToDirection;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.constants.Settings;
@@ -31,7 +31,8 @@ public class SingleCoralAuton extends SequentialCommandGroup {
                 .withTimeout(0.1),
             new PivotCoralOuttake()
                 .withTimeout(3),
-            new PivotRollerToDirection(0)
+            new PivotRollerStop()
+                .withTimeout(0.1)
         );
     }
 }

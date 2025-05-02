@@ -20,6 +20,9 @@ public class MobilityAuton extends SequentialCommandGroup {
     public MobilityAuton() {
         addCommands(
             new DriveTank(.25, .25, true)
+                .withTimeout(5),
+            new DriveTank(0,0,true)
+                .withTimeout(0.1)
         );
     }
 }
