@@ -92,6 +92,7 @@ public interface Settings {
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
         Rotation2d PIVOT_CORAL_OUTAKE_ANGLE = Rotation2d.fromDegrees(-41);
+        Rotation2d INTAKE_ALGAE_FROM_LOLIPOP = Rotation2d.fromDegrees(-25);
     }
 
     public interface Drivetrain {
