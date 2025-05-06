@@ -53,6 +53,9 @@ public class PivotImpl extends Pivot {
 
         stallDetector = BStream.create(() -> pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT)
             .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
+
+        setPivotState(PivotState.DEFAULT);
+        setPivotControlMode(PivotControlMode.USING_STATES);
     }
     
     @Override

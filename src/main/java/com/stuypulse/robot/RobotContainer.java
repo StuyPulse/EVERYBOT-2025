@@ -51,6 +51,7 @@ public class RobotContainer {
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Pivot pivot = Pivot.getInstance();
+    private final Drivetrain drive = Drivetrain.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -80,7 +81,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // BUTTONS
         driver.getTopButton()
-                .onTrue(new PivotCoralScore().withTimeout(3))
+                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+                .whileTrue(new PivotCoralScore())
+                .onFalse(new PivotToCoralStow())
                 .onFalse(new PivotHoldCoral());
         driver.getLeftButton()
                 .whileTrue(new ClimbToClimb());
@@ -117,6 +120,8 @@ public class RobotContainer {
         driver.getDPadDown()
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .onTrue(new PivotToAlgaeIntake());
+        // driver.getDPadLeft()
+        //         .onTrue(drive.getAutonomousCommand());
 
         // MENU BUTTONS
         driver.getRightMenuButton()

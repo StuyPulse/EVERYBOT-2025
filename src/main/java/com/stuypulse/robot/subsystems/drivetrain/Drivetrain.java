@@ -6,6 +6,7 @@ import com.stuypulse.stuylib.control.angle.AngleController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -36,6 +37,8 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract void resetPose();
 
     public abstract Pose2d getPose();
+
+    public abstract Command getAutonomousCommand();
 
     @Override
     public void periodic() {}

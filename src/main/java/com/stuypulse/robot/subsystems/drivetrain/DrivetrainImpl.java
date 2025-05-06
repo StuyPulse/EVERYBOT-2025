@@ -212,11 +212,11 @@ public class DrivetrainImpl extends Drivetrain {
      */
 
     public double getLeftDistance() {
-        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
+        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     public double getRightDistance() {
-        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
+        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     // Experimental, need confirmation that this is actually what sysId needs
@@ -242,6 +242,7 @@ public class DrivetrainImpl extends Drivetrain {
                         voltage -> {
                             leftMotors[0].setVoltage(voltage);
                             rightMotors[0].setVoltage(voltage);
+                            drive.feed();
                         },
                         log -> {
                             log.motor("drive-left")
