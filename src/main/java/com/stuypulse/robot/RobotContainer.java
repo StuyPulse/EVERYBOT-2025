@@ -81,49 +81,50 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // BUTTONS
-        driver.getTopButton()
-                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-                .whileTrue(new PivotCoralScore())
-                .onFalse(new PivotToCoralStow())
-                .onFalse(new PivotHoldCoral());
-        driver.getLeftButton()
-                .whileTrue(new ClimbToClimb());
-        driver.getRightButton()
-                .whileTrue(new ClimbToStow());
+        
+       // driver.getTopButton()
+               // .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+                //.whileTrue(new PivotCoralScore())
+                // .onFalse(new PivotToCoralStow())
+                // .onFalse(new PivotHoldCoral());
+       // driver.getLeftButton()
+                //.whileTrue(new ClimbToClimb());
+        //driver.getRightButton()
+                //.whileTrue(new ClimbToStow());
         driver.getBottomButton()
-                .whileTrue(new PivotAlgaeOuttake())
+                //.whileTrue(new PivotAlgaeOuttake())
                 .onFalse(new PivotRollerStop());
         // driver.getBottomButton()
         // .whileTrue(new VisionAlignToReef())
 
         // TRIGGERS
         driver.getRightTriggerButton()
-                .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-                .whileTrue(new PivotRaise())
+                //.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+                //.whileTrue(new PivotRaise())
                 .onFalse(new PivotStop());
         driver.getLeftTriggerButton()
-                .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-                .whileTrue(new PivotLower())
+                //.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+                // .whileTrue(new PivotLower())
                 .onFalse(new PivotStop());
 
         // BUMPERS
-        driver.getRightBumper()
-                .whileTrue(new PivotAlgaeOuttake())
-                .onFalse(new PivotHoldCoral());
-        driver.getLeftBumper()
-                .whileTrue(new PivotAlgaeIntake())
-                .onFalse(new PivotRollerStop());
+       // driver.getRightBumper()
+               // .whileTrue(new PivotAlgaeOuttake())
+               // .onFalse(new PivotHoldCoral());
+       // driver.getLeftBumper()
+              //  .whileTrue(new PivotAlgaeIntake())
+              //  .onFalse(new PivotRollerStop());
 
         // DPAD
-        driver.getDPadRight()
-                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-                .onTrue(new PivotToAlgaeStow());
-        driver.getDPadDown()
-                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-                .onTrue(new PivotToAlgaeIntake());
-        driver.getDPadLeft()
-                .whileTrue(new PivotLolipopAlgeaIntake())
-                .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
+        // driver.getDPadRight()
+        //         //.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+        //         .onTrue(new PivotToAlgaeStow());
+        // driver.getDPadDown()
+        //         .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+        //         .onTrue(new PivotToAlgaeIntake());
+           driver.getDPadLeft()
+        //         .whileTrue(new PivotLolipopAlgeaIntake())
+                 .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
         
 
         // MENU BUTTONS

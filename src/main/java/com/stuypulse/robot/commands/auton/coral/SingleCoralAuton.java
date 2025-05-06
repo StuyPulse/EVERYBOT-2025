@@ -23,7 +23,7 @@ public class SingleCoralAuton extends SequentialCommandGroup {
     public SingleCoralAuton() {
         addCommands(
             new DriveTank(-.45, -.45, true)
-                .withTimeout(2.5),
+                .withTimeout(2.2),
             new DriveTank(0, 0, false)
                 .withTimeout(0.1),
             new PivotCoralScore()
