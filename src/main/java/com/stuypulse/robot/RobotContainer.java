@@ -22,6 +22,7 @@ import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotLolipopAlgeaIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
@@ -120,8 +121,10 @@ public class RobotContainer {
         driver.getDPadDown()
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .onTrue(new PivotToAlgaeIntake());
-        // driver.getDPadLeft()
-        //         .onTrue(drive.getAutonomousCommand());
+        driver.getDPadLeft()
+                .whileTrue(new PivotLolipopAlgeaIntake())
+                .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
+        
 
         // MENU BUTTONS
         driver.getRightMenuButton()
