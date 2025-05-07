@@ -20,9 +20,9 @@ public class PushBackwardsCoralAuton extends SequentialCommandGroup {
     public PushBackwardsCoralAuton() {
         addCommands(
             // new LEDApplyPattern(LEDPatterns.PUSH_BACKWARDS_SINGLE_L1_AUTON),
-            new DriveTank(-.75, -.75, true)
+            new DriveTank(.75, .75, true)
                 .withTimeout(2),
-            new DriveTank(.3, .3, true)
+            new DriveTank(-.3, -.3, true)
                 .withTimeout(10),
             new DriveTank(0, 0, true)
                 .withTimeout(0.1),

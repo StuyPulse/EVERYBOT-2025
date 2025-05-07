@@ -1,5 +1,6 @@
 package com.stuypulse.robot;
 
+import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.DoubleCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.SingleCoralAuton;
@@ -137,15 +138,21 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-        autonChooser.setDefaultOption("Misc - Mobility", new MobilityAuton());
-        autonChooser.addOption("Misc - Do Nothing", new DoNothingAuton());
-
-        autonChooser.addOption("Coral Only - Single", new SingleCoralAuton());
+        // Coral
+        autonChooser.setDefaultOption("Coral Only - Single", new SingleCoralAuton());
         autonChooser.addOption("Coral Only - Double", new DoubleCoralAuton());
-
+        
+        // Misc
+        autonChooser.addOption("Misc - Do Nothing", new DoNothingAuton());
+        autonChooser.addOption("Misc - Mobility", new MobilityAuton());
+        
+        // Push
         autonChooser.addOption("Push Only - Forwards", new PushForwardsAuton());
         autonChooser.addOption("Push Only - Backwards", new PushBackwardsAuton());
+
+        
         autonChooser.addOption("Combination - Coral w/ Push", new PushBackwardsCoralAuton());
+        autonChooser.addOption("Combination - Coralgae", new CoralgaeAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

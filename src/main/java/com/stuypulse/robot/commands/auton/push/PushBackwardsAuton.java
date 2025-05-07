@@ -16,11 +16,12 @@ public class PushBackwardsAuton extends SequentialCommandGroup {
     public PushBackwardsAuton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.PUSH_BACKWARDS_AUTON),
-            new DriveTank(-.75, -.75, true),
-            new WaitUntilCommand(2.00),
-            new DriveTank(.3, .3, true),
-            new WaitUntilCommand(10),
+            new DriveTank(.75, .75, true)
+                .withTimeout(1),
+            new DriveTank(-0.3, -0.3, true)
+                .withTimeout(5),
             new DriveTank(0, 0, true)
+                .withTimeout(0.1)
         );
     }
 }

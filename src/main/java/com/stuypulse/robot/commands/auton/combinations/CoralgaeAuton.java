@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton.coral;
+package com.stuypulse.robot.commands.auton.combinations;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
@@ -15,32 +15,23 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  * 
  * @author Sebastian Waldman
  */
-public class DoubleCoralAuton extends SequentialCommandGroup {
-    public DoubleCoralAuton() {
+public class CoralgaeAuton extends SequentialCommandGroup {
+    public CoralgaeAuton() {
         addCommands(
             new DriveTank(-.45, -.45, true)
                 .withTimeout(2.2),
-            new DriveTank(0, 0, false),
-            // new PivotCoralScore()
-                // .withTimeout(2.4),
+            new DriveTank(0, 0, false)
+                .withTimeout(0.1),
+            new PivotCoralScore()
+                .withTimeout(2.0),
             new DriveTank(.5,.5,true)
                 .withTimeout(.5),
             new DriveTank(.7,.3,true)
                 .withTimeout(.45),
             new DriveTank(-.7,-.7,true)
-                .withTimeout(0.95),
+                .withTimeout(1.15),
             new DriveTank(-.7,-.3,true)
-                .withTimeout(.65),
-            new DriveTank(-.7,-.7,true)
-                .withTimeout(1.2),
-            new DriveTank(-.3,-.7,true) 
-                .withTimeout(.53),
-            new DriveTank(-.5,-.5,true)
-                .withTimeout(1.5),
-            new DriveTank(0,0,true)
-                .withTimeout(1.5),
-            new DriveTank(0.6,0.6,true)
-                .withTimeout(0.4)
+                .withTimeout(.5)
             
         );
     }

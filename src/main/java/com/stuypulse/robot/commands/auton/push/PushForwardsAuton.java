@@ -16,9 +16,10 @@ public class PushForwardsAuton extends SequentialCommandGroup {
     public PushForwardsAuton() {
         addCommands(
             new LEDApplyPattern(LEDPatterns.PUSH_FORWARDS_AUTON),
-            new DriveTank(1, 1, true),
-            new WaitUntilCommand(7),
+            new DriveTank(1, 1, true)
+                .withTimeout(7),
             new DriveTank(0,0,true)
+                .withTimeout(0.1)
         );
     }
 }
