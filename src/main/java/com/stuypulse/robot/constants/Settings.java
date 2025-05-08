@@ -64,11 +64,11 @@ public interface Settings {
         double DEFAULT_VOLTAGE = 0.0;
     }
     
-    public interface Pivot { // TODO Change max pivot speed to whatever ryan/bennett tells us because so far belt can only handle 0.75 i think but they will try to make it higher
-        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 0.75);
-        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
+    public interface Pivot { // TODO Change max pivot speed to whatever ryan/bennett tells us because so far belt can only handle 0.75 but they said to start at 1 and test
+        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 1);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -1);
 
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 0.75);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.22);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
