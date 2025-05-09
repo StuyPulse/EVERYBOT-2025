@@ -68,7 +68,7 @@ public interface Settings {
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 0.75);
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
 
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 0.75);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.22);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
