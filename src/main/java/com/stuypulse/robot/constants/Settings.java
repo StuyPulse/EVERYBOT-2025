@@ -64,24 +64,24 @@ public interface Settings {
         double DEFAULT_VOLTAGE = 0.0;
     }
     
-    public interface Pivot { // TODO Change max pivot speed to whatever ryan/bennett tells us because so far belt can only handle 0.75 i think but they will try to make it higher
+    public interface Pivot { // TODO Change max roller speed to whatever ryan/bennett tells us because so far belt can only handle 0.75 i think but they will try to make it higher
         SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 0.75);
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
 
-        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 0.75);
+        SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
         SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.22);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.09);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.09);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.2);
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
 
-        public static final double PIVOT_STALL_CURRENT = 1; // Replace with actual voltage spike when stalled.
-        public static final double PIVOT_STALL_DEBOUNCE = .25; // Placeholder
-        
+        public static final double PIVOT_STALL_CURRENT = 10; 
+        public static final double PIVOT_STALL_DEBOUNCE = .25;
+
         public static final String CTRLMODE_MANUAL = "MANUAL";
         public static final String CTRLMODE_STATES = "USING_STATES";
 

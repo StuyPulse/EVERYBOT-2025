@@ -1,6 +1,7 @@
 package com.stuypulse.robot.constants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 
 /** Miscellaneous constants */
 public interface Constants {
@@ -17,13 +18,12 @@ public interface Constants {
     }
 
     public interface Drivetrain {
-        public static final double WHEEL_CIRCUMFERENCE = 0.479; //TODO: RECHECK WHEEL CIRCUMFERENCE, SHOULD BE IN INCHES
-        public static final double TRACK_WIDTH = 0.0; //TODO: GET TRACK WIDTH (DISTANCE B/W CENTER OF 2 WHEELS)
+        public static final double WHEEL_CIRCUMFERENCE_METERS = 0.479;
+        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(21.75);
 
-        //TODO: GET DRIVETRAIN GEAR RATIOS
         public static final double DRIVETRAIN_GEAR_RATIO = 1.0/8.45;
 
-          public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE * DRIVETRAIN_GEAR_RATIO / 42.0; //42.0 represents the pulse per motor shaft reduction (42 for NEO)
+          public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE_METERS * DRIVETRAIN_GEAR_RATIO / 42.0; //42.0 represents the pulse per motor shaft reduction (42 for NEO)
     }
 
     public interface Autonomous {

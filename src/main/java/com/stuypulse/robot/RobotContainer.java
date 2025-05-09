@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.auton.push.PushBackwardsAuton;
 import com.stuypulse.robot.commands.auton.push.PushForwardsAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
+import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
@@ -29,7 +30,7 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
-
+import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
@@ -82,7 +83,6 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // BUTTONS
-        
        driver.getTopButton()
                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .whileTrue(new PivotCoralScore())
@@ -95,8 +95,6 @@ public class RobotContainer {
         driver.getBottomButton()
                 .whileTrue(new PivotAlgaeOuttake())
                 .onFalse(new PivotRollerStop());
-        // driver.getBottomButton()
-        // .whileTrue(new VisionAlignToReef())
 
         // TRIGGERS
         driver.getRightTriggerButton()
@@ -123,14 +121,18 @@ public class RobotContainer {
         driver.getDPadDown()
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .onTrue(new PivotToAlgaeIntake());
-           driver.getDPadLeft()
+        driver.getDPadLeft()
                 .whileTrue(new PivotLolipopAlgeaIntake())
                  .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
         
-
         // MENU BUTTONS
         driver.getRightMenuButton()
                 .onTrue(new PivotResetAngle());
+
+        //JOYSTICK BUTTONS
+        driver.getLeftStickButton()
+                .whileTrue(new VisionDriveToNearestApriltag())
+                .onFalse(new DriveArcade(0, 0, false));
     }
 
     /**************/

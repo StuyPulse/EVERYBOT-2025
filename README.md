@@ -9,7 +9,6 @@ StuyPulse's code for the Everybot designed by 118.
 
 ## Mechanisms
 - ALGAE from Ground to PROCESSOR
-- LEDs to make driving more user-friendly
 - CORAL from Coral Station to L1
 - Deep Climb
 - Limelight 2 for vision and alignment

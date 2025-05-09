@@ -113,14 +113,13 @@ public class PivotImpl extends Pivot {
         super.periodic();
       
         if (stallDetector.getAsBoolean()){
+            pivotMotor.set(0);
             if(getPivotRotation().getDegrees()>-15) { //Check Stalling Direction: Check if hitting top hard stop
                 resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
             } else if(getPivotRotation().getDegrees()<-60) { //Check Stalling Direction: Check if hitting bottom hard stop
                 resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
             }
-        }
-
-        if (pivotControlMode == PivotControlMode.USING_STATES) {
+        } else if (pivotControlMode == PivotControlMode.USING_STATES) {
             pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       

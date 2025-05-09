@@ -4,6 +4,7 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.angle.AngleController;
 import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
+import com.stuypulse.stuylib.math.SLMath;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
@@ -23,6 +24,8 @@ import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator3d;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -37,6 +40,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -67,8 +71,11 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
+    private final DifferentialDrivePoseEstimator poseEstimator;
 
     private final Field2d field = new Field2d();
+    private double visionDrive;
+    private double visionSteer;
 
     private SimpleMotorFeedforward ffController;
     private PIDController lPIDController = new PIDController(Gains.Drivetrain.PID.left.kP, Gains.Drivetrain.PID.left.kI,
@@ -92,17 +99,7 @@ public class DrivetrainImpl extends Drivetrain {
 
         Motors.DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.encoder
                 .positionConversionFactor(
-                        Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE); // May
-                                                                                                                // need
-                                                                                                                // to
-                                                                                                                // divide
-                                                                                                                // by
-                                                                                                                // 42,
-                                                                                                                // which
-                                                                                                                // is
-                                                                                                                // the
-                                                                                                                // NEO
-                                                                                                                // ppr
+                        Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS);
 
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
@@ -136,7 +133,7 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[1].setCANTimeout(250);
 
         // Odometry, Kinematics, Controllers
-        kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
+        kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
         odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
 
         controllerPosition = new MotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
@@ -145,6 +142,8 @@ public class DrivetrainImpl extends Drivetrain {
 
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
+
+        poseEstimator = new DifferentialDrivePoseEstimator(kinematics, getHeading(), getLeftDistance(), getRightDistance(), new Pose2d());
     }
 
     @Override
@@ -212,16 +211,16 @@ public class DrivetrainImpl extends Drivetrain {
      */
 
     public double getLeftDistance() {
-        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
+        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     public double getRightDistance() {
-        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
+        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     // Experimental, need confirmation that this is actually what sysId needs
     public LinearVelocity getMetersPerSecond(double velocity) {
-        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60);
+        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS / 60);
     }
 
     @Override
@@ -290,8 +289,36 @@ public class DrivetrainImpl extends Drivetrain {
                 .andThen(Commands.runOnce(() -> driveTankVolts(0.0, 0.0))); // Stop Drivetrain
     }
 
+    private void updateVision() { //TEMPORARY
+        final double STEER_K = 0.03;
+        final double DRIVE_K = 0.03;
+        final double DESIRED_TARGET_AREA = 13.0;
+        final double MAX_DRIVE = 0.3;
+
+        double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    
+        if (tv<0) {
+            visionDrive = 0.0;
+            visionSteer = 0.0;
+            return;
+        }
+
+        visionDrive = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
+        visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
+        visionSteer = tx * STEER_K;   
+    }
+
+    @Override
+    public void driveToNearestAprilTag() {
+        driveArcade(visionSteer, visionDrive, false);
+    }
+
     @Override
     public void periodic() {
+        updateVision();
         updateOdometry();
         field.setRobotPose(odometry.getPoseMeters());
         SmartDashboard.putData("Field", field);
