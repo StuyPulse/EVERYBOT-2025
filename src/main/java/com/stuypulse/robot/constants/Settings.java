@@ -5,7 +5,6 @@
 package com.stuypulse.robot.constants;
 
 import com.stuypulse.stuylib.network.SmartNumber;
-import com.stuypulse.stuylib.network.SmartString;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
@@ -65,39 +64,38 @@ public interface Settings {
         double DEFAULT_VOLTAGE = 0.0;
     }
     
-    public interface Pivot {
-        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 1);
-        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -1);
+    public interface Pivot { // TODO Change max roller speed to whatever ryan/bennett tells us because so far belt can only handle 0.75 i think but they will try to make it higher
+        SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 0.75);
+        SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
 
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
-        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.25);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.22);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.09);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.09);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.2);
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
 
-        public static final double PIVOT_MOTOR_GEAR_RATIO = 1.0/27.0;
-        public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
+        public static final double PIVOT_STALL_CURRENT = 10; 
+        public static final double PIVOT_STALL_DEBOUNCE = .25;
 
-        public static final double PIVOT_STALL_CURRENT = 1; // Replace with actual voltage spike when stalled.
-        public static final double PIVOT_STALL_DEBOUNCE = .25; // Placeholder
-        
         public static final String CTRLMODE_MANUAL = "MANUAL";
-        public static final String CTRLMODE_STATES = "STATES";
+        public static final String CTRLMODE_STATES = "USING_STATES";
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3); 
-        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-25);
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3);
+        Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(-34); 
+        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-45);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
+        Rotation2d PIVOT_CORAL_OUTAKE_ANGLE = Rotation2d.fromDegrees(-41);
+        Rotation2d INTAKE_ALGAE_FROM_LOLIPOP = Rotation2d.fromDegrees(-25);
     }
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
-        public static final double TRACK_WIDTH = 0.0;
     }
 }

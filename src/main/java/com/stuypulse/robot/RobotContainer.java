@@ -1,7 +1,8 @@
 package com.stuypulse.robot;
 
+import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
-import com.stuypulse.robot.commands.auton.coral.DoubleCoralAuton;
+import com.stuypulse.robot.commands.auton.coral.DoubleCenterCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.SingleCoralAuton;
 import com.stuypulse.robot.commands.auton.misc.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.misc.MobilityAuton;
@@ -9,6 +10,7 @@ import com.stuypulse.robot.commands.auton.push.PushBackwardsAuton;
 import com.stuypulse.robot.commands.auton.push.PushForwardsAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
+import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
@@ -21,12 +23,14 @@ import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotLolipopAlgeaIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
-
+import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
@@ -50,6 +54,7 @@ public class RobotContainer {
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Pivot pivot = Pivot.getInstance();
+    private final Drivetrain drive = Drivetrain.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -78,19 +83,18 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // BUTTONS
-        driver.getTopButton()
-                .whileTrue(new PivotRollerStop())
-                .whileTrue(new PivotCoralOuttake())
-                .onFalse(new PivotHoldCoral());
-        driver.getLeftButton()
+       driver.getTopButton()
+               .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+                .whileTrue(new PivotCoralScore())
+                .onFalse(new PivotToCoralStow());
+                // .onFalse(new PivotHoldCoral());
+       driver.getLeftButton()
                 .whileTrue(new ClimbToClimb());
         driver.getRightButton()
                 .whileTrue(new ClimbToStow());
         driver.getBottomButton()
                 .whileTrue(new PivotAlgaeOuttake())
                 .onFalse(new PivotRollerStop());
-        // driver.getBottomButton()
-        // .whileTrue(new VisionAlignToReef())
 
         // TRIGGERS
         driver.getRightTriggerButton()
@@ -103,12 +107,12 @@ public class RobotContainer {
                 .onFalse(new PivotStop());
 
         // BUMPERS
-        driver.getRightBumper()
-                .whileTrue(new PivotAlgaeOuttake())
-                .onFalse(new PivotHoldCoral());
-        driver.getLeftBumper()
-                .whileTrue(new PivotAlgaeIntake())
-                .onFalse(new PivotRollerStop());
+       driver.getRightBumper()
+               .whileTrue(new PivotAlgaeOuttake());
+        //        .onFalse(new PivotHoldCoral());
+       driver.getLeftBumper()
+               .whileTrue(new PivotAlgaeIntake())
+               .onFalse(new PivotRollerStop());
 
         // DPAD
         driver.getDPadRight()
@@ -117,10 +121,18 @@ public class RobotContainer {
         driver.getDPadDown()
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .onTrue(new PivotToAlgaeIntake());
-
+        driver.getDPadLeft()
+                .whileTrue(new PivotLolipopAlgeaIntake())
+                 .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
+        
         // MENU BUTTONS
         driver.getRightMenuButton()
                 .onTrue(new PivotResetAngle());
+
+        //JOYSTICK BUTTONS
+        driver.getLeftStickButton()
+                .whileTrue(new VisionDriveToNearestApriltag())
+                .onFalse(new DriveArcade(0, 0, false));
     }
 
     /**************/
@@ -128,16 +140,21 @@ public class RobotContainer {
     /**************/
 
     public void configureAutons() {
-        autonChooser.setDefaultOption("Misc - Mobility", new MobilityAuton());
+        // Coral
+        autonChooser.setDefaultOption("Coral Only - Single", new SingleCoralAuton());
+        autonChooser.addOption("Coral Only - Center Double", new DoubleCenterCoralAuton());
+        
+        // Misc
         autonChooser.addOption("Misc - Do Nothing", new DoNothingAuton());
-
-        autonChooser.addOption("Coral Only - Single", new SingleCoralAuton());
-        autonChooser.addOption("Coral Only - Double", new DoubleCoralAuton());
-
+        autonChooser.addOption("Misc - Mobility", new MobilityAuton());
+        
+        // Push
         autonChooser.addOption("Push Only - Forwards", new PushForwardsAuton());
         autonChooser.addOption("Push Only - Backwards", new PushBackwardsAuton());
 
+        
         autonChooser.addOption("Combination - Coral w/ Push", new PushBackwardsCoralAuton());
+        autonChooser.addOption("Combination - Coralgae", new CoralgaeAuton());
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

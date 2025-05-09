@@ -3,13 +3,15 @@ package com.stuypulse.robot.subsystems.drivetrain;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.angle.AngleController;
-import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
+import com.stuypulse.stuylib.math.SLMath;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
+import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.util.SysId;
 
+import java.util.List;
 import java.util.function.Consumer;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -21,12 +23,30 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator3d;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.LinearVelocityUnit;
 import edu.wpi.first.units.measure.Distance;
@@ -50,26 +70,36 @@ public class DrivetrainImpl extends Drivetrain {
 
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
+    private final DifferentialDriveKinematics kinematics;
+    private final DifferentialDrivePoseEstimator poseEstimator;
 
     private final Field2d field = new Field2d();
-    
+    private double visionDrive;
+    private double visionSteer;
+
+    private SimpleMotorFeedforward ffController;
+    private PIDController lPIDController = new PIDController(Gains.Drivetrain.PID.left.kP, Gains.Drivetrain.PID.left.kI,
+            Gains.Drivetrain.PID.left.kD);
+    private PIDController rPIDController = new PIDController(Gains.Drivetrain.PID.right.kP,
+            Gains.Drivetrain.PID.right.kI, Gains.Drivetrain.PID.right.kD);
+
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
 
-                    new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
-                    new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
-                };
+                new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
+                new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
+        };
         rightMotors = new SparkMax[] {
-                    new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
-                    new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushless)
+                new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
+                new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushless)
         };
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);
 
-        /* Back wheel config:
-        *  back left will follow front left, safe parameters will persist; config will
-        *  persist across power cycles */
+        Motors.DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.encoder
+                .positionConversionFactor(
+                        Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS);
 
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
@@ -88,26 +118,32 @@ public class DrivetrainImpl extends Drivetrain {
         leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
+        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.inverted(true);
+        leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
+
         // Left Lead
         leftEncoder = leftMotors[0].getEncoder();
         // Right Lead
         rightEncoder = rightMotors[0].getEncoder();
 
-        //Odometry + Controllers
-        odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
-
-        controllerPosition = new MotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV, Gains.Drivetrain.FF.kA)
-                .position();
-        
-        DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.inverted(true); 
-        leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        
         leftMotors[0].setCANTimeout(250);
         leftMotors[1].setCANTimeout(250);
         rightMotors[0].setCANTimeout(250);
         rightMotors[1].setCANTimeout(250);
 
-        SmartDashboard.putData("Field", field);
+        // Odometry, Kinematics, Controllers
+        kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
+        odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
+
+        controllerPosition = new MotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
+                Gains.Drivetrain.FF.kA)
+                .position();
+
+        ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
+                Gains.Drivetrain.FF.kA);
+
+        poseEstimator = new DifferentialDrivePoseEstimator(kinematics, getHeading(), getLeftDistance(), getRightDistance(), new Pose2d());
     }
 
     @Override
@@ -122,8 +158,18 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
     }
 
+    public void driveTankVolts(Double lVolts, Double rVolts) {
+        leftMotors[0].setVoltage(lVolts);
+        rightMotors[0].setVoltage(rVolts);
+        drive.feed();
+    }
+
     private void updateOdometry() {
-        odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(), rightEncoder.getPosition());
+        odometry.update(getHeading(), getLeftDistance(), getRightDistance());
+    }
+
+    public void resetOdometry(Pose2d newPose) {
+        odometry.resetPose(newPose);
     }
 
     @Override
@@ -136,30 +182,45 @@ public class DrivetrainImpl extends Drivetrain {
         return rightEncoder.getVelocity();
     }
 
-    //TODO: Configure Auton Builder
-    /*public void configureAutoBuilder() {
-        AutoBuilder.configure(
-            getPose(), 
-            resetPose(), 
-            null,
-            null,
-            null,
-            null, 
-            null
-        );
-    }*/
+    // private DifferentialDriveWheelPositions getPositions() {
+    // return new
+    // DifferentialDriveWheelPositions(getLeftDistance(),getRightDistance());
+    // }
+
+    public DifferentialDriveWheelSpeeds getSpeeds() {
+        return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
+    }
+
+    private Rotation2d getHeading() {
+        return Rotation2d.fromDegrees(gyro.getAngle()); // Might need to negate angle
+    }
+
+    // TODO: Configure Auton Builder
+    /*
+     * public void configureAutoBuilder() {
+     * AutoBuilder.configure(
+     * getPose(),
+     * resetPose(),
+     * null,
+     * null,
+     * null,
+     * null,
+     * null
+     * );
+     * }
+     */
 
     public double getLeftDistance() {
-        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
+        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     public double getRightDistance() {
-        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE;
+        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     // Experimental, need confirmation that this is actually what sysId needs
-    public LinearVelocity getMetersPerSecond(double velocity){
-        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE / 60); 
+    public LinearVelocity getMetersPerSecond(double velocity) {
+        return MetersPerSecond.ofBaseUnits(velocity * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS / 60);
     }
 
     @Override
@@ -175,31 +236,91 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public SysIdRoutine getSysIdRoutine() {
         return new SysIdRoutine(
-            new SysIdRoutine.Config(),
-            new SysIdRoutine.Mechanism(
-                voltage -> {
-                leftMotors[0].setVoltage(voltage);
-                rightMotors[0].setVoltage(voltage);   
-                },         
-                log -> {
-                    log.motor("drive-left")
-                        .voltage(Voltage.ofBaseUnits(leftMotors[0].getBusVoltage(), Volts))
-                        .linearPosition(Meters.ofBaseUnits(getLeftDistance()))
-                        .linearVelocity(getMetersPerSecond(getLeftVelocity()));
-                        
-                    log.motor("drive-right")
-                        .voltage(Voltage.ofBaseUnits(rightMotors[0].getBusVoltage(), Volts))
-                        .linearPosition(Meters.ofBaseUnits(getRightDistance()))
-                        .linearVelocity(getMetersPerSecond(getRightVelocity())); 
-                }, 
-                this     
-            )
-        );
+                new SysIdRoutine.Config(),
+                new SysIdRoutine.Mechanism(
+                        voltage -> {
+                            leftMotors[0].setVoltage(voltage);
+                            rightMotors[0].setVoltage(voltage);
+                            drive.feed();
+                        },
+                        log -> {
+                            log.motor("drive-left")
+                                    .voltage(Voltage.ofBaseUnits(leftMotors[0].getBusVoltage(), Volts))
+                                    .linearPosition(Meters.ofBaseUnits(getLeftDistance()))
+                                    .linearVelocity(getMetersPerSecond(getLeftVelocity()));
+
+                            log.motor("drive-right")
+                                    .voltage(Voltage.ofBaseUnits(rightMotors[0].getBusVoltage(), Volts))
+                                    .linearPosition(Meters.ofBaseUnits(getRightDistance()))
+                                    .linearVelocity(getMetersPerSecond(getRightVelocity()));
+                        },
+                        this));
+    }
+
+    public Command getAutonomousCommand() {
+        final DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(
+                ffController, kinematics, 10);
+
+        final TrajectoryConfig trajectoryConfig = new TrajectoryConfig(Constants.Autonomous.MAX_SPEED_METERS_PER_SECOND,
+                Constants.Autonomous.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+                .setKinematics(kinematics)
+                .addConstraint(voltageConstraint);
+
+        final Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(0, 0, new Rotation2d(0)),                        // START
+                List.of(new Translation2d(1, 1), new Translation2d(2, -1)),     // INTERMEDIATE SETPOINTS
+                new Pose2d(3, 0, new Rotation2d()),                               // END
+                trajectoryConfig);
+
+        RamseteCommand command = new RamseteCommand(
+                exampleTrajectory,
+                this::getPose,
+                new RamseteController(.7, 2.0),
+                ffController,
+                kinematics,
+                this::getSpeeds,
+                lPIDController,
+                rPIDController,
+                this::driveTankVolts,
+                this);
+
+        return Commands.runOnce(() -> resetOdometry(exampleTrajectory.getInitialPose()))
+                .andThen(command)
+                .andThen(Commands.runOnce(() -> driveTankVolts(0.0, 0.0))); // Stop Drivetrain
+    }
+
+    private void updateVision() { //TEMPORARY
+        final double STEER_K = 0.03;
+        final double DRIVE_K = 0.03;
+        final double DESIRED_TARGET_AREA = 13.0;
+        final double MAX_DRIVE = 0.3;
+
+        double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    
+        if (tv<0) {
+            visionDrive = 0.0;
+            visionSteer = 0.0;
+            return;
+        }
+
+        visionDrive = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
+        visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
+        visionSteer = tx * STEER_K;   
+    }
+
+    @Override
+    public void driveToNearestAprilTag() {
+        driveArcade(visionSteer, visionDrive, false);
     }
 
     @Override
     public void periodic() {
+        updateVision();
         updateOdometry();
         field.setRobotPose(odometry.getPoseMeters());
+        SmartDashboard.putData("Field", field);
     }
 }

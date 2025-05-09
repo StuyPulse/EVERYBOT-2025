@@ -1,15 +1,14 @@
-# 118 Everybot
+# 118 Everybot (2025 SZN)
 
 StuyPulse's code for the Everybot designed by 118.
 
 ## Our Changes from the 118 Everybot
-- Replaced Drivetrain and Pivot motors with NEOs so we can have encoders
-- Add LEDS
-- Add LimeLight 2 for alignment to HP station/reef
+- Replaced Drivetrain and Pivot motors with NEOs for encoders
+- Add LEDs
+- Add LimeLight 2 for better Odometry
 
 ## Mechanisms
 - ALGAE from Ground to PROCESSOR
-- LEDs to make driving more user-friendly
 - CORAL from Coral Station to L1
 - Deep Climb
 - Limelight 2 for vision and alignment

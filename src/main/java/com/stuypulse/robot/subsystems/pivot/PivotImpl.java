@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -40,7 +41,7 @@ public class PivotImpl extends Pivot {
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
 
         Motors.PivotConfig.PIVOT_MOTOR_CONFIG.encoder
-            .positionConversionFactor(Settings.Pivot.PIVOT_MOTOR_GEAR_RATIO * Settings.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);  
+            .positionConversionFactor(Constants.Pivot.PIVOT_MOTOR_GEAR_RATIO * Constants.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);  
         
         pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -52,6 +53,9 @@ public class PivotImpl extends Pivot {
 
         stallDetector = BStream.create(() -> pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT)
             .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
+
+        setPivotState(PivotState.DEFAULT);
+        setPivotControlMode(PivotControlMode.USING_STATES);
     }
     
     @Override
@@ -109,14 +113,13 @@ public class PivotImpl extends Pivot {
         super.periodic();
       
         if (stallDetector.getAsBoolean()){
-            if(rollerMotor.get() > 0) { //Check Stalling Direction: Check if hitting top hard stop
+            pivotMotor.set(0);
+            if(getPivotRotation().getDegrees()>-15) { //Check Stalling Direction: Check if hitting top hard stop
                 resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
-            } else if(rollerMotor.get() < 0) { //Check Stalling Direction: Check if hitting bottom hard stop
+            } else if(getPivotRotation().getDegrees()<-60) { //Check Stalling Direction: Check if hitting bottom hard stop
                 resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
             }
-        }
-
-        if (pivotControlMode == PivotControlMode.USING_STATES) {
+        } else if (pivotControlMode == PivotControlMode.USING_STATES) {
             pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       

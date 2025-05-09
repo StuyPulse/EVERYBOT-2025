@@ -4,6 +4,7 @@ import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.angle.AngleController;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -22,7 +23,7 @@ public abstract class Drivetrain extends SubsystemBase {
     }
 
     public abstract void driveArcade(double xSpeed, double zRotation, boolean squared);
-    
+
     public abstract void driveTank(double leftSpeed, double rightSpeed, boolean squared);
     
     public abstract double getLeftVelocity();
@@ -35,10 +36,9 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract Pose2d getPose();
 
+    public abstract Command getAutonomousCommand();
 
-
-    
-
+    public abstract void driveToNearestAprilTag();
 
     @Override
     public void periodic() {}
