@@ -2,7 +2,7 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
-import com.stuypulse.robot.commands.auton.coral.DoubleCoralAuton;
+import com.stuypulse.robot.commands.auton.coral.DoubleCenterCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.SingleCoralAuton;
 import com.stuypulse.robot.commands.auton.misc.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.misc.MobilityAuton;
@@ -86,8 +86,8 @@ public class RobotContainer {
        driver.getTopButton()
                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .whileTrue(new PivotCoralScore())
-                .onFalse(new PivotToCoralStow())
-                .onFalse(new PivotHoldCoral());
+                .onFalse(new PivotToCoralStow());
+                // .onFalse(new PivotHoldCoral());
        driver.getLeftButton()
                 .whileTrue(new ClimbToClimb());
         driver.getRightButton()
@@ -110,8 +110,8 @@ public class RobotContainer {
 
         // BUMPERS
        driver.getRightBumper()
-               .whileTrue(new PivotAlgaeOuttake())
-               .onFalse(new PivotHoldCoral());
+               .whileTrue(new PivotAlgaeOuttake());
+        //        .onFalse(new PivotHoldCoral());
        driver.getLeftBumper()
                .whileTrue(new PivotAlgaeIntake())
                .onFalse(new PivotRollerStop());
@@ -140,7 +140,7 @@ public class RobotContainer {
     public void configureAutons() {
         // Coral
         autonChooser.setDefaultOption("Coral Only - Single", new SingleCoralAuton());
-        autonChooser.addOption("Coral Only - Double", new DoubleCoralAuton());
+        autonChooser.addOption("Coral Only - Center Double", new DoubleCenterCoralAuton());
         
         // Misc
         autonChooser.addOption("Misc - Do Nothing", new DoNothingAuton());
