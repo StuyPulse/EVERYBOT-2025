@@ -71,7 +71,6 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
-    private final DifferentialDrivePoseEstimator poseEstimator;
 
     private final Field2d field = new Field2d();
     private double visionDrive;
@@ -142,8 +141,6 @@ public class DrivetrainImpl extends Drivetrain {
 
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
-
-        poseEstimator = new DifferentialDrivePoseEstimator(kinematics, getHeading(), getLeftDistance(), getRightDistance(), new Pose2d());
     }
 
     @Override
@@ -172,27 +169,26 @@ public class DrivetrainImpl extends Drivetrain {
         odometry.resetPose(newPose);
     }
 
-    @Override
     public double getLeftVelocity() {
         return leftEncoder.getVelocity();
     }
 
-    @Override
     public double getRightVelocity() {
         return rightEncoder.getVelocity();
     }
-
-    // private DifferentialDriveWheelPositions getPositions() {
-    // return new
-    // DifferentialDriveWheelPositions(getLeftDistance(),getRightDistance());
-    // }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
         return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
     }
 
-    private Rotation2d getHeading() {
+    @Override
+    public Rotation2d getHeading() {
         return Rotation2d.fromDegrees(gyro.getAngle()); // Might need to negate angle
+    }
+
+    @Override
+    public double getGyroRate() {
+        return gyro.getRate();
     }
 
     // TODO: Configure Auton Builder
@@ -210,10 +206,12 @@ public class DrivetrainImpl extends Drivetrain {
      * }
      */
 
+    @Override
     public double getLeftDistance() {
         return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
+    @Override
     public double getRightDistance() {
         return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
@@ -314,6 +312,16 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void driveToNearestAprilTag() {
         driveArcade(visionSteer, visionDrive, false);
+    }
+
+    @Override
+    public DifferentialDriveKinematics getKinematics() {
+        return kinematics;
+    }
+
+    @Override
+    public DifferentialDriveOdometry getOdometry() {
+        return odometry;
     }
 
     @Override
