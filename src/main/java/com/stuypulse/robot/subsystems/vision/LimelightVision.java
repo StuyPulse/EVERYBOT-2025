@@ -106,7 +106,7 @@ public class LimelightVision extends SubsystemBase {
     @Override
     public void periodic() {
         limelightPose = poseEstimator.getEstimatedPosition();
-        SmartDashboard.putData("Field", field);
         field.setRobotPose(limelightPose);
+        SmartDashboard.putData("Field", field);
      }
 }

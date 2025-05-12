@@ -328,7 +328,5 @@ public class DrivetrainImpl extends Drivetrain {
     public void periodic() {
         updateVision();
         updateOdometry();
-        field.setRobotPose(odometry.getPoseMeters());
-        SmartDashboard.putData("Field", field);
     }
 }
