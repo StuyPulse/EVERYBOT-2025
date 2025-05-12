@@ -54,7 +54,6 @@ public class RobotContainer {
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Pivot pivot = Pivot.getInstance();
-    private final Drivetrain drive = Drivetrain.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
