@@ -51,8 +51,9 @@ public class PivotImpl extends Pivot {
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         pivotEncoder = pivotMotor.getEncoder();
-        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO);
-      
+        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO,1.0/0.241,1.9);
+        pivotThroughbore.setInverted(true);
+        
         controller = new ArmFeedforward(Gains.Pivot.FF.kG)
                 .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
 
@@ -65,13 +66,15 @@ public class PivotImpl extends Pivot {
     
     @Override
     public SysIdRoutine getSysIdRoutine() {
+        setPivotControlMode(PivotControlMode.MANUAL);
         return SysId.getSysIdRoutine(
             pivotMotor.toString(),
             pivotMotor,
-            getPivotRotation(),
+            this::getPivotRotationAbsolute,
+            this::getPivotVelocity,
             Pivot.getInstance(),
-            0.5,
-            .5,
+            1,
+            3,
             10
         );
     }
@@ -91,6 +94,14 @@ public class PivotImpl extends Pivot {
     @Override
     public Rotation2d getPivotRotation() {
         return Rotation2d.fromRotations(pivotEncoder.getPosition());
+    }
+
+    public double getPivotRotationAbsolute() {
+        return pivotThroughbore.get()/4;
+    }
+
+    public double getPivotVelocity() {
+        return pivotEncoder.getVelocity();
     }
 
     @Override
