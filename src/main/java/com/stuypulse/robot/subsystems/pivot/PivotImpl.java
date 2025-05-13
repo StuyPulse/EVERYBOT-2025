@@ -1,9 +1,11 @@
 package com.stuypulse.robot.subsystems.pivot;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
 
 import com.stuypulse.robot.util.SysId;
@@ -20,20 +22,22 @@ import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class PivotImpl extends Pivot {
-    private SparkMax pivotMotor;
-    private SparkMax rollerMotor;
-    private RelativeEncoder pivotEncoder;
-
-    private Controller controller;
+    private final SparkMax rollerMotor;
+    private final SparkMax pivotMotor;
+    private final RelativeEncoder pivotEncoder;
+    private final DutyCycleEncoder pivotThroughbore;
     
-    private BStream stallDetector;
+    private final Controller controller;
     
-    private SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
-    private SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
+    private final BStream stallDetector;
+    
+    private final SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
+    private final SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 
     public PivotImpl() {
         super();
@@ -47,6 +51,7 @@ public class PivotImpl extends Pivot {
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         pivotEncoder = pivotMotor.getEncoder();
+        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO);
       
         controller = new ArmFeedforward(Gains.Pivot.FF.kG)
                 .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
@@ -124,6 +129,7 @@ public class PivotImpl extends Pivot {
         }
       
         SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
+        SmartDashboard.putNumber("Pivot/Current Absolute Angle", pivotThroughbore.get());
         SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
