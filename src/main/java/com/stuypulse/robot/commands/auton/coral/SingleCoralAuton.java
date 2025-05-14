@@ -7,14 +7,17 @@ package com.stuypulse.robot.commands.auton.coral;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
+<<<<<<< HEAD
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+=======
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
+>>>>>>> main
 
 /**
  * attempts to score one coral
@@ -25,17 +28,20 @@ import com.stuypulse.robot.constants.Settings.LEDPatterns;
 public class SingleCoralAuton extends SequentialCommandGroup {
     public SingleCoralAuton() {
         addCommands(
+<<<<<<< HEAD
             new DriveTank(-.45, -.45, true)
                 .withTimeout(2.5),
             new DriveTank(0, 0, false)
                 .withTimeout(0.1),
             new PivotCoralScore()
                  .withTimeout(5.0)
+=======
             new LEDApplyPattern(LEDPatterns.SINGLE_L1_AUTON),
             new DriveTank(.25, .25, true),
             new WaitUntilCommand(7.00),
             new DriveTank(0, 0, true),
             new PivotCoralOuttake()
+>>>>>>> main
         );
     }
 }

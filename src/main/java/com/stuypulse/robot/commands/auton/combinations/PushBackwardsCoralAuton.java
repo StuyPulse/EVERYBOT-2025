@@ -2,13 +2,16 @@ package com.stuypulse.robot.commands.auton.combinations;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
+<<<<<<< HEAD
 import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerToDirection;
 import com.stuypulse.robot.constants.Settings;
+=======
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
+>>>>>>> main
 import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -21,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class PushBackwardsCoralAuton extends SequentialCommandGroup {
     public PushBackwardsCoralAuton() {
         addCommands(
+<<<<<<< HEAD
             // new LEDApplyPattern(LEDPatterns.PUSH_BACKWARDS_SINGLE_L1_AUTON),
             new DriveTank(.75, .75, true)
                 .withTimeout(2),
@@ -32,6 +36,7 @@ public class PushBackwardsCoralAuton extends SequentialCommandGroup {
                 .withTimeout(3),
             new PivotRollerStop()
                 .withTimeout(0.1)
+=======
             new LEDApplyPattern(LEDPatterns.PUSH_BACKWARDS_SINGLE_L1_AUTON),
             new DriveTank(-.75, -.75, true),
             new WaitUntilCommand(2.00),
@@ -41,6 +46,7 @@ public class PushBackwardsCoralAuton extends SequentialCommandGroup {
             new PivotCoralOuttake(),
             new WaitUntilCommand(1),
             new PivotRollerStop()
+>>>>>>> main
         );
     }
 }

@@ -19,8 +19,6 @@ import edu.wpi.first.wpilibj.util.Color;
  */
 public interface Settings {
     public interface LEDPatterns {
-        // Auton Colors
-    
         // AUTON COLORS    
         // MISC
         LEDPattern DO_NOTHING_AUTON = LEDPattern.solid(Color.kWheat).blink(Units.Seconds.of(1.5));
@@ -52,26 +50,18 @@ public interface Settings {
     }
 
     public interface Climb {
-        Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(180);
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
         public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(85);
 
         public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(2);
 
-        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(5);
         public static final int CLIMB_CURRENT_LIMIT = 60;
 
-        int CLIMB_CURRENT = 0;
         public static final double DEFAULT_VOLTAGE = 0.0;
         public static final double STOW_VOLTAGE = -1.0;
         public static final double CLIMBING_VOLTAGE = 1.0;
 
-        double STOW_VOLTAGE = 0.0;
-        double EXTEND_VOLTAGE = 0.0;
-        double CLIMBING_VOLTAGE = 0.0;
-        double DEFAULT_VOLTAGE = 0.0;
         public static final double CLIMB_MOTOR_GEAR_RATIO = 1.0/100.0;
         public static final double CLIMB_MOTOR_REDUCTION_FACTOR = 1.0/8.0; //Found from testing
     }
@@ -97,6 +87,7 @@ public interface Settings {
         public static final String CTRLMODE_MANUAL = "MANUAL";
         public static final String CTRLMODE_STATES = "USING_STATES";
 
+<<<<<<< HEAD
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3);
         Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(-34); 
@@ -105,12 +96,14 @@ public interface Settings {
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
         Rotation2d PIVOT_CORAL_OUTAKE_ANGLE = Rotation2d.fromDegrees(-41);
         Rotation2d INTAKE_ALGAE_FROM_LOLIPOP = Rotation2d.fromDegrees(-25);
+=======
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.kZero;
         public static final Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3); 
         public static final Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-45);
         public static final Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
         public static final Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
 
+>>>>>>> main
     }
 
     public interface Drivetrain {
