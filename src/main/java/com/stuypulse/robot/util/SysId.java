@@ -10,6 +10,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Rotations;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Time;
@@ -22,7 +23,7 @@ public class SysId {
         String motorname,
         SparkMax motor,
         Supplier<Double> getEncoderVelocity,
-        Supplier<Double> getEncoderPosition,
+        Supplier<Rotation2d> getEncoderPosition,
         Subsystem subsysteminstance,
         double quasistaticRampVoltage,  //1V by default
         double dynamicStepVoltage,      //7V by default
@@ -38,7 +39,7 @@ public class SysId {
                     log.motor(motorname)
                         .angularVelocity(AngularVelocity.ofBaseUnits(getEncoderVelocity.get() / 60.0, RotationsPerSecond))
                         .voltage(Voltage.ofBaseUnits(motor.getBusVoltage(), Volts))
-                        .angularPosition(Angle.ofBaseUnits(getEncoderPosition.get(), Rotations));
+                        .angularPosition(Angle.ofBaseUnits(getEncoderPosition.get().getRotations(), Rotations));
                 },
                 subsysteminstance
             )

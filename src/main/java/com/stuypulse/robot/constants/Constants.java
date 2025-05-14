@@ -7,12 +7,15 @@ import edu.wpi.first.math.util.Units;
 public interface Constants {
     public interface Climb {
         Rotation2d MIN_ANGLE = Rotation2d.kZero;
-        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(87.5);
+        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(120);
     }
 
     public interface Pivot {
         public static final double PIVOT_MOTOR_GEAR_RATIO = 1.0/27.0;
         public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
+        
+        public static final double PIVOT_THROUGHBORE_RANGE = 1.0/0.241;
+        public static final double PIVOT_THROUGHBORE_EXPECTED_ZERO = 1.9;
     }
 
     public interface Drivetrain {

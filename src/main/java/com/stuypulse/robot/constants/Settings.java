@@ -52,7 +52,7 @@ public interface Settings {
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
-        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(85);
+        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(115);
 
         public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(2);
 
@@ -71,7 +71,7 @@ public interface Settings {
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
 
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
-        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.26);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.22);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
 

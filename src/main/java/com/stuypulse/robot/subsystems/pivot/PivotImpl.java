@@ -49,7 +49,7 @@ public class PivotImpl extends Pivot {
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         pivotEncoder = pivotMotor.getEncoder();
-        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO,1.0/0.241,1.9);
+        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO, Constants.Pivot.PIVOT_THROUGHBORE_RANGE, Constants.Pivot.PIVOT_THROUGHBORE_EXPECTED_ZERO);
         pivotThroughbore.setInverted(true);
         
         controller = new ArmFeedforward(Gains.Pivot.FF.kG)
@@ -69,7 +69,7 @@ public class PivotImpl extends Pivot {
             pivotMotor.toString(),
             pivotMotor,
             this::getPivotVelocity,
-            this::getPivotRotationAbsolute,
+            this::getPivotRotation,
             Pivot.getInstance(),
             1,
             3,
@@ -89,13 +89,13 @@ public class PivotImpl extends Pivot {
         pivotMotor.set(speed);
     }
 
-    @Override
-    public Rotation2d getPivotRotation() {
+    public Rotation2d getPivotRotationRelative() {
         return Rotation2d.fromRotations(pivotEncoder.getPosition());
     }
-
-    public double getPivotRotationAbsolute() {
-        return pivotThroughbore.get()/4;
+    
+    @Override
+    public Rotation2d getPivotRotation() {
+        return Rotation2d.fromRotations(pivotThroughbore.get() / Constants.Pivot.PIVOT_THROUGHBORE_RANGE);
     }
 
     public double getPivotVelocity() {
