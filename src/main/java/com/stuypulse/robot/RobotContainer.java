@@ -24,7 +24,6 @@ import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
 import com.stuypulse.robot.commands.pivot.PivotCombos.PivotLolipopAlgeaIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
-import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
