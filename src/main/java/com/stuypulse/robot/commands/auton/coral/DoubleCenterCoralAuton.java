@@ -20,7 +20,7 @@ public class DoubleCenterCoralAuton extends SequentialCommandGroup {
         addCommands(
             new DriveTank(-.45, -.45, true)
                 .withTimeout(2.2),
-            new DriveTank(0, 0, false)
+            new DriveTank(0, 0, true)
                 .withTimeout(0.1),
             // new PivotCoralScore()
                 // .withTimeout(2.4),
