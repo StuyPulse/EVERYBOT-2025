@@ -68,8 +68,8 @@ public class PivotImpl extends Pivot {
         return SysId.getSysIdRoutine(
             pivotMotor.toString(),
             pivotMotor,
-            this::getPivotRotationAbsolute,
             this::getPivotVelocity,
+            this::getPivotRotationAbsolute,
             Pivot.getInstance(),
             1,
             3,
