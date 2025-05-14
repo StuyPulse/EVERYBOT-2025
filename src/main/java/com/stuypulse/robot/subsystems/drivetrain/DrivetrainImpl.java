@@ -299,19 +299,19 @@ public class DrivetrainImpl extends Drivetrain {
         double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     
         if (tv<0) {
-            visionDrive = 0.0;
-            visionSteer = 0.0;
+            this.visionDrive = 0.0;
+            this.visionSteer = 0.0;
             return;
         }
 
         visionDrive = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
-        visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
-        visionSteer = tx * STEER_K;   
+        this.visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
+        this.visionSteer = tx * STEER_K;   
     }
 
     @Override
     public void driveToNearestAprilTag() {
-        driveArcade(visionSteer, visionDrive, false);
+        driveArcade(this.visionSteer, this.visionDrive, true);
     }
 
     @Override

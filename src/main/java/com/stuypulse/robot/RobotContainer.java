@@ -131,7 +131,7 @@ public class RobotContainer {
         //JOYSTICK BUTTONS
         driver.getLeftStickButton()
                 .whileTrue(new VisionDriveToNearestApriltag())
-                .onFalse(new DriveArcade(0, 0, false));
+                .onFalse(new DriveArcade(0, 0, true));
     }
 
     /**************/
