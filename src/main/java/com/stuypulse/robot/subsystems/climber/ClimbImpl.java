@@ -6,7 +6,6 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
-import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.ClimbConfig;
 import com.stuypulse.robot.constants.Ports;

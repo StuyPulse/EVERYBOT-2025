@@ -38,7 +38,6 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract void resetPose();
     public abstract Pose2d getPose();
 
-<<<<<<< HEAD
     public abstract Command getAutonomousCommand();
 
     public abstract void driveToNearestAprilTag();
@@ -46,8 +45,6 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract DifferentialDriveKinematics getKinematics();
     public abstract DifferentialDriveOdometry getOdometry();
 
-=======
->>>>>>> main
     @Override
     public void periodic() {}
 }

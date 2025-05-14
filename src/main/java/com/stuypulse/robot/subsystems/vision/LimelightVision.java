@@ -1,12 +1,9 @@
 package com.stuypulse.robot.subsystems.vision;
 
-import org.photonvision.EstimatedRobotPose;
-
 import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Cameras.Camera;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
-import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
