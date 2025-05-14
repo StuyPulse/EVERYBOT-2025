@@ -118,8 +118,10 @@ public class RobotContainer {
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .onTrue(new PivotToAlgaeIntake());
         driver.getDPadLeft()
-                .whileTrue(new PivotLolipopAlgeaIntake())
-                 .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
+                .onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
+                .onTrue(new PivotLolipopAlgeaIntake())
+                .onFalse(new PivotRollerStop())
+                .onFalse(new PivotToAlgaeStow());
         
         // MENU BUTTONS
         driver.getRightMenuButton()

@@ -1,6 +1,8 @@
 package com.stuypulse.robot.commands.auton.coral;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
+import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -16,8 +18,10 @@ public class DoubleCenterCoralAuton extends SequentialCommandGroup {
                 .withTimeout(2.2),
             new DriveTank(0, 0, false)
                 .withTimeout(0.1),
-            // new PivotCoralScore()
-                // .withTimeout(2.4),
+            new PivotCoralScore()
+                .withTimeout(2),
+            new PivotHoldCoral()
+                .withTimeout(0.1),
             new DriveTank(.5,.5,true)
                 .withTimeout(.5),
             new DriveTank(.7,.3,true)

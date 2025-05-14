@@ -134,12 +134,11 @@ public class PivotImpl extends Pivot {
                 resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
             }
         } else if (pivotControlMode == PivotControlMode.USING_STATES) {
-            pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+            pivotMotor.setVoltage(-controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       
-        SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
-        SmartDashboard.putNumber("Pivot/Current Absolute Angle", pivotThroughbore.get());
-        SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
+        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
+        SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
     }       

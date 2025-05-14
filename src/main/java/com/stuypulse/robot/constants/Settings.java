@@ -71,12 +71,12 @@ public interface Settings {
         SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
 
         SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
-        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.22);
+        SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral Shoot Speed", -0.3);
         SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral Hold Speed", 0.08);
 
-        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
-        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.2);
+        SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", -0.2);
+        SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", 0.2);
         
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
@@ -88,13 +88,13 @@ public interface Settings {
         public static final String CTRLMODE_STATES = "USING_STATES";
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(-3);
-        Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(-34); 
-        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(-45);
-        Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(-70);
-        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-85);
-        Rotation2d PIVOT_CORAL_OUTAKE_ANGLE = Rotation2d.fromDegrees(-41);
-        Rotation2d INTAKE_ALGAE_FROM_LOLIPOP = Rotation2d.fromDegrees(-25);
+        Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
+        Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(34); 
+        Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(45);
+        Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(70);
+        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(85);
+        Rotation2d PIVOT_CORAL_OUTAKE_ANGLE = Rotation2d.fromDegrees(41);
+        Rotation2d INTAKE_ALGAE_FROM_LOLIPOP = Rotation2d.fromDegrees(25);
     }
 
     public interface Drivetrain {
