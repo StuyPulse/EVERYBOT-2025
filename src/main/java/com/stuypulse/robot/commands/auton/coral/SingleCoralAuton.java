@@ -12,6 +12,9 @@ import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.commands.leds.LEDApplyPattern;
+import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
+import com.stuypulse.robot.constants.Settings.LEDPatterns;
 
 /**
  * attempts to score one coral
@@ -28,6 +31,11 @@ public class SingleCoralAuton extends SequentialCommandGroup {
                 .withTimeout(0.1),
             new PivotCoralScore()
                  .withTimeout(5.0)
+            new LEDApplyPattern(LEDPatterns.SINGLE_L1_AUTON),
+            new DriveTank(.25, .25, true),
+            new WaitUntilCommand(7.00),
+            new DriveTank(0, 0, true),
+            new PivotCoralOuttake()
         );
     }
 }
