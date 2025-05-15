@@ -7,6 +7,7 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import java.util.List;
 import com.kauailabs.navx.frc.AHRS;
@@ -61,6 +62,8 @@ public class DrivetrainImpl extends Drivetrain {
     private double visionDrive;
     private double visionSteer;
 
+    //private final LimelightVision vision;
+
     private SimpleMotorFeedforward ffController;
     private PIDController lPIDController = new PIDController(Gains.Drivetrain.PID.left.kP, Gains.Drivetrain.PID.left.kI,
             Gains.Drivetrain.PID.left.kD);
@@ -70,7 +73,6 @@ public class DrivetrainImpl extends Drivetrain {
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
-
                 new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
                 new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
         };
@@ -116,7 +118,7 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[0].setCANTimeout(250);
         rightMotors[1].setCANTimeout(250);
 
-        // Odometry, Kinematics, Controllers
+        // Odometry, Kinematics, Controllers, Vision
         kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
         odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
 
@@ -126,6 +128,8 @@ public class DrivetrainImpl extends Drivetrain {
 
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
+
+        //vision = LimelightVision.getInstance();
     }
 
     @Override
@@ -155,11 +159,11 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     public double getLeftVelocity() {
-        return leftEncoder.getVelocity();
+        return -leftEncoder.getVelocity();
     }
 
     public double getRightVelocity() {
-        return rightEncoder.getVelocity();
+        return -rightEncoder.getVelocity();
     }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
@@ -168,7 +172,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(gyro.getAngle()); // Might need to negate angle
+        return Rotation2d.fromDegrees(-gyro.getAngle()); // Might need to negate angle
     }
 
     @Override
@@ -193,12 +197,12 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public double getLeftDistance() {
-        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
+        return -leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     @Override
     public double getRightDistance() {
-        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
+        return -rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
     }
 
     // Experimental, need confirmation that this is actually what sysId needs

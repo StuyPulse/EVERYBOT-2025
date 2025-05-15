@@ -22,7 +22,7 @@ public interface Constants {
         public static final double WHEEL_CIRCUMFERENCE_METERS = 0.479;
         public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(21.75);
 
-        public static final double DRIVETRAIN_GEAR_RATIO = 1.0/8.45;
+        public static final double DRIVETRAIN_GEAR_RATIO = 1.0/12.76;
 
           public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE_METERS * DRIVETRAIN_GEAR_RATIO / 42.0; //42.0 represents the pulse per motor shaft reduction (42 for NEO)
     }

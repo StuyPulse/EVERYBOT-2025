@@ -68,7 +68,7 @@ public interface Settings {
     
     public interface Pivot {
         //PIVOT ANGLES
-        public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
+        public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(1);
         
         public static final Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
         public static final Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(29);

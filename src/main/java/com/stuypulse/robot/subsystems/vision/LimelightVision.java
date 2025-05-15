@@ -69,7 +69,11 @@ public class LimelightVision extends SubsystemBase {
      
     private void updatePoseEstimator() {
         apriltagDetected = false;
-        poseEstimator.update(drivetrain.getHeading(), drivetrain.getLeftDistance(), drivetrain.getRightDistance());
+        doRejectUpdate = false;
+
+        poseEstimator.update(drivetrain.getHeading(), 
+            Units.metersToInches(drivetrain.getLeftDistance()), 
+            Units.metersToInches(drivetrain.getRightDistance()));
 
         if (megaTagMode == MegaTagMode.MEGATAG1) {
             LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
@@ -120,11 +124,22 @@ public class LimelightVision extends SubsystemBase {
         }
     }
 
-    @Override
-    public void periodic() {
+    public Pose2d getEstimatedPose() {
         updatePoseEstimator();
         limelightPose = poseEstimator.getEstimatedPosition();
+        return limelightPose;
+    }
+
+    public void resetEstimatedPose(Pose2d newPose) {
+        poseEstimator.resetPose(newPose);
+        getEstimatedPose();
+    }
+
+    @Override
+    public void periodic() {
+        getEstimatedPose();
         field.setRobotPose(limelightPose);
+
         SmartDashboard.putData("Field", field);
         SmartDashboard.putBoolean("Vision/AprilTag Detected?", apriltagDetected);
      }
