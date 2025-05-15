@@ -73,7 +73,7 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         // ledSubsystem.setDefaultCommand(new LEDDeafultCommand());
         pivot.setDefaultCommand(new PivotHoldCoral());
-        driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+        //driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
     }
 
     /***********************/
@@ -134,9 +134,9 @@ public class RobotContainer {
                 .onTrue(new PivotReseatCoral());
 
         //JOYSTICK BUTTONS
-        driver.getLeftStickButton()                                             // Drive to Nearest April Tag
-                .whileTrue(new VisionDriveToNearestApriltag())
-                .onFalse(new DriveArcade(0, 0, true));
+        // driver.getLeftStickButton()                                             // Drive to Nearest April Tag
+        //         .whileTrue(new VisionDriveToNearestApriltag())
+        //         .onFalse(new DriveArcade(0, 0, true));
     }
 
     /**************/
