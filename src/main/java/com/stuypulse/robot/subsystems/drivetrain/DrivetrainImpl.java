@@ -228,12 +228,12 @@ public class DrivetrainImpl extends Drivetrain {
                         },
                         log -> {
                             log.motor("drive-left")
-                                    .voltage(Voltage.ofBaseUnits(leftMotors[0].getBusVoltage(), Volts))
+                                    .voltage(Voltage.ofBaseUnits(leftMotors[0].getAppliedOutput(), Volts))
                                     .linearPosition(Meters.ofBaseUnits(getLeftDistance()))
                                     .linearVelocity(getMetersPerSecond(getLeftVelocity()));
 
                             log.motor("drive-right")
-                                    .voltage(Voltage.ofBaseUnits(rightMotors[0].getBusVoltage(), Volts))
+                                    .voltage(Voltage.ofBaseUnits(rightMotors[0].getAppliedOutput(), Volts))
                                     .linearPosition(Meters.ofBaseUnits(getRightDistance()))
                                     .linearVelocity(getMetersPerSecond(getRightVelocity()));
                         },
