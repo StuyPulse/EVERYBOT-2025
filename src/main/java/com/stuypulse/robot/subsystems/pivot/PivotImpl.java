@@ -20,20 +20,22 @@ import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class PivotImpl extends Pivot {
-    private SparkMax pivotMotor;
-    private SparkMax rollerMotor;
-    private RelativeEncoder pivotEncoder;
-
-    private Controller controller;
+    private final SparkMax rollerMotor;
+    private final SparkMax pivotMotor;
+    private final RelativeEncoder pivotEncoder;
+    private final DutyCycleEncoder pivotThroughbore;
     
-    private BStream stallDetector;
+    private final Controller controller;
     
-    private SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
-    private SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
+    private final BStream stallDetector;
+    
+    private final SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
+    private final SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 
     public PivotImpl() {
         super();
@@ -47,7 +49,9 @@ public class PivotImpl extends Pivot {
         rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         pivotEncoder = pivotMotor.getEncoder();
-      
+        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO, Constants.Pivot.PIVOT_THROUGHBORE_RANGE, Constants.Pivot.PIVOT_THROUGHBORE_EXPECTED_ZERO);
+        pivotThroughbore.setInverted(true);
+        
         controller = new ArmFeedforward(Gains.Pivot.FF.kG)
                 .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
 
@@ -60,13 +64,15 @@ public class PivotImpl extends Pivot {
     
     @Override
     public SysIdRoutine getSysIdRoutine() {
+        setPivotControlMode(PivotControlMode.MANUAL);
         return SysId.getSysIdRoutine(
             pivotMotor.toString(),
             pivotMotor,
-            getPivotRotation(),
+            this::getPivotVelocity,
+            this::getPivotRotation,
             Pivot.getInstance(),
-            0.5,
-            .5,
+            1,
+            3,
             10
         );
     }
@@ -83,9 +89,17 @@ public class PivotImpl extends Pivot {
         pivotMotor.set(speed);
     }
 
+    public Rotation2d getPivotRotationRelative() {
+        return Rotation2d.fromRotations(pivotEncoder.getPosition());
+    }
+    
     @Override
     public Rotation2d getPivotRotation() {
-        return Rotation2d.fromRotations(pivotEncoder.getPosition());
+        return Rotation2d.fromRotations(pivotThroughbore.get() / Constants.Pivot.PIVOT_THROUGHBORE_RANGE);
+    }
+
+    public double getPivotVelocity() {
+        return pivotEncoder.getVelocity();
     }
 
     @Override
@@ -120,11 +134,11 @@ public class PivotImpl extends Pivot {
                 resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
             }
         } else if (pivotControlMode == PivotControlMode.USING_STATES) {
-            pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+            pivotMotor.setVoltage(-controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
       
-        SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
-        SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
+        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
+        SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
     }       

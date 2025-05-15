@@ -8,7 +8,7 @@ StuyPulse's code for the Everybot designed by 118.
 - Add LimeLight 2 for better Odometry
 
 ## Mechanisms
-- ALGAE from Ground to PROCESSOR
+- ALGAE from Ground  and Golf-Tee to PROCESSOR
 - CORAL from Coral Station to L1
 - Deep Climb
 - Limelight 2 for vision and alignment

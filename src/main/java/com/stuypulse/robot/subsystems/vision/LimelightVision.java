@@ -1,20 +1,20 @@
 package com.stuypulse.robot.subsystems.vision;
 
-import org.photonvision.EstimatedRobotPose;
-
 import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Cameras.Camera;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
-import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightVision extends SubsystemBase {
@@ -23,6 +23,7 @@ public class LimelightVision extends SubsystemBase {
     private final int maxTagCount = 2;
     private boolean doRejectUpdate = false;
     private Pose2d limelightPose;
+    private final Matrix<N3, N1> visionStdDevs;
     
     private final Field2d field = new Field2d();
 
@@ -43,6 +44,8 @@ public class LimelightVision extends SubsystemBase {
     }
 
     private LimelightVision() {
+        visionStdDevs = VecBuilder.fill(.1, .1, .1);
+
         for (Camera camera : Cameras.LimelightCameras) {
             Pose3d robotRelativePose = camera.getLocation();
             LimelightHelpers.setCameraPose_RobotSpace(
@@ -63,9 +66,12 @@ public class LimelightVision extends SubsystemBase {
             drivetrain.getPose());
     }
      
-    public void updatePoseEstimator() {
+    private void updatePoseEstimator() {
+        poseEstimator.update(drivetrain.getHeading(), drivetrain.getLeftDistance(), drivetrain.getRightDistance());
+
         if (megaTagMode == MegaTagMode.MEGATAG1) {
             LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+
             if (mt1.tagCount == 1 && mt1.rawFiducials.length == 1) {
                 if(mt1.rawFiducials[0].ambiguity > .7) {
                     doRejectUpdate = true;
@@ -74,37 +80,43 @@ public class LimelightVision extends SubsystemBase {
                     doRejectUpdate = true;
                 }
             }
+
             if (mt1.tagCount == 0) {
                 doRejectUpdate = true;
             }
+
             if(!doRejectUpdate) {
-                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+                poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
                 poseEstimator.addVisionMeasurement(
                     mt1.pose,
                     mt1.timestampSeconds);
             }
-        }
-        else if (megaTagMode == MegaTagMode.MEGATAG2) {
+
+        } else if (megaTagMode == MegaTagMode.MEGATAG2) {
             LimelightHelpers.SetRobotOrientation("limelight", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0,0, 0, 0,0);
             LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+            
             if(Math.abs(Drivetrain.getInstance().getGyroRate()) > 360) {
                 doRejectUpdate = true;
             }
+
             if(mt2.tagCount == 0) {
                 doRejectUpdate = true;
             }
+
             if(!doRejectUpdate) {
-                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+                poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
                 poseEstimator.addVisionMeasurement(
                     mt2.pose,
                     mt2.timestampSeconds
                 );             
             }
         }
-    } 
+    }
 
     @Override
     public void periodic() {
+        updatePoseEstimator();
         limelightPose = poseEstimator.getEstimatedPosition();
         field.setRobotPose(limelightPose);
         SmartDashboard.putData("Field", field);

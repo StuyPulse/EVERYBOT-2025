@@ -1,53 +1,60 @@
 package com.stuypulse.robot.subsystems.climber;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 
-import com.stuypulse.robot.constants.Constants;
-import com.stuypulse.robot.constants.Gains;
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Motors.ClimbConfig;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.stuylib.control.Controller;
-import com.stuypulse.stuylib.control.feedback.PIDController;
-import com.stuypulse.stuylib.control.feedforward.ArmFeedforward;
-import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
-import com.stuypulse.robot.constants.Motors.ClimbConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbImpl extends Climb {
     private SparkMax climbMotor;
     private RelativeEncoder climbEncoder;
 
-    private Controller controller;
-
     public ClimbImpl() {
         super();
         climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
-        climbEncoder = climbMotor.getEncoder();
-        climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        controller = new MotorFeedforward(Gains.Climb.FF.kS, Gains.Climb.FF.kV, Gains.Climb.FF.kA).position()
-            .add(new ArmFeedforward(Gains.Climb.FF.kG))
-            .add(new PIDController(Gains.Climb.PID.kP, Gains.Climb.PID.kI, Gains.Climb.PID.kD));
+        Motors.ClimbConfig.CLIMB_MOTOR_CONFIG.encoder
+                .positionConversionFactor(
+                        Settings.Climb.CLIMB_MOTOR_GEAR_RATIO * Settings.Climb.CLIMB_MOTOR_REDUCTION_FACTOR);
+
+        climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
+        climbEncoder = climbMotor.getEncoder();
     }
 
     @Override
-    public Rotation2d getCurrentAngle(){
-        return Rotation2d.fromRotations(climbEncoder.getPosition() - Constants.Climb.CLIMBER_OFFSET.getRotations());
+    public Rotation2d getCurrentAngle() {
+        return Rotation2d.fromRotations(climbEncoder.getPosition());
     }
 
     @Override
     public boolean atTargetAngle() {
-        return (getState().getTargetAngle().getDegrees() - getCurrentAngle().getDegrees()) > Settings.Climb.ANGLE_TOLERANCE.getDegrees();
+        return Math.abs(getCurrentAngle().getDegrees()
+                - getState().getTargetAngle().getDegrees()) < Settings.Climb.ANGLE_TOLERANCE.getDegrees();
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         super.periodic();
-        climbMotor.setVoltage(controller.update(getState().getTargetAngle().getDegrees(), getCurrentAngle().getDegrees()));
+
+        if (!atTargetAngle()) {
+            climbMotor.set(getState().getTargetMotorSpeed());
+        } else {
+            climbMotor.set(0.0);
+        }
+
+        SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
+        SmartDashboard.putNumber("Climb/Current Angle", getCurrentAngle().getDegrees());
+        SmartDashboard.putNumber("Climb/Target angle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putBoolean("Climb/At target angle", atTargetAngle());
     }
 }

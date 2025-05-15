@@ -27,6 +27,7 @@ public interface Ports {
     public interface Pivot {
         int PIVOT_MOTOR = 1;
         int ROLLER_MOTOR = 3;
+        int THROUGHBORE_DIO = 5;
     }
   
     public interface Drivetrain {

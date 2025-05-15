@@ -24,8 +24,8 @@ public class Gains {
             double kG = 0.21;
         }
         public interface PID {
-            double kP = 0.16;
-            double kI = 0.02;
+            double kP = 0.08;
+            double kI = 0.01;
             double kD = 0.0;
         }       
     }

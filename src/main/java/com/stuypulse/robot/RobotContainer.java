@@ -12,22 +12,20 @@ import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
-import com.stuypulse.robot.commands.leds.LEDApplyPattern;
-import com.stuypulse.robot.commands.leds.LEDDeafultCommand;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
+import com.stuypulse.robot.commands.pivot.PivotReseatCoral;
 import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
-import com.stuypulse.robot.commands.pivot.PivotToDirection;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
 import com.stuypulse.robot.commands.pivot.PivotCombos.PivotLolipopAlgeaIntake;
+import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeHold;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
-import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
@@ -35,6 +33,7 @@ import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.constants.Ports;
 
 import com.stuypulse.stuylib.input.Gamepad;
@@ -54,6 +53,7 @@ public class RobotContainer {
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Pivot pivot = Pivot.getInstance();
+    private final LimelightVision limelightVision = LimelightVision.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -82,54 +82,59 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // BUTTONS
-       driver.getTopButton()
-               .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+        driver.getTopButton()                                                   // Coral Score
+                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .whileTrue(new PivotCoralScore())
-                .onFalse(new PivotToCoralStow());
-                // .onFalse(new PivotHoldCoral());
-       driver.getLeftButton()
+                .onFalse(new PivotToCoralStow())
+                .onFalse(new PivotHoldCoral());
+        driver.getLeftButton()                                                  // Climb
                 .whileTrue(new ClimbToClimb());
-        driver.getRightButton()
+        driver.getRightButton()                                                 // Stow Climb
                 .whileTrue(new ClimbToStow());
-        driver.getBottomButton()
+        driver.getBottomButton()                                                
                 .whileTrue(new PivotAlgaeOuttake())
-                .onFalse(new PivotRollerStop());
+                .onFalse(new PivotHoldCoral());
 
         // TRIGGERS
-        driver.getRightTriggerButton()
+        driver.getRightTriggerButton()                                          // Pivot Up
                 .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
                 .whileTrue(new PivotRaise())
                 .onFalse(new PivotStop());
-        driver.getLeftTriggerButton()
+        driver.getLeftTriggerButton()                                           // Pivot Down
                 .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
                 .whileTrue(new PivotLower())
                 .onFalse(new PivotStop());
 
         // BUMPERS
-       driver.getRightBumper()
-               .whileTrue(new PivotAlgaeOuttake());
-        //        .onFalse(new PivotHoldCoral());
-       driver.getLeftBumper()
+        driver.getRightBumper()                                                  // Algae Outtake
+               .whileTrue(new PivotAlgaeOuttake())
+               .onFalse(new PivotHoldCoral());
+        driver.getLeftBumper()                                                   // Algae Intake
                .whileTrue(new PivotAlgaeIntake())
-               .onFalse(new PivotRollerStop());
+               .onFalse(new PivotAlgaeHold());
 
         // DPAD
-        driver.getDPadRight()
+        driver.getDPadRight()                                                   // Pivot to Hold Algae
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-                .onTrue(new PivotToAlgaeStow());
-        driver.getDPadDown()
+                .onTrue(new PivotToAlgaeStow())
+                .onTrue(new PivotAlgaeHold());
+        driver.getDPadDown()                                                    // Pivot to Intake Algae
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .onTrue(new PivotToAlgaeIntake());
-        driver.getDPadLeft()
-                .whileTrue(new PivotLolipopAlgeaIntake())
-                 .onFalse(new SetPivotControlMode(Pivot.PivotControlMode.MANUAL));
+        driver.getDPadLeft()                                                    // Pivot to Lollipop Intake
+                .onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
+                .onTrue(new PivotLolipopAlgeaIntake())
+                .onFalse(new PivotRollerStop())
+                .onFalse(new PivotToAlgaeStow());
         
         // MENU BUTTONS
-        driver.getRightMenuButton()
+        driver.getRightMenuButton()                                             // Reset Relative Encoder
                 .onTrue(new PivotResetAngle());
+        driver.getLeftMenuButton()                                              // Reseat Coral
+                .onTrue(new PivotReseatCoral());
 
         //JOYSTICK BUTTONS
-        driver.getLeftStickButton()
+        driver.getLeftStickButton()                                             // Drive to Nearest April Tag
                 .whileTrue(new VisionDriveToNearestApriltag())
                 .onFalse(new DriveArcade(0, 0, true));
     }
