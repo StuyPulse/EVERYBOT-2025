@@ -66,17 +66,13 @@ public interface Settings {
         public static final double CLIMB_MOTOR_REDUCTION_FACTOR = 1.0/8.0; //Found from testing
     }
     
-    public interface Pivot { // TODO test algae speeds     
-        // SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 0.75);
-        // SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
-        // SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
-        
+    public interface Pivot { 
         //PIVOT ANGLES
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         
         public static final Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
         public static final Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(29);
-        public static final Rotation2d CORAL_RESEAT_ANGLE = Rotation2d.fromDegrees(15);
+        public static final Rotation2d CORAL_RESEAT_ANGLE = Rotation2d.fromDegrees(29);
         
         public static final Rotation2d ALGAE_LOLLIPOP_ANGLE = Rotation2d.fromDegrees(25);
         public static final Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(45);
@@ -90,12 +86,12 @@ public interface Settings {
         
         //ROLLER SPEEDS
         public static SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
-        public static SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Intake Speed", -0.75); // TODO: Test
+        public static SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Intake Speed", -0.85); // TODO: Test
         public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.5); // TODO: Test
-        public static SmartNumber ALGAE_HOLD_SPEED = new SmartNumber("Pivot/Roller/Algae/Hold Speed", -0.05); // TODO: Test
+        public static SmartNumber ALGAE_HOLD_SPEED = new SmartNumber("Pivot/Roller/Algae/Hold Speed", -0.1); // TODO: Test
         
-        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.5);
-        public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.08);
+        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.4);
+        public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.1);
         
         //PIVOT MOTOR AND ROLLER CURRENT LIMIT
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;

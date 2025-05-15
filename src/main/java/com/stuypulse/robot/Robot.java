@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
 
         //TODO: REMOVE THE LINE BELOW DURING COMPETITIONS TO ENSURE NO LAG OCCURS, THIS IS HERE FOR LIMELIGHT TESTING
-        NetworkTableInstance.getDefault().flush();
+        //NetworkTableInstance.getDefault().flush();
     }
 
     /*********************/

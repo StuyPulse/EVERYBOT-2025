@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 
 import java.util.List;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.config.RobotConfig;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -313,7 +314,7 @@ public class DrivetrainImpl extends Drivetrain {
     public void periodic() {
         updateVision();
         updateOdometry();
-        field.setRobotPose(odometry.getPoseMeters());
-        SmartDashboard.putData("Field", field);
+        // field.setRobotPose(odometry.getPoseMeters());
+        // SmartDashboard.putData("Field", field);
     }
 }
