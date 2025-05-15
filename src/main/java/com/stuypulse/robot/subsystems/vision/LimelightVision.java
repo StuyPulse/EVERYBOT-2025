@@ -22,6 +22,7 @@ public class LimelightVision extends SubsystemBase {
     private final MegaTagMode megaTagMode = MegaTagMode.MEGATAG1;
     private final int maxTagCount = 2;
     private boolean doRejectUpdate = false;
+    private boolean apriltagDetected = false;
     private Pose2d limelightPose;
     private final Matrix<N3, N1> visionStdDevs;
     
@@ -67,6 +68,7 @@ public class LimelightVision extends SubsystemBase {
     }
      
     private void updatePoseEstimator() {
+        apriltagDetected = false;
         poseEstimator.update(drivetrain.getHeading(), drivetrain.getLeftDistance(), drivetrain.getRightDistance());
 
         if (megaTagMode == MegaTagMode.MEGATAG1) {
@@ -86,6 +88,8 @@ public class LimelightVision extends SubsystemBase {
             }
 
             if(!doRejectUpdate) {
+                apriltagDetected = true;
+
                 poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
                 poseEstimator.addVisionMeasurement(
                     mt1.pose,
@@ -105,6 +109,8 @@ public class LimelightVision extends SubsystemBase {
             }
 
             if(!doRejectUpdate) {
+                apriltagDetected = true;
+
                 poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
                 poseEstimator.addVisionMeasurement(
                     mt2.pose,
@@ -120,5 +126,6 @@ public class LimelightVision extends SubsystemBase {
         limelightPose = poseEstimator.getEstimatedPosition();
         field.setRobotPose(limelightPose);
         SmartDashboard.putData("Field", field);
+        SmartDashboard.putBoolean("Vision/AprilTag Detected?", apriltagDetected);
      }
 }

@@ -66,11 +66,7 @@ public interface Settings {
         public static final double CLIMB_MOTOR_REDUCTION_FACTOR = 1.0/8.0; //Found from testing
     }
     
-    public interface Pivot { // TODO test algae speeds     
-        // SmartNumber ALGAE_HOLDING_SPEED = new SmartNumber("Pivot/Roller/Algae Holding Speed", 0.75);
-        // SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae Intake Speed", -0.75);
-        // SmartNumber ALGAE_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Algae Shoot Speed", 1);
-        
+    public interface Pivot {
         //PIVOT ANGLES
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         

@@ -311,6 +311,8 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void periodic() {
+        super.periodic();
+        
         updateVision();
         updateOdometry();
     }
