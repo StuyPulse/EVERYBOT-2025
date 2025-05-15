@@ -11,6 +11,7 @@ import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import java.util.List;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.config.RobotConfig;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -319,5 +320,7 @@ public class DrivetrainImpl extends Drivetrain {
         
         updateVision();
         updateOdometry();
+        // field.setRobotPose(odometry.getPoseMeters());
+        // SmartDashboard.putData("Field", field);
     }
 }

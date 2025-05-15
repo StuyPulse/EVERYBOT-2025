@@ -12,7 +12,8 @@ public class PivotReseatCoral extends SequentialCommandGroup{
                 .alongWith(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
                 .withTimeout(1),
             new PivotToCoralStow()
-                .withTimeout(0.01)
+                .alongWith(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
+                .withTimeout(1)
         );
     }
 }

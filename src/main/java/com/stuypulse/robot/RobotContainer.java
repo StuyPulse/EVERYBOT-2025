@@ -131,7 +131,7 @@ public class RobotContainer {
         driver.getRightMenuButton()                                             // Reset Relative Encoder
                 .onTrue(new PivotResetAngle());
         driver.getLeftMenuButton()                                              // Reseat Coral
-                .onTrue(new PivotReseatCoral());
+                .whileTrue(new PivotReseatCoral());
 
         //JOYSTICK BUTTONS
         // driver.getLeftStickButton()                                             // Drive to Nearest April Tag
