@@ -66,9 +66,10 @@ public interface Settings {
         public static final double CLIMB_MOTOR_REDUCTION_FACTOR = 1.0/8.0; //Found from testing
     }
     
-    public interface Pivot { 
+    public interface Pivot {
+
         //PIVOT ANGLES
-        public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
+        public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(1);
         
         public static final Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
         public static final Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(29);
