@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 
 import java.util.List;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.config.RobotConfig;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;

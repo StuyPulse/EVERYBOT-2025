@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.283573008849557,
+        "y": 5.765763274336283
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.753258754863814,
+        "y": 5.63403453307393
+      },
+      "isLocked": false,
+      "linkedName": "NonProcessor After Reverse"
+    },
+    {
+      "anchor": {
+        "x": 1.604867256637168,
+        "y": 7.402986725663716
+      },
+      "prevControl": {
+        "x": 1.9672566371681417,
+        "y": 6.827046460176991
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "NonProcessor HP"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Non-Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

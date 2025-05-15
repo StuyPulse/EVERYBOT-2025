@@ -1,5 +1,6 @@
 package com.stuypulse.robot;
 
+import com.pathplanner.lib.config.RobotConfig;
 import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.DoubleCenterCoralAuton;
@@ -76,6 +77,12 @@ public class RobotContainer {
     }
 
     /***********************/
+    /*** CONFIGURE CMDS ****/
+    /***********************/
+    // TODO: FOLLOW https://pathplanner.dev/pplib-getting-started.html#install-pathplannerlib
+
+
+    /***********************/
     /*** BUTTON BINDINGS ***/
     /***********************/
 
@@ -105,10 +112,10 @@ public class RobotContainer {
                 .onFalse(new PivotStop());
 
         // BUMPERS
-        driver.getRightBumper()                                                  // Algae Outtake
+        driver.getRightBumper()                                                 // Algae Outtake
                .whileTrue(new PivotAlgaeOuttake())
                .onFalse(new PivotHoldCoral());
-        driver.getLeftBumper()                                                   // Algae Intake
+        driver.getLeftBumper()                                                  // Algae Intake
                .whileTrue(new PivotAlgaeIntake())
                .onFalse(new PivotAlgaeHold());
 
@@ -141,6 +148,7 @@ public class RobotContainer {
     /**************/
     /*** AUTONS ***/
     /**************/
+
 
     public void configureAutons() {
         // Coral

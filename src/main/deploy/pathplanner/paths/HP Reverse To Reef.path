@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 3.565652654867256,
+        "y": 6.432300884955752
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8420801526717558,
-        "y": 4.920920801526717
+        "x": 3.099723451327433,
+        "y": 6.289933628318583
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "NonProcessor After HP Reverse"
     },
     {
       "anchor": {
-        "x": 5.442509541984733,
-        "y": 7.0
+        "x": 3.3844579646017694,
+        "y": 5.21570796460177
       },
       "prevControl": {
-        "x": 4.513096374045801,
-        "y": 5.255844465648854
+        "x": 3.106194690265486,
+        "y": 5.713993362831858
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral 2"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Non-Processor",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
