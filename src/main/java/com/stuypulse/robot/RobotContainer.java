@@ -14,6 +14,7 @@ import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
+import com.stuypulse.robot.commands.pivot.PivotReseatCoral;
 import com.stuypulse.robot.commands.pivot.PivotResetAngle;
 import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
@@ -104,10 +105,10 @@ public class RobotContainer {
                 .onFalse(new PivotStop());
 
         // BUMPERS
-       driver.getRightBumper()                                                  // Algae Outtake
+        driver.getRightBumper()                                                  // Algae Outtake
                .whileTrue(new PivotAlgaeOuttake())
                .onFalse(new PivotHoldCoral());
-       driver.getLeftBumper()                                                   // Algae Intake
+        driver.getLeftBumper()                                                   // Algae Intake
                .whileTrue(new PivotAlgaeIntake())
                .onFalse(new PivotAlgaeHold());
 
@@ -128,6 +129,8 @@ public class RobotContainer {
         // MENU BUTTONS
         driver.getRightMenuButton()                                             // Reset Relative Encoder
                 .onTrue(new PivotResetAngle());
+        driver.getLeftMenuButton()                                              // Reseat Coral
+                .onTrue(new PivotReseatCoral());
 
         //JOYSTICK BUTTONS
         driver.getLeftStickButton()                                             // Drive to Nearest April Tag

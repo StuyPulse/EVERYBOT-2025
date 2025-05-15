@@ -95,11 +95,11 @@ public interface Settings {
 
         Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
-        Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(34); 
+        Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(29);
+        Rotation2d CORAL_RESEAT_ANGLE = Rotation2d.fromDegrees(15);
         Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(45);
         Rotation2d ALGAE_INTAKE_ANGLE = Rotation2d.fromDegrees(70);
         Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(85);
-        Rotation2d PIVOT_CORAL_OUTAKE_ANGLE = Rotation2d.fromDegrees(41);
         Rotation2d INTAKE_ALGAE_FROM_LOLIPOP = Rotation2d.fromDegrees(25);
     }
 

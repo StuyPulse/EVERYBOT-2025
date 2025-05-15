@@ -33,7 +33,8 @@ public abstract class Pivot extends SubsystemBase {
         SCORE_CORAL(Settings.Pivot.CORAL_SCORE_ANGLE),
         INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_ANGLE),
         STOW_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE),
-        INTAKE_ALGAE_FROM_LOLIPOP(Settings.Pivot.INTAKE_ALGAE_FROM_LOLIPOP);
+        INTAKE_ALGAE_FROM_LOLIPOP(Settings.Pivot.INTAKE_ALGAE_FROM_LOLIPOP),
+        RESEAT_CORAL(Settings.Pivot.CORAL_RESEAT_ANGLE);
 
         Rotation2d targetAngle;
 
