@@ -33,6 +33,7 @@ import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.constants.Ports;
 
 import com.stuypulse.stuylib.input.Gamepad;
@@ -52,7 +53,7 @@ public class RobotContainer {
     private final LEDController ledSubsystem = LEDController.getInstance();
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Pivot pivot = Pivot.getInstance();
-    private final Drivetrain drive = Drivetrain.getInstance();
+    private final LimelightVision limelightVision = LimelightVision.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
