@@ -96,11 +96,11 @@ public class RobotContainer {
                 .onFalse(new PivotHoldCoral());
 
         // TRIGGERS
-        driver.getRightTriggerButton()                                          // Pivot Up
-                .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-                .whileTrue(new PivotRaise())
-                .onFalse(new PivotStop());
-        driver.getLeftTriggerButton()                                           // Pivot Down
+        driver.getLeftTriggerButton()                                           // Pivot Up
+        .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+        .whileTrue(new PivotRaise())
+        .onFalse(new PivotStop());
+        driver.getRightTriggerButton()                                          // Pivot Down
                 .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
                 .whileTrue(new PivotLower())
                 .onFalse(new PivotStop());
@@ -124,7 +124,7 @@ public class RobotContainer {
         driver.getDPadLeft()                                                    // Pivot to Lollipop Intake
                 .onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
                 .onTrue(new PivotLolipopAlgeaIntake())
-                .onFalse(new PivotRollerStop())
+                .onFalse(new PivotAlgaeHold())
                 .onFalse(new PivotToAlgaeStow());
         
         // MENU BUTTONS
