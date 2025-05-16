@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.017874513618676,
+        "y": 1.8013740272373537
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.000802529182878,
+        "y": 1.1953185797665369
+      },
+      "isLocked": false,
+      "linkedName": "WaitProcessor"
+    },
+    {
+      "anchor": {
+        "x": 6.017874513618676,
+        "y": 0.7514469844357973
+      },
+      "prevControl": {
+        "x": 5.983730544747081,
+        "y": 1.6221181906614777
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "ScoreProc"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "ProcessorAlgae",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
