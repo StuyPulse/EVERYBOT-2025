@@ -45,6 +45,7 @@ import edu.wpi.first.units.measure.Voltage;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
 
 public class DrivetrainImpl extends Drivetrain {
     private final AHRS gyro = new AHRS();
@@ -224,7 +225,7 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public SysIdRoutine getSysIdRoutine() {
         return new SysIdRoutine(
-                new SysIdRoutine.Config(),
+                new SysIdRoutine.Config(Volts.of(1).per(Second), Volts.of(8), null, null),
                 new SysIdRoutine.Mechanism(
                         voltage -> {
                             leftMotors[0].setVoltage(voltage);

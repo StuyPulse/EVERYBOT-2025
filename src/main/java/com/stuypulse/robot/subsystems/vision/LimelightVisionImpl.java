@@ -63,7 +63,9 @@ public class LimelightVisionImpl extends LimelightVision {
             Units.metersToInches(drivetrain.getRightDistance()));
 
         if (megaTagMode == MegaTagMode.MEGATAG1) {
-            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight"); 
+
+            if(mt1 == null) return;
 
             if (mt1.tagCount == 1 && mt1.rawFiducials.length == 1) {
                 if(mt1.rawFiducials[0].ambiguity > .7) {
