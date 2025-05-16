@@ -23,7 +23,7 @@ public class LimelightVisionImpl extends LimelightVision {
     private boolean doRejectUpdate = false;
     private boolean apriltagDetected = false;
 
-    private final Matrix<N3, N1> visionStdDevs;
+    private final Matrix<N3, N1> visionStdDevs; //X, Y, Theta
     private final DifferentialDrivePoseEstimator poseEstimator;
     private Pose2d limelightPose;
     
@@ -32,7 +32,7 @@ public class LimelightVisionImpl extends LimelightVision {
     private final Drivetrain drivetrain;
 
     LimelightVisionImpl() {
-        visionStdDevs = VecBuilder.fill(.1, .1, .1);
+        visionStdDevs = VecBuilder.fill(.5, .5, .3);
 
         for (Camera camera : Cameras.LimelightCameras) {
             Pose3d robotRelativePose = camera.getLocation();
@@ -59,8 +59,8 @@ public class LimelightVisionImpl extends LimelightVision {
         doRejectUpdate = false;
 
         poseEstimator.update(drivetrain.getHeading(), 
-            Units.metersToInches(drivetrain.getLeftDistance()), 
-            Units.metersToInches(drivetrain.getRightDistance()));
+            drivetrain.getLeftDistance(), 
+            drivetrain.getRightDistance());
 
         if (megaTagMode == MegaTagMode.MEGATAG1) {
             LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight"); 

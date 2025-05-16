@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
+import com.revrobotics.spark.SparkMax;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.angle.AngleController;
 
@@ -39,6 +40,8 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract void resetPose();
     public abstract Pose2d getPose();
 
+    public abstract double getOutputVoltage(SparkMax motor);
+
     public abstract Command getAutonomousCommand();
 
     public abstract void driveToNearestAprilTag();
@@ -47,8 +50,5 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract DifferentialDriveOdometry getOdometry();
 
     @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Drivetrain/Left encoder distance", getLeftDistance());
-        SmartDashboard.putNumber("Drivetrain/Right encoder distance", getRightDistance());
-    }
+    public void periodic() {}
 }
