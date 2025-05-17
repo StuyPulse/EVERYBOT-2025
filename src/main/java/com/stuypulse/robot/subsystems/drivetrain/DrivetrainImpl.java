@@ -335,11 +335,12 @@ public class DrivetrainImpl extends Drivetrain {
         
         updateVision();
         updateOdometry();
-        SmartDashboard.putNumber("Drivetrain/ left applied voltage",getOutputVoltage(leftMotors[0]));
-        SmartDashboard.putNumber("Drivetrain/ right applied voltage",getOutputVoltage(rightMotors[0]));
-        SmartDashboard.putNumber("Drivetrain/ left distance", getLeftDistance());
-        SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
-        SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
-        SmartDashboard.putNumber("Drivetrain/ Right velocity", getRightVelocity());
+        
+        SmartDashboard.putNumber("Drivetrain/Left applied voltage",getOutputVoltage(leftMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/Right applied voltage",getOutputVoltage(rightMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/Left distance", getLeftDistance());
+        SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
+        SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
     }
 }

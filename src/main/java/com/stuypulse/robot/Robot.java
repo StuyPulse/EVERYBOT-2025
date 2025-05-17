@@ -6,7 +6,6 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -31,9 +30,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-
-        //TODO: REMOVE THE LINE BELOW DURING COMPETITIONS TO ENSURE NO LAG OCCURS, THIS IS HERE FOR LIMELIGHT TESTING
-        //NetworkTableInstance.getDefault().flush();
     }
 
     /*********************/

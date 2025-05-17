@@ -131,5 +131,5 @@ public class LimelightVisionImpl extends LimelightVision {
 
         SmartDashboard.putData("Field", field);
         SmartDashboard.putBoolean("Vision/AprilTag Detected?", apriltagDetected);
-     }
+    }
 }
