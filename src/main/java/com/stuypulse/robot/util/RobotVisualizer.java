@@ -1,6 +1,7 @@
 package com.stuypulse.robot.util;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -37,6 +38,10 @@ public class RobotVisualizer {
     private final MechanismLigament2d pivotSupport;
 
     private double pivotAngle;
+
+    private final MechanismRoot2d rollerRoot;
+    private final MechanismLigament2d[] rollerLigaments;
+
     private double rollerSpeed;
 
 
@@ -90,6 +95,22 @@ public class RobotVisualizer {
             new Color8Bit(Color.kDarkGray)
         );
 
+
+        /* Rollers */
+        rollerRoot = canvas.getRoot("z - Roller Root", 70, 65);
+        rollerLigaments = new MechanismLigament2d[4];
+        for(int i = 0; i < 4; i++){
+            rollerLigaments[i] = new MechanismLigament2d(
+                "z - Roller " + (i+1), 
+                4, 
+                90 * i,
+                6,
+                new Color8Bit(Color.kBlack)
+            );
+            rollerRoot.append(rollerLigaments[i]);
+        }
+
+        /* Appending Stuff */
         bumper.append(bumperLine);
         superStructureBase.append(superStructureLength);
         pivotVertex.append(pivot);
@@ -105,11 +126,21 @@ public class RobotVisualizer {
             pivot.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));
         }
 
+        rollerRoot.setPosition(
+            70 + (Math.cos(Units.degreesToRadians(pivotAngle)) * 40),
+            25 + (Math.sin(Units.degreesToRadians(pivotAngle)) * 40)
+        );
+
         SmartDashboard.putData("Visualizers/Robot", canvas);
     }
 
     public void updateRollers(double speed) {
         this.rollerSpeed = speed;
+        for(int i = 0; i < 4; i++) {
+            rollerLigaments[i].setAngle(rollerLigaments[i].getAngle() + (-speed) * 20);
+        }
+
+        SmartDashboard.putData("Visualizers/Robot", canvas);
     }
 
 }
