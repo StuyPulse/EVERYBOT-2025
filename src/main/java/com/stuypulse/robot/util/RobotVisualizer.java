@@ -1,7 +1,6 @@
 package com.stuypulse.robot.util;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -42,7 +41,6 @@ public class RobotVisualizer {
 
     private double pivotAngle;
 
-    private final MechanismRoot2d rollerRoot;
     private final MechanismLigament2d[] rollerLigaments;
 
     private double rollerSpeed;
@@ -116,7 +114,6 @@ public class RobotVisualizer {
 
 
         /* Rollers */
-        rollerRoot = canvas.getRoot("z - Roller Root", 70, 65);
         rollerLigaments = new MechanismLigament2d[4];
         for(int i = 0; i < 4; i++){
             rollerLigaments[i] = new MechanismLigament2d(
@@ -126,7 +123,7 @@ public class RobotVisualizer {
                 8,
                 new Color8Bit(Color.kBlack)
             );
-            rollerRoot.append(rollerLigaments[i]);
+            pivot.append(rollerLigaments[i]);
         }
 
         /* Coral Cage */
@@ -206,11 +203,6 @@ public class RobotVisualizer {
         } else if(Pivot.getInstance().PivotControlMode() == PivotControlMode.USING_STATES) {
             pivot.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));
         }
-
-        rollerRoot.setPosition(
-            70 + (Math.cos(Units.degreesToRadians(pivotAngle)) * 40),
-            25 + (Math.sin(Units.degreesToRadians(pivotAngle)) * 40)
-        );
 
         SmartDashboard.putData("Visualizers/Robot", canvas);
     }
