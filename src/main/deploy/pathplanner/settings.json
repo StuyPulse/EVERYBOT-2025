@@ -3,10 +3,13 @@
   "robotLength": 1.016254,
   "holonomicMode": false,
   "pathFolders": [
-    "ProcessorAlgae",
-    "Non-Processor"
+    "TROLL",
+    "Non-Processor",
+    "ProcessorAlgae"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "TROLL"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

@@ -29,15 +29,12 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
-import com.stuypulse.robot.commands.pivot.roller.UpdateRollerSpeedInVis;
 import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
-import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -93,7 +90,6 @@ public class RobotContainer {
         driver.getTopButton()                                                   // Coral Score
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .whileTrue(new PivotCoralScore())
-                .whileTrue(new UpdateRollerSpeedInVis(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble()))
                 .onFalse(new PivotToCoralStow())
                 .onFalse(new PivotHoldCoral());
         driver.getLeftButton()                                                  // Climb
@@ -102,7 +98,6 @@ public class RobotContainer {
                 .whileTrue(new ClimbToStow());
         driver.getBottomButton()                                                
                 .whileTrue(new PivotAlgaeOuttake())
-                .whileTrue(new UpdateRollerSpeedInVis(Settings.Pivot.ALGAE_OUTTAKE_SPEED.getAsDouble()))
                 .onFalse(new PivotHoldCoral());
 
         // TRIGGERS
@@ -118,11 +113,9 @@ public class RobotContainer {
         // BUMPERS
         driver.getRightBumper()                                                 // Algae Outtake
                .whileTrue(new PivotAlgaeOuttake())
-               .whileTrue(new UpdateRollerSpeedInVis(Settings.Pivot.ALGAE_OUTTAKE_SPEED.getAsDouble()))
                .onFalse(new PivotHoldCoral());
         driver.getLeftBumper()                                                  // Algae Intake
                .whileTrue(new PivotAlgaeIntake())
-               .whileTrue(new UpdateRollerSpeedInVis(Settings.Pivot.ALGAE_INTAKE_SPEED.getAsDouble()))
                .onFalse(new PivotAlgaeHold());
 
         // DPAD
