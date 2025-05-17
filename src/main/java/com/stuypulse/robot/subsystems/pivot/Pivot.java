@@ -78,6 +78,8 @@ public abstract class Pivot extends SubsystemBase {
 
     public abstract void setRollerMotor(double speed);
 
+    public abstract double getRollerMotor();
+
     public abstract void setPivotMotor(double speed);
     
     public abstract void resetPivotEncoder(double newEncoderPosition);
@@ -95,6 +97,7 @@ public abstract class Pivot extends SubsystemBase {
         SmartDashboard.putBoolean("Pivot/At Target Angle", atTargetAngle());
 
         RobotVisualizer.getInstance().updatePivotAngle(this.pivotState.getTargetAngle(), atTargetAngle());
+        RobotVisualizer.getInstance().updateRollers(getRollerMotor());
     }
 
     public abstract SysIdRoutine getSysIdRoutine();

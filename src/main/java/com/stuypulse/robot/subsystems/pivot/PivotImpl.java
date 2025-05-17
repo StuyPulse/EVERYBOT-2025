@@ -84,6 +84,11 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
+    public double getRollerMotor() {
+        return CurrentRollerSetSpeed.getAsDouble();
+    }
+
+    @Override
     public void setPivotMotor(double speed) {
         CurrentPivotSetSpeed.set(speed);
         pivotMotor.set(speed);

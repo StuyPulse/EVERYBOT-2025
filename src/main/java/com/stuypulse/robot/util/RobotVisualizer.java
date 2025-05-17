@@ -44,7 +44,6 @@ public class RobotVisualizer {
 
     private double rollerSpeed;
 
-
     private RobotVisualizer() {
         width = 150;
         height = 100;
@@ -115,6 +114,7 @@ public class RobotVisualizer {
         superStructureBase.append(superStructureLength);
         pivotVertex.append(pivot);
         pivotSupportEnd.append(pivotSupport);
+
     }
 
     public void updatePivotAngle(Rotation2d angle, boolean atTargetAngle) {
@@ -137,9 +137,9 @@ public class RobotVisualizer {
     public void updateRollers(double speed) {
         this.rollerSpeed = speed;
         for(int i = 0; i < 4; i++) {
-            rollerLigaments[i].setAngle(rollerLigaments[i].getAngle() + (-speed) * 20);
+            rollerLigaments[i].setAngle(rollerLigaments[i].getAngle() + (-rollerSpeed) * 20);
         }
-
+        
         SmartDashboard.putData("Visualizers/Robot", canvas);
     }
 
