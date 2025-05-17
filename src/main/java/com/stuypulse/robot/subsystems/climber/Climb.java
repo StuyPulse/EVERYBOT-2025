@@ -2,6 +2,7 @@ package com.stuypulse.robot.subsystems.climber;
 
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -65,5 +66,7 @@ public abstract class Climb extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putString("Climb/State", state.toString());
+
+        RobotVisualizer.getInstance().updateClimb(state.getTargetAngle(), atTargetAngle());
     }
 }
