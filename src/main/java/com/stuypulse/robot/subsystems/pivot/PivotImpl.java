@@ -123,6 +123,15 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
+    public boolean atTargetAngle(){
+        if(Math.abs(Pivot.getInstance().pivotState.getTargetAngle().getDegrees() - Pivot.getInstance().getPivotRotation().getDegrees()) > 0.5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public void periodic() {
         super.periodic();
       

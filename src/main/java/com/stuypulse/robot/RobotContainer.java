@@ -34,6 +34,7 @@ import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.constants.Ports;
 
 import com.stuypulse.stuylib.input.Gamepad;

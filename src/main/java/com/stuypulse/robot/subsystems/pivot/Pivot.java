@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.pivot;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -64,6 +65,11 @@ public abstract class Pivot extends SubsystemBase {
         public String getPivotControlMode() {
             return this.controlMode;
         }
+
+    }
+
+    public PivotControlMode PivotControlMode() {
+        return this.pivotControlMode;
     }
 
     public abstract void setPivotState(PivotState pivotState);
@@ -80,10 +86,15 @@ public abstract class Pivot extends SubsystemBase {
 
     public abstract Rotation2d getPivotRotation();
 
+    public abstract boolean atTargetAngle();
+
     @Override
     public void periodic() {
         SmartDashboard.putString("Pivot/Pivot State", pivotState.toString());
         SmartDashboard.putNumber("Pivot/Target Angle", this.pivotState.getTargetAngle().getDegrees());
+        SmartDashboard.putBoolean("Pivot/At Target Angle", atTargetAngle());
+
+        RobotVisualizer.getInstance().updatePivotAngle(getPivotRotation(), atTargetAngle());
     }
 
     public abstract SysIdRoutine getSysIdRoutine();
