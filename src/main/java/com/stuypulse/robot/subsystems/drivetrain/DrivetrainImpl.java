@@ -7,6 +7,7 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import java.util.List;
 import com.kauailabs.navx.frc.AHRS;
@@ -44,6 +45,7 @@ import edu.wpi.first.units.measure.Voltage;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
 
 public class DrivetrainImpl extends Drivetrain {
     private final AHRS gyro = new AHRS();
@@ -62,6 +64,8 @@ public class DrivetrainImpl extends Drivetrain {
     private double visionDrive;
     private double visionSteer;
 
+    //private final LimelightVision vision;
+
     private SimpleMotorFeedforward ffController;
     private PIDController lPIDController = new PIDController(Gains.Drivetrain.PID.left.kP, Gains.Drivetrain.PID.left.kI,
             Gains.Drivetrain.PID.left.kD);
@@ -71,7 +75,6 @@ public class DrivetrainImpl extends Drivetrain {
     public DrivetrainImpl() {
         super();
         leftMotors = new SparkMax[] {
-
                 new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
                 new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
         };
@@ -84,7 +87,9 @@ public class DrivetrainImpl extends Drivetrain {
 
         Motors.DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.encoder
                 .positionConversionFactor(
-                        Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS);
+                        Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS)
+                .velocityConversionFactor(
+                    Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS / 60);
 
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
@@ -117,7 +122,7 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[0].setCANTimeout(250);
         rightMotors[1].setCANTimeout(250);
 
-        // Odometry, Kinematics, Controllers
+        // Odometry, Kinematics, Controllers, Vision
         kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
         odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
 
@@ -127,6 +132,8 @@ public class DrivetrainImpl extends Drivetrain {
 
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
+
+        //vision = LimelightVision.getInstance();
     }
 
     @Override
@@ -154,13 +161,21 @@ public class DrivetrainImpl extends Drivetrain {
     public void resetOdometry(Pose2d newPose) {
         odometry.resetPose(newPose);
     }
-
-    public double getLeftVelocity() {
-        return leftEncoder.getVelocity();
+    
+    /**
+     * returns the left motor velocity
+     * @return velocity in meters per minute
+     */
+    public double getLeftVelocity() { //In Meters per minute
+        return -leftEncoder.getVelocity();
     }
 
+    /**
+     * returns the right motor velocity
+     * @return velocity in meters per minute
+     */
     public double getRightVelocity() {
-        return rightEncoder.getVelocity();
+        return -rightEncoder.getVelocity();
     }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
@@ -169,7 +184,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(gyro.getAngle()); // Might need to negate angle
+        return Rotation2d.fromDegrees(-gyro.getAngle()); // Might need to negate angle
     }
 
     @Override
@@ -194,12 +209,12 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public double getLeftDistance() {
-        return leftEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
+        return -leftEncoder.getPosition();
     }
 
     @Override
     public double getRightDistance() {
-        return rightEncoder.getPosition() * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS * Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO;
+        return -rightEncoder.getPosition();
     }
 
     // Experimental, need confirmation that this is actually what sysId needs
@@ -218,6 +233,11 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     @Override
+    public double getOutputVoltage(SparkMax motor) {
+        return motor.getAppliedOutput() * motor.getBusVoltage();
+    }
+
+    @Override
     public SysIdRoutine getSysIdRoutine() {
         return new SysIdRoutine(
                 new SysIdRoutine.Config(),
@@ -229,14 +249,13 @@ public class DrivetrainImpl extends Drivetrain {
                         },
                         log -> {
                             log.motor("drive-left")
-                                    .voltage(Voltage.ofBaseUnits(leftMotors[0].getBusVoltage(), Volts))
+                                    .voltage(Voltage.ofBaseUnits(getOutputVoltage(leftMotors[0]), Volts))
                                     .linearPosition(Meters.ofBaseUnits(getLeftDistance()))
-                                    .linearVelocity(getMetersPerSecond(getLeftVelocity()));
-
+                                    .linearVelocity(MetersPerSecond.ofBaseUnits(getLeftVelocity()));
                             log.motor("drive-right")
-                                    .voltage(Voltage.ofBaseUnits(rightMotors[0].getBusVoltage(), Volts))
+                                    .voltage(Voltage.ofBaseUnits(getOutputVoltage(rightMotors[0]), Volts))
                                     .linearPosition(Meters.ofBaseUnits(getRightDistance()))
-                                    .linearVelocity(getMetersPerSecond(getRightVelocity()));
+                                    .linearVelocity(MetersPerSecond.ofBaseUnits(getRightVelocity()));
                         },
                         this));
     }
@@ -285,19 +304,19 @@ public class DrivetrainImpl extends Drivetrain {
         double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     
         if (tv<0) {
-            visionDrive = 0.0;
-            visionSteer = 0.0;
+            this.visionDrive = 0.0;
+            this.visionSteer = 0.0;
             return;
         }
 
         visionDrive = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
-        visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
-        visionSteer = tx * STEER_K;   
+        this.visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
+        this.visionSteer = tx * STEER_K;   
     }
 
     @Override
     public void driveToNearestAprilTag() {
-        driveArcade(visionSteer, visionDrive, false);
+        driveArcade(this.visionSteer, this.visionDrive, true);
     }
 
     @Override
@@ -312,9 +331,15 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void periodic() {
+        super.periodic();
+        
         updateVision();
         updateOdometry();
-        field.setRobotPose(odometry.getPoseMeters());
-        SmartDashboard.putData("Field", field);
+        SmartDashboard.putNumber("Drivetrain/ left applied voltage",getOutputVoltage(leftMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/ right applied voltage",getOutputVoltage(rightMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/ left distance", getLeftDistance());
+        SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
+        SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/ Right velocity", getRightVelocity());
     }
 }

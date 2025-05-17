@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
+import com.revrobotics.spark.SparkMax;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.angle.AngleController;
 
@@ -7,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -37,6 +39,8 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract void resetPose();
     public abstract Pose2d getPose();
+
+    public abstract double getOutputVoltage(SparkMax motor);
 
     public abstract Command getAutonomousCommand();
 

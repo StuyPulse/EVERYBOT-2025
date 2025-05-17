@@ -32,21 +32,20 @@ public class Gains {
 
     public interface Drivetrain {
         public interface FF {
-            double kS = 0.2;
-            double kV = 0.3;
-            double kA = 0.14;
-            double kG = 0.0;
+            double kS = 0.18997;
+            double kV = 3.3276;
+            double kA = 0.70584;
         }
         public interface PID {
             public interface left {
-                double kP = 0.1;
+                double kP = 0.016975;
                 double kI = 0.0;
-                double kD = 0.02;
+                double kD = 0.0;
             }
             public interface right {
-                double kP = 0.1;
+                double kP = 0.016975;
                 double kI = 0.0;
-                double kD = 0.02;
+                double kD = 0.0;
             }
         }
     }
