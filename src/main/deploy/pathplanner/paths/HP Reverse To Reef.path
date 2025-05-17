@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.565652654867256,
+        "y": 6.432300884955752
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.099723451327433,
+        "y": 6.289933628318583
+      },
+      "isLocked": false,
+      "linkedName": "NonProcessor After HP Reverse"
+    },
+    {
+      "anchor": {
+        "x": 3.320500972762646,
+        "y": 5.335274805447471
+      },
+      "prevControl": {
+        "x": 3.0422376984263626,
+        "y": 5.833560203677559
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Coral 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Non-Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

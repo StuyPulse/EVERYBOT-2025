@@ -1,0 +1,106 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center ToReef"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterCoral Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToProcessorAlgae"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ProcessorAlgaePickup"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotLolipopAlgeaIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotAlgaeHold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgaeToProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoreProcessor"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgaeOuttake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotAlgaeOuttake"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
