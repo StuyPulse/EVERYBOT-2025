@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.5458171206225675,
-        "y": 5.70232247081712
+        "x": 7.562889105058366,
+        "y": 4.012196011673152
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.033586459219281,
-        "y": 5.70232247081712
+        "x": 6.487354085603113,
+        "y": 4.012196011673152
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.5458171206225675,
-        "y": 5.70232247081712
+        "x": 6.205666342412452,
+        "y": 4.012196011673152
       },
       "prevControl": {
-        "x": 7.5458171206225675,
-        "y": 6.021938106742414
+        "x": 7.904350240855554,
+        "y": 4.012196011673152
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "left"
+      "linkedName": "Center Coral"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "TROLL",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

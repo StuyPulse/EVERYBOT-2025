@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.488642996115813,
-        "y": 5.429170719842245
+        "x": 5.753782894736841,
+        "y": 5.251768092105262
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.6439527306344,
-        "y": 5.804502578250317
+        "x": 5.625453746338105,
+        "y": 5.03721826182974
       },
       "isLocked": false,
       "linkedName": "NonProcessor Coral 1"
     },
     {
       "anchor": {
-        "x": 6.283573008849557,
-        "y": 5.765763274336283
+        "x": 6.677467105263157,
+        "y": 5.92047697368421
       },
       "prevControl": {
-        "x": 6.01825221238938,
-        "y": 5.804590707964602
+        "x": 6.1963783650486715,
+        "y": 6.310152282190378
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NonProcessor After Reverse"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

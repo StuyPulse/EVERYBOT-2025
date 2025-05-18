@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center ToReef"
+            "pathName": "Center To Reef"
           }
         },
         {
@@ -23,7 +23,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 1.0
                 }
               }
             ]
@@ -42,7 +42,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -54,7 +54,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "PivotLolipopAlgeaIntake"
+                  "name": "PivotLollipopAlgaeIntake"
                 }
               }
             ]

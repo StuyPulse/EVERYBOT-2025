@@ -191,7 +191,7 @@ public class DrivetrainImpl extends Drivetrain {
         return -rightEncoder.getVelocity();
     }
 
-    public DifferentialDriveWheelSpeeds getSpeeds() {
+    private DifferentialDriveWheelSpeeds getSpeeds() {
         return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
     }
 
@@ -205,6 +205,7 @@ public class DrivetrainImpl extends Drivetrain {
         return gyro.getRate();
     }
 
+    @Override
     public void configureAutoBuilder() {
         AutoBuilder.configure(
                 vision::getEstimatedPose,

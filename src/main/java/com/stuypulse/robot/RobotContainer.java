@@ -3,6 +3,7 @@ package com.stuypulse.robot;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.events.EventTrigger;
 import com.pathplanner.lib.path.EventMarker;
 import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
@@ -45,6 +46,7 @@ import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class RobotContainer {
@@ -63,7 +65,7 @@ public class RobotContainer {
 
 	// Robot container
 	public RobotContainer() {
-		configureAutons(); //MAKE SURE THIS IS RUN FIRST TO ADD IN COMMANDS INTO PATHPLANNER
+		configureAutons(); // MAKE SURE THIS IS RUN FIRST TO ADD IN COMMANDS INTO PATHPLANNER
 		configureDefaultCommands();
 		configureButtonBindings();
 		configureSysId();
@@ -92,7 +94,7 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// BUTTONS
 		driver.getTopButton() // Coral Score
-				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+				// .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.whileTrue(new PivotCoralScore())
 				.onFalse(new PivotToCoralStow())
 				.onFalse(new PivotHoldCoral());
@@ -131,7 +133,7 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake());
 		driver.getDPadLeft() // Pivot to Lollipop Intake
-				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
+				// .onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLolipopAlgeaIntake())
 				.onFalse(new PivotAlgaeHold())
 				.onFalse(new PivotToAlgaeStow());
@@ -169,7 +171,9 @@ public class RobotContainer {
 		autonChooser.addOption("Combination - Coralgae", new CoralgaeAuton());
 
 		// PATHPLANNER
+		driveSubsystem.configureAutoBuilder();
 		registerAutoCommands();
+		// registerEventTriggers();
 
 		autonChooser.addOption("PP Coral 1PC", new PathPlannerAuto("Center 1Pc.auto"));
 
@@ -177,15 +181,22 @@ public class RobotContainer {
 	}
 
 	private void registerAutoCommands() {
-		NamedCommands.registerCommand("Coral - Score", new PivotCoralScore());
+		NamedCommands.registerCommand("PivotCoralScore",
+				new SequentialCommandGroup(
+						new PivotCoralScore().withTimeout(1), new PivotToCoralStow()));
+		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLolipopAlgeaIntake());
+		NamedCommands.registerCommand("PivotAlgaeHold",
+				new SequentialCommandGroup(new PivotAlgaeHold(), new PivotToAlgaeStow()));
+		NamedCommands.registerCommand("PivotAlgaeOuttake", new PivotAlgaeOuttake());
 	}
 
-	private void registerEventTriggers() {
-		/*new EventMarker("Coral - Score").onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-				.whileTrue(new PivotCoralScore())
-				.onFalse(new PivotToCoralStow())
-				.onFalse(new PivotHoldCoral());*/
-	}
+	// private void registerEventTriggers() {
+	// new EventTrigger("Coral - Score").onTrue(new
+	// SetPivotControlMode(PivotControlMode.USING_STATES))
+	// .whileTrue(new PivotCoralScore())
+	// .onFalse(new PivotToCoralStow())
+	// .onFalse(new PivotHoldCoral());
+	// }
 
 	public void configureSysId() {
 		SysIdRoutine pivotSysIdRoutine = pivot.getSysIdRoutine();
