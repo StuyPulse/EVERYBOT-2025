@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Turn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "TROLL",
+  "choreoAuto": false
+}

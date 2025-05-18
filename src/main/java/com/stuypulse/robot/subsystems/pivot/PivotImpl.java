@@ -84,6 +84,11 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
+    public double getRollerMotor() {
+        return CurrentRollerSetSpeed.getAsDouble();
+    }
+
+    @Override
     public void setPivotMotor(double speed) {
         CurrentPivotSetSpeed.set(speed);
         pivotMotor.set(speed);
@@ -120,6 +125,15 @@ public class PivotImpl extends Pivot {
     @Override
     public void setPivotControlMode(PivotControlMode pivotControlMode) {
         this.pivotControlMode = pivotControlMode;
+    }
+
+    @Override
+    public boolean atTargetAngle(){
+        if(Math.abs(Pivot.getInstance().pivotState.getTargetAngle().getDegrees() - Pivot.getInstance().getPivotRotation().getDegrees()) > 0.5) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

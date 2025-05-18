@@ -39,7 +39,6 @@ import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.constants.Ports;
-
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
