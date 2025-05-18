@@ -34,6 +34,7 @@ import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.ButtonBindingManager;
 import com.stuypulse.robot.constants.Ports;
 
 import com.stuypulse.stuylib.input.Gamepad;
@@ -46,7 +47,9 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class RobotContainer {
 	// Gamepads
-	public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
+	ButtonBindingManager buttonBindingManager;
+
+	public Gamepad driver;
 	public final Gamepad operator = new AutoGamepad(Ports.Gamepad.OPERATOR);
 
 	// Subsystem
@@ -80,7 +83,7 @@ public class RobotContainer {
 	/*** BUTTON BINDINGS ***/
 	/***********************/
 
-	private void configureButtonBindings() {
+	private AutoGamepad configureButtonBindingsDefault(AutoGamepad driver) {
 		// BUTTONS
 		driver.getTopButton() // Coral Score
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
@@ -137,6 +140,14 @@ public class RobotContainer {
 		// driver.getLeftStickButton() // Drive to Nearest April Tag
 		// .whileTrue(new VisionDriveToNearestApriltag())
 		// .onFalse(new DriveArcade(0, 0, true));
+
+		return driver;
+	}
+
+	private void configureButtonBindings() {
+		buttonBindingManager.addProfile("DEFAULT", this::configureButtonBindingsDefault);
+
+		driver = buttonBindingManager.configureButtonBindings(Ports.Gamepad.DRIVER, "DEFAULT");
 	}
 
 	/**************/
