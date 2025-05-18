@@ -1,5 +1,6 @@
 package com.stuypulse.robot.commands.drive;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
@@ -19,7 +20,7 @@ public class DriveDefault extends Command {
 
     @Override
     public void execute() {
-        Drivetrain.getInstance().driveArcade(-gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
+        Drivetrain.getInstance().driveArcade(MathUtil.applyDeadband(-gamepad.getLeftStick().y, 0.06), gamepad.getRightStick().x, squared);
     }
 
     @Override

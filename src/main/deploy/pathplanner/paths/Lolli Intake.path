@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.9436284046692607,
+        "y": 5.753538424124513
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.1541372542267827,
+        "y": 5.81177957456699
+      },
+      "isLocked": false,
+      "linkedName": "After Coral2 Reverse"
+    },
+    {
+      "anchor": {
+        "x": 2.2278939688715953,
+        "y": 5.787682392996109
+      },
+      "prevControl": {
+        "x": 2.9462014909954886,
+        "y": 5.761797437243896
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Wait Loli"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Non-Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
