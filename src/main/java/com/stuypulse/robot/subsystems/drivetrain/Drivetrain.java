@@ -49,6 +49,8 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract DifferentialDriveKinematics getKinematics();
     public abstract DifferentialDriveOdometry getOdometry();
 
+    public abstract void configureAutoBuilder();
+
     @Override
     public void periodic() {}
 }
