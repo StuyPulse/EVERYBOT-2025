@@ -96,6 +96,7 @@ public abstract class Pivot extends SubsystemBase {
         SmartDashboard.putNumber("Pivot/Target Angle", this.pivotState.getTargetAngle().getDegrees());
         SmartDashboard.putBoolean("Pivot/At Target Angle", atTargetAngle());
 
+        // RobotVisualizer.getInstance().updatePivotAngle(this.pivotState.getTargetAngle(), atTargetAngle());
         RobotVisualizer.getInstance().updatePivotAngle(getPivotRotation(), atTargetAngle());
         RobotVisualizer.getInstance().updateRollers(getRollerMotor());
     }
