@@ -11,7 +11,9 @@ import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import java.util.List;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPLTVController;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -24,6 +26,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -34,6 +37,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -52,7 +56,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     private final SparkMax[] leftMotors;
     private final SparkMax[] rightMotors;
-
     private final RelativeEncoder leftEncoder;
     private final RelativeEncoder rightEncoder;
 
@@ -60,11 +63,11 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
 
-    private final Field2d field = new Field2d();
+    private final LimelightVision vision;
     private double visionDrive;
     private double visionSteer;
 
-    //private final LimelightVision vision;
+    private RobotConfig pathPlannerRobotConfig;
 
     private SimpleMotorFeedforward ffController;
     private PIDController lPIDController = new PIDController(Gains.Drivetrain.PID.left.kP, Gains.Drivetrain.PID.left.kI,
@@ -89,7 +92,8 @@ public class DrivetrainImpl extends Drivetrain {
                 .positionConversionFactor(
                         Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS)
                 .velocityConversionFactor(
-                    Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS / 60);
+                        Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO * Constants.Drivetrain.WHEEL_CIRCUMFERENCE_METERS
+                                / 60);
 
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
@@ -133,7 +137,14 @@ public class DrivetrainImpl extends Drivetrain {
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
 
-        //vision = LimelightVision.getInstance();
+        vision = LimelightVision.getInstance();
+
+        //PathPlanner robot configuration
+        try {
+            pathPlannerRobotConfig = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            pathPlannerRobotConfig = null;
+        }
     }
 
     @Override
@@ -161,17 +172,19 @@ public class DrivetrainImpl extends Drivetrain {
     public void resetOdometry(Pose2d newPose) {
         odometry.resetPose(newPose);
     }
-    
+
     /**
      * returns the left motor velocity
+     * 
      * @return velocity in meters per minute
      */
-    public double getLeftVelocity() { //In Meters per minute
+    public double getLeftVelocity() { // In Meters per minute
         return -leftEncoder.getVelocity();
     }
 
     /**
      * returns the right motor velocity
+     * 
      * @return velocity in meters per minute
      */
     public double getRightVelocity() {
@@ -192,20 +205,30 @@ public class DrivetrainImpl extends Drivetrain {
         return gyro.getRate();
     }
 
-    // TODO: Configure Auton Builder
-    /*
-     * public void configureAutoBuilder() {
-     * AutoBuilder.configure(
-     * getPose(),
-     * resetPose(),
-     * null,
-     * null,
-     * null,
-     * null,
-     * null
-     * );
-     * }
-     */
+    public void configureAutoBuilder() {
+        AutoBuilder.configure(
+                vision::getEstimatedPose,
+                vision::resetEstimatedPose,
+                this::getChassisSpeeds,
+                (speeds) -> {
+                    double leftSpeed = kinematics.toWheelSpeeds(speeds).leftMetersPerSecond;
+                    double rightSpeed = kinematics.toWheelSpeeds(speeds).rightMetersPerSecond;
+
+                    driveTank(leftSpeed, rightSpeed, true);
+                },
+                new PPLTVController(0.02),
+                pathPlannerRobotConfig,
+                () -> {
+                    var alliance = DriverStation.getAlliance();
+
+                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false; 
+                },
+                this);
+    }
+
+    public ChassisSpeeds getChassisSpeeds() {
+        return kinematics.toChassisSpeeds(getSpeeds());
+    }
 
     @Override
     public double getLeftDistance() {
@@ -224,7 +247,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void resetPose() {
-        odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), field.getRobotPose());
+        odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), vision.getEstimatedPose());
     }
 
     @Override
@@ -270,9 +293,9 @@ public class DrivetrainImpl extends Drivetrain {
                 .addConstraint(voltageConstraint);
 
         final Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(0, 0, new Rotation2d(0)),                        // START
-                List.of(new Translation2d(1, 1), new Translation2d(2, -1)),     // INTERMEDIATE SETPOINTS
-                new Pose2d(3, 0, new Rotation2d()),                               // END
+                new Pose2d(0, 0, new Rotation2d(0)), // START
+                List.of(new Translation2d(1, 1), new Translation2d(2, -1)), // INTERMEDIATE SETPOINTS
+                new Pose2d(3, 0, new Rotation2d()), // END
                 trajectoryConfig);
 
         RamseteCommand command = new RamseteCommand(
@@ -292,7 +315,7 @@ public class DrivetrainImpl extends Drivetrain {
                 .andThen(Commands.runOnce(() -> driveTankVolts(0.0, 0.0))); // Stop Drivetrain
     }
 
-    private void updateVision() { //TEMPORARY
+    private void updateVision() { // TEMPORARY
         final double STEER_K = 0.03;
         final double DRIVE_K = 0.03;
         final double DESIRED_TARGET_AREA = 13.0;
@@ -302,8 +325,8 @@ public class DrivetrainImpl extends Drivetrain {
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
         double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-    
-        if (tv<0) {
+
+        if (tv < 0) {
             this.visionDrive = 0.0;
             this.visionSteer = 0.0;
             return;
@@ -311,7 +334,7 @@ public class DrivetrainImpl extends Drivetrain {
 
         visionDrive = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
         this.visionDrive = SLMath.clamp(visionDrive, 0.0, MAX_DRIVE);
-        this.visionSteer = tx * STEER_K;   
+        this.visionSteer = tx * STEER_K;
     }
 
     @Override
@@ -332,11 +355,11 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void periodic() {
         super.periodic();
-        
+
         updateVision();
         updateOdometry();
-        SmartDashboard.putNumber("Drivetrain/ left applied voltage",getOutputVoltage(leftMotors[0]));
-        SmartDashboard.putNumber("Drivetrain/ right applied voltage",getOutputVoltage(rightMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/ left applied voltage", getOutputVoltage(leftMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/ right applied voltage", getOutputVoltage(rightMotors[0]));
         SmartDashboard.putNumber("Drivetrain/ left distance", getLeftDistance());
         SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
