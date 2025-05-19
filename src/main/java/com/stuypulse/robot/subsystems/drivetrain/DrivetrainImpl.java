@@ -63,7 +63,7 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
 
-    private final LimelightVision vision;
+    //private final LimelightVision vision;
     private double visionDrive;
     private double visionSteer;
 
@@ -137,7 +137,7 @@ public class DrivetrainImpl extends Drivetrain {
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
 
-        vision = LimelightVision.getInstance();
+        //vision = LimelightVision.getInstance();
 
         //PathPlanner robot configuration
         try {
@@ -192,7 +192,9 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     private DifferentialDriveWheelSpeeds getSpeeds() {
-        return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
+        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
+        wheelspeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+        return wheelspeeds;
     }
 
     @Override
@@ -207,14 +209,22 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void configureAutoBuilder() {
+        LimelightVision vision = LimelightVision.getInstance();
         AutoBuilder.configure(
                 vision::getEstimatedPose,
                 vision::resetEstimatedPose,
                 this::getChassisSpeeds,
-                (speeds) -> {
-                    double leftSpeed = kinematics.toWheelSpeeds(speeds).leftMetersPerSecond;
-                    double rightSpeed = kinematics.toWheelSpeeds(speeds).rightMetersPerSecond;
+                (speeds, ffvalues) -> {
+                    SmartDashboard.putNumber("Drivetrain/Forward speed predicted", speeds.vxMetersPerSecond);
+                    // SmartDashboard.putNumber("Drivetrain/ff values auto", ffvalues.);
 
+                    DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
+                    convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+
+                    double leftSpeed = convertedSpeeds.leftMetersPerSecond;
+                    double rightSpeed = convertedSpeeds.rightMetersPerSecond;
+                    SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
+                    SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
                     driveTank(leftSpeed, rightSpeed, true);
                 },
                 new PPLTVController(0.02),
@@ -222,7 +232,7 @@ public class DrivetrainImpl extends Drivetrain {
                 () -> {
                     var alliance = DriverStation.getAlliance();
 
-                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false; 
+                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : true; 
                 },
                 this);
     }
@@ -248,6 +258,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void resetPose() {
+        LimelightVision vision = LimelightVision.getInstance();
         odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), vision.getEstimatedPose());
     }
 

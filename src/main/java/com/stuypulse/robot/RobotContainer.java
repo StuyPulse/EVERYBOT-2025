@@ -56,15 +56,18 @@ public class RobotContainer {
 
 	// Subsystem
 	private final LEDController ledSubsystem = LEDController.getInstance();
-	private final Drivetrain driveSubsystem = Drivetrain.getInstance();
+	private final Drivetrain driveSubsystem;
 	private final Pivot pivot = Pivot.getInstance();
-	private final LimelightVision limelightVision = LimelightVision.getInstance();
+	//private final LimelightVision limelightVision;
 
 	// Autons
 	private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
 	// Robot container
 	public RobotContainer() {
+		driveSubsystem = Drivetrain.getInstance();
+		//limelightVision  = LimelightVision.getInstance();
+
 		configureAutons(); // MAKE SURE THIS IS RUN FIRST TO ADD IN COMMANDS INTO PATHPLANNER
 		configureDefaultCommands();
 		configureButtonBindings();
@@ -175,7 +178,7 @@ public class RobotContainer {
 		registerAutoCommands();
 		// registerEventTriggers();
 
-		autonChooser.addOption("PP Coral 1PC", new PathPlannerAuto("Center 1Pc.auto"));
+		autonChooser.addOption("PP Coral 1PC", new PathPlannerAuto("Center 1Pc"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
