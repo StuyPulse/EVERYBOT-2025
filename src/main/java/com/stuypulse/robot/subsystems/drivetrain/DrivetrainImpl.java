@@ -10,10 +10,14 @@ import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import java.util.List;
+import java.util.Vector;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -63,7 +67,7 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
 
-    //private final LimelightVision vision;
+    // private final LimelightVision vision;
     private double visionDrive;
     private double visionSteer;
 
@@ -137,9 +141,9 @@ public class DrivetrainImpl extends Drivetrain {
         ffController = new SimpleMotorFeedforward(Gains.Drivetrain.FF.kS, Gains.Drivetrain.FF.kV,
                 Gains.Drivetrain.FF.kA);
 
-        //vision = LimelightVision.getInstance();
+        // vision = LimelightVision.getInstance();
 
-        //PathPlanner robot configuration
+        // PathPlanner robot configuration
         try {
             pathPlannerRobotConfig = RobotConfig.fromGUISettings();
         } catch (Exception e) {
@@ -192,7 +196,8 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     private DifferentialDriveWheelSpeeds getSpeeds() {
-        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
+        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(),
+                getRightVelocity());
         wheelspeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
         return wheelspeeds;
     }
@@ -210,31 +215,44 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void configureAutoBuilder() {
         LimelightVision vision = LimelightVision.getInstance();
-        AutoBuilder.configure(
+        // AutoBuilder.configure(
+        // vision::getEstimatedPose,
+        // vision::resetEstimatedPose,
+        // this::getChassisSpeeds,
+        // (speeds, ffvalues) -> {
+        // SmartDashboard.putNumber("Drivetrain/Forward speed predicted",
+        // speeds.vxMetersPerSecond);
+        // // SmartDashboard.putNumber("Drivetrain/ff values auto", ffvalues.);
+
+        // DifferentialDriveWheelSpeeds convertedSpeeds =
+        // kinematics.toWheelSpeeds(speeds);
+        // convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+
+        // double leftSpeed = convertedSpeeds.leftMetersPerSecond;
+        // double rightSpeed = convertedSpeeds.rightMetersPerSecond;
+        // SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
+        // SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
+        // driveTank(leftSpeed, rightSpeed, true);
+        // },
+        // new PPLTVController(0.02),
+        // pathPlannerRobotConfig,
+        // () -> {
+        // var alliance = DriverStation.getAlliance();
+
+        // return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue :
+        // true;
+        // },
+        // this);
+        AutoBuilder.configureCustom(
+                this::followPathCommand,
                 vision::getEstimatedPose,
                 vision::resetEstimatedPose,
-                this::getChassisSpeeds,
-                (speeds, ffvalues) -> {
-                    SmartDashboard.putNumber("Drivetrain/Forward speed predicted", speeds.vxMetersPerSecond);
-                    // SmartDashboard.putNumber("Drivetrain/ff values auto", ffvalues.);
-
-                    DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
-                    convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
-
-                    double leftSpeed = convertedSpeeds.leftMetersPerSecond;
-                    double rightSpeed = convertedSpeeds.rightMetersPerSecond;
-                    SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
-                    SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
-                    driveTank(leftSpeed, rightSpeed, true);
-                },
-                new PPLTVController(0.02),
-                pathPlannerRobotConfig,
                 () -> {
                     var alliance = DriverStation.getAlliance();
 
-                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : true; 
+                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : true;
                 },
-                this);
+                false);
     }
 
     public ChassisSpeeds getChassisSpeeds() {
@@ -295,7 +313,8 @@ public class DrivetrainImpl extends Drivetrain {
                         this));
     }
 
-    public Command getAutonomousCommand() {
+    @Override
+    public Command followPathCommand(PathPlannerPath ppPath) {
         final DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(
                 ffController, kinematics, 10);
 
@@ -304,11 +323,14 @@ public class DrivetrainImpl extends Drivetrain {
                 .setKinematics(kinematics)
                 .addConstraint(voltageConstraint);
 
-        final Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(0, 0, new Rotation2d(0)), // START
-                List.of(new Translation2d(1, 1), new Translation2d(2, -1)), // INTERMEDIATE SETPOINTS
-                new Pose2d(3, 0, new Rotation2d()), // END
-                trajectoryConfig);
+        final Trajectory exampleTrajectory = TrajectoryGenerator
+                .generateTrajectory(new Vector<Pose2d>(ppPath.getPathPoses()), trajectoryConfig);
+        // TrajectoryGenerator.generateTrajectory(
+        // new Pose2d(0, 0, new Rotation2d(0)), // START
+        // List.of(new Translation2d(1, 1), new Translation2d(2, -1)), // INTERMEDIATE
+        // SETPOINTS
+        // new Pose2d(3, 0, new Rotation2d()), // END
+        // trajectoryConfig);
 
         RamseteCommand command = new RamseteCommand(
                 exampleTrajectory,

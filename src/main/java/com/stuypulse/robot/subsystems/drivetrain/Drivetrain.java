@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;
 import com.stuypulse.stuylib.control.Controller;
 import com.stuypulse.stuylib.control.angle.AngleController;
@@ -42,7 +43,7 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract double getOutputVoltage(SparkMax motor);
 
-    public abstract Command getAutonomousCommand();
+    public abstract Command followPathCommand(PathPlannerPath ppPath);
 
     public abstract void driveToNearestAprilTag();
 
