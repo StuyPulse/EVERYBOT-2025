@@ -216,8 +216,7 @@ public class DrivetrainImpl extends Drivetrain {
                 this::getChassisSpeeds,
                 (speeds, ffvalues) -> {
                     SmartDashboard.putNumber("Drivetrain/Forward speed predicted", speeds.vxMetersPerSecond);
-                    // SmartDashboard.putNumber("Drivetrain/ff values auto", ffvalues.);
-
+                    
                     DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
                     convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
 
