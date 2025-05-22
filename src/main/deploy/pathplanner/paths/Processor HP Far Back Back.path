@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9436284046692607,
-        "y": 5.753538424124513
+        "x": 5.112278761061947,
+        "y": 2.465431415929203
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.200472057650175,
-        "y": 5.785671656461566
+        "x": 5.2287610619485205,
+        "y": 1.9542035398278608
       },
       "isLocked": false,
-      "linkedName": "After Coral2 Reverse"
+      "linkedName": "FarProcessorScore"
     },
     {
       "anchor": {
-        "x": 1.2171463815789472,
-        "y": 5.867557565789473
+        "x": 5.765873893806927,
+        "y": 2.2971792035446743
       },
       "prevControl": {
-        "x": 1.7702822740052855,
-        "y": 5.844929595400511
+        "x": 5.5347043691882485,
+        "y": 2.2019917522311006
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Wait Loli"
+      "linkedName": "AfterProcessorFarCoralBack"
     }
   ],
   "rotationTargets": [],
@@ -44,8 +44,8 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "reversed": false,
-  "folder": "Non-Processor",
+  "reversed": true,
+  "folder": "Processor",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

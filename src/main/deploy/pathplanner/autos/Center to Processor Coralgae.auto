@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Non-Processor To Reef"
+            "pathName": "Center To Reef"
           }
         },
         {
@@ -32,66 +32,23 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Reverse"
+            "pathName": "CenterCoral Back"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "To HP"
+            "pathName": "ToProcessorAlgae"
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Reverse"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Reverse To Reef"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "PivotCoralScore"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Coral 2 Reverse"
-          }
-        },
-        {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Lolli Intake"
+                  "pathName": "ProcessorAlgaePickup"
                 }
               },
               {
@@ -102,11 +59,48 @@
               }
             ]
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotAlgaeHold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgaeToProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoreProcessor"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgaeOuttake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotAlgaeOuttake"
+                }
+              }
+            ]
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Non-Processor-Start",
+  "folder": "Center-Start",
   "choreoAuto": false
 }

@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Non-Processor To Reef"
+            "pathName": "Processor to Reef"
           }
         },
         {
@@ -32,31 +32,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Reverse"
+            "pathName": "ProcessorScoreBack"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "To HP"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "Processor Coral Back to HP"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HP Reverse"
+            "pathName": "Processor HP Far Back"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HP Reverse To Reef"
+            "pathName": "Processor HP Far Back Score"
           }
         },
         {
@@ -81,7 +75,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Coral 2 Reverse"
+            "pathName": "Processor HP Far Back Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Far Back Coral Back to HP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Back to Score"
           }
         },
         {
@@ -89,15 +101,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Lolli Intake"
+                  "name": "PivotCoralScore"
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "PivotLollipopAlgaeIntake"
+                  "waitTime": 1.0
                 }
               }
             ]
@@ -107,6 +119,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Non-Processor-Start",
+  "folder": "Processor-Start",
   "choreoAuto": false
 }
