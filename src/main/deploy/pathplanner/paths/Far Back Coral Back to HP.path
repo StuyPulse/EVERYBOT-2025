@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.765873893806927,
-        "y": 2.2971792035446743
+        "x": 5.791758849557522,
+        "y": 1.960674778761063
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.280712389382147,
-        "y": 2.277336283190692
+        "x": 5.306597345132742,
+        "y": 1.9408318584070805
       },
       "isLocked": false,
       "linkedName": "AfterProcessorFarCoralBack"

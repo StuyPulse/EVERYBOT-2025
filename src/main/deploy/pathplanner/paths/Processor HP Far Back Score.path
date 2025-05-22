@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.979424778761062,
-        "y": 2.1612831858407073
+        "x": 5.707632743362832,
+        "y": 1.6759402654867268
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.66233407079646,
-        "y": 2.1742256637168156
+        "x": 5.519966814159291,
+        "y": 1.8636061946902671
       },
       "isLocked": false,
       "linkedName": "AfterProcessorHPFarReverse"

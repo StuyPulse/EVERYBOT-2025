@@ -36,19 +36,13 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "ToProcessorAlgae"
-          }
-        },
-        {
           "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ProcessorAlgaePickup"
+                  "pathName": "ToProcessorAlgae"
                 }
               },
               {
