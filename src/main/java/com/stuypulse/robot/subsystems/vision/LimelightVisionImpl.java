@@ -32,7 +32,7 @@ public class LimelightVisionImpl extends LimelightVision {
     private final Drivetrain drivetrain;
 
     LimelightVisionImpl() {
-        visionStdDevs = VecBuilder.fill(.5, .5, .3);
+        visionStdDevs = VecBuilder.fill(1, 1, .3);
 
         for (Camera camera : Cameras.LimelightCameras) {
             Pose3d robotRelativePose = camera.getLocation();
