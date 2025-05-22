@@ -30,7 +30,7 @@ public interface Constants {
         public static final double DRIVETRAIN_GEAR_RATIO = 1.0/8.45;
         
         public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE_METERS * DRIVETRAIN_GEAR_RATIO / 42.0; //42.0 represents the pulse per motor shaft reduction (42 for NEO)
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 2;
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 3;
         
         // public static final RobotConfig config = null;
         // try{

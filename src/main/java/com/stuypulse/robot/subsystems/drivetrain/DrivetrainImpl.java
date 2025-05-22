@@ -208,7 +208,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(-gyro.getAngle()); // Might need to negate angle
+        return Rotation2d.fromDegrees(-gyro.getAngle()); 
     }
 
     @Override
@@ -234,7 +234,7 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(leftSpeed, rightSpeed);
         },
-        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 2.0), VecBuilder.fill(1.0, 2.0), 0.02, 1),
+        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 2.0), VecBuilder.fill(1.0, 2.0), 0.02, 9),
         pathPlannerRobotConfig,
         () -> {
         var alliance = DriverStation.getAlliance();
