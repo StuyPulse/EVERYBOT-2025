@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center To Reef"
+            "pathName": "Processor to Reef"
           }
         },
         {
@@ -32,13 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CenterCoral Back"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ToProcessorAlgae"
+            "pathName": "ProcessorScoreBack"
           }
         },
         {
@@ -48,7 +42,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ProcessorAlgaePickup"
+                  "pathName": "Processor Back to Algae Wait"
                 }
               },
               {
@@ -101,6 +95,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Processor-Start",
   "choreoAuto": false
 }
