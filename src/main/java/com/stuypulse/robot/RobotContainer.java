@@ -35,6 +35,7 @@ import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
+import com.stuypulse.robot.subsystems.drivetrain.DrivetrainImpl;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
@@ -179,6 +180,8 @@ public class RobotContainer {
 		// registerEventTriggers();
 
 		autonChooser.addOption("PP Coral 1PC", new PathPlannerAuto("Center 1Pc"));
+		autonChooser.addOption("pp 2 peice", new PathPlannerAuto("Non-Processor 2 Pc + AlgaePickup"));
+		autonChooser.addOption("pp Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}

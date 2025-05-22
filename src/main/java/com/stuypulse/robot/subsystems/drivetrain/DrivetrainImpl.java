@@ -25,6 +25,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.DifferentialDriveWheelVoltages;
+import edu.wpi.first.math.controller.LTVUnicycleController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -34,6 +37,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.proto.Kinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -53,8 +57,6 @@ import edu.wpi.first.units.measure.Voltage;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.Second;
-
 public class DrivetrainImpl extends Drivetrain {
     private final AHRS gyro = new AHRS();
 
@@ -167,6 +169,8 @@ public class DrivetrainImpl extends Drivetrain {
         leftMotors[0].setVoltage(lVolts);
         rightMotors[0].setVoltage(rVolts);
         drive.feed();
+        SmartDashboard.putNumber("Drivetrain/ left volts", lVolts);
+        SmartDashboard.putNumber("Drivetrain/ right volts", rVolts);
     }
 
     private void updateOdometry() {
@@ -214,45 +218,40 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void configureAutoBuilder() {
-        LimelightVision vision = LimelightVision.getInstance();
-        // AutoBuilder.configure(
-        // vision::getEstimatedPose,
-        // vision::resetEstimatedPose,
-        // this::getChassisSpeeds,
-        // (speeds, ffvalues) -> {
-        // SmartDashboard.putNumber("Drivetrain/Forward speed predicted",
-        // speeds.vxMetersPerSecond);
-        // // SmartDashboard.putNumber("Drivetrain/ff values auto", ffvalues.);
+         LimelightVision vision = LimelightVision.getInstance();
+        AutoBuilder.configure(
+        vision::getEstimatedPose,
+        vision::resetEstimatedPose,
+        this::getChassisSpeeds,
+        (speeds) -> {
 
-        // DifferentialDriveWheelSpeeds convertedSpeeds =
-        // kinematics.toWheelSpeeds(speeds);
-        // convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+            DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
+                convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
 
-        // double leftSpeed = convertedSpeeds.leftMetersPerSecond;
-        // double rightSpeed = convertedSpeeds.rightMetersPerSecond;
-        // SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
-        // SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
-        // driveTank(leftSpeed, rightSpeed, true);
-        // },
-        // new PPLTVController(0.02),
-        // pathPlannerRobotConfig,
-        // () -> {
-        // var alliance = DriverStation.getAlliance();
+            double leftSpeed = convertedSpeeds.leftMetersPerSecond;
+            double rightSpeed = convertedSpeeds.rightMetersPerSecond;
+            SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
+            SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
+            driveTankVolts(leftSpeed, rightSpeed);
+        },
+        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 2.0), VecBuilder.fill(1.0, 2.0), 0.02, 1),
+        pathPlannerRobotConfig,
+        () -> {
+        var alliance = DriverStation.getAlliance();
 
-        // return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue :
-        // true;
-        // },
-        // this);
-        AutoBuilder.configureCustom(
-                this::followPathCommand,
-                vision::getEstimatedPose,
-                vision::resetEstimatedPose,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
+        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : false;
+        },
+        this);
+        // AutoBuilder.configureCustom(
+        //         this::followPathCommand,
+        //         vision::getEstimatedPose,
+        //         vision::resetEstimatedPose,
+        //         () -> {
+        //             var alliance = DriverStation.getAlliance();
 
-                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : true; 
-                },
-                false);
+        //             return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : true; 
+        //         },
+        //         false);
     }
 
     public ChassisSpeeds getChassisSpeeds() {
@@ -324,7 +323,9 @@ public class DrivetrainImpl extends Drivetrain {
                 .addConstraint(voltageConstraint);
 
         final Trajectory exampleTrajectory = TrajectoryGenerator
-                .generateTrajectory(new Vector<Pose2d>(ppPath.getPathPoses()), trajectoryConfig);
+                .generateTrajectory(
+                    new Vector<Pose2d>(ppPath.getPathPoses()), 
+                    trajectoryConfig);
         // TrajectoryGenerator.generateTrajectory(
         // new Pose2d(0, 0, new Rotation2d(0)), // START
         // List.of(new Translation2d(1, 1), new Translation2d(2, -1)), // INTERMEDIATE
@@ -343,7 +344,6 @@ public class DrivetrainImpl extends Drivetrain {
                 rPIDController,
                 this::driveTankVolts,
                 this);
-
         return Commands.runOnce(() -> resetOdometry(exampleTrajectory.getInitialPose()))
                 .andThen(command)
                 .andThen(Commands.runOnce(() -> driveTankVolts(0.0, 0.0))); // Stop Drivetrain
