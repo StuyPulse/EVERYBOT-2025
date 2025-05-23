@@ -28,6 +28,7 @@ public interface Ports {
         int PIVOT_MOTOR = 1;
         int ROLLER_MOTOR = 3;
         int THROUGHBORE_DIO = 5;
+        int bumpSwitchPort = 0; //TODO: get bump switch port
     }
   
     public interface Drivetrain {

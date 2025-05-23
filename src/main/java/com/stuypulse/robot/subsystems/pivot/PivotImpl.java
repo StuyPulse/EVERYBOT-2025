@@ -19,7 +19,9 @@ import com.stuypulse.stuylib.network.SmartNumber;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -29,13 +31,16 @@ public class PivotImpl extends Pivot {
     private final SparkMax pivotMotor;
     private final RelativeEncoder pivotEncoder;
     private final DutyCycleEncoder pivotThroughbore;
+    private final DigitalInput bumpSwitch;
     
     private final Controller controller;
     
     private final BStream stallDetector;
-    
+    private final BStream bumpSwitchIsDepressed;
+        
     private final SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
     private final SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
+
 
     public PivotImpl() {
         super();
@@ -60,6 +65,10 @@ public class PivotImpl extends Pivot {
 
         setPivotState(PivotState.DEFAULT);
         setPivotControlMode(PivotControlMode.USING_STATES);
+
+        bumpSwitch = new DigitalInput(Ports.Pivot.bumpSwitchPort);
+        bumpSwitchIsDepressed = BStream.create(bumpSwitch)
+            .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE));
     }
     
     @Override
@@ -149,6 +158,10 @@ public class PivotImpl extends Pivot {
             }
         } else if (pivotControlMode == PivotControlMode.USING_STATES) {
             pivotMotor.setVoltage(-controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+        }
+
+        if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false && pivotControlMode.getPivotControlMode() == Pivot.PivotControlMode.USING_STATES.getPivotControlMode()) {
+            setPivotControlMode(PivotControlMode.MANUAL);
         }
       
         SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());

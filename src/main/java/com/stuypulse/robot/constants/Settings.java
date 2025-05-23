@@ -70,6 +70,7 @@ public interface Settings {
 
         //PIVOT ANGLES
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(1);
+        public static final Rotation2d PIVOT_ANGLE_TOLERANCE = Rotation2d.fromDegrees(3);
         
         public static final Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
         public static final Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(29);
@@ -105,6 +106,9 @@ public interface Settings {
         //PIVOT CONTROL MODE VALUES
         public static final String CTRLMODE_MANUAL = "MANUAL";
         public static final String CTRLMODE_STATES = "USING_STATES";
+
+        //PIVOT BUMP SWITCH
+        public static final double BUMP_SWITCH_DEBOUNCE = 2;
     }
 
     public interface Drivetrain {
