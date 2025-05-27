@@ -68,7 +68,8 @@ public class PivotImpl extends Pivot {
 
         bumpSwitch = new DigitalInput(Ports.Pivot.bumpSwitchPort);
         bumpSwitchIsDepressed = BStream.create(bumpSwitch)
-            .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE));
+            .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE))
+            .not();
     }
     
     @Override
@@ -168,5 +169,6 @@ public class PivotImpl extends Pivot {
         SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
+        SmartDashboard.putBoolean("Pivot/ Bump Switch", bumpSwitchIsDepressed.getAsBoolean());
     }       
 }

@@ -5,9 +5,7 @@
 package com.stuypulse.robot.constants;
 
 /** This file contains the different ports of motors, solenoids and sensors */
-public interface Ports {
-    // TODO: Await CAN IDs / Device IDs from mec, put them here
-    
+public interface Ports {    
     public interface Gamepad {
         int DRIVER = 0;
         int OPERATOR = 1;
@@ -28,7 +26,7 @@ public interface Ports {
         int PIVOT_MOTOR = 1;
         int ROLLER_MOTOR = 3;
         int THROUGHBORE_DIO = 5;
-        int bumpSwitchPort = 0; //TODO: get bump switch port
+        int bumpSwitchPort = 4;
     }
   
     public interface Drivetrain {

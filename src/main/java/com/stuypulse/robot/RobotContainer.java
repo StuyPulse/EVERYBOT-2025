@@ -2,9 +2,6 @@ package com.stuypulse.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.events.EventTrigger;
-import com.pathplanner.lib.path.EventMarker;
 import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.DoubleCenterCoralAuton;
@@ -15,7 +12,6 @@ import com.stuypulse.robot.commands.auton.push.PushBackwardsAuton;
 import com.stuypulse.robot.commands.auton.push.PushForwardsAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
-import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
@@ -32,15 +28,11 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeHold;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
-import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
-import com.stuypulse.robot.commands.vision.VisionDriveToNearestApriltag;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
-import com.stuypulse.robot.subsystems.drivetrain.DrivetrainImpl;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -182,6 +174,8 @@ public class RobotContainer {
 		autonChooser.addOption("PP Coral 1PC", new PathPlannerAuto("Center 1Pc"));
 		autonChooser.addOption("pp 2 peice", new PathPlannerAuto("Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("pp Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
+		autonChooser.addOption("PP Procceser to E", new PathPlannerAuto("Procceser to E"));
+		autonChooser.addOption("PP Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
