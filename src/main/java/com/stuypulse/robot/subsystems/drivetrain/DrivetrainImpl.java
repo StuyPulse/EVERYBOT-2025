@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.feedforward.MotorFeedforward;
 import com.stuypulse.stuylib.math.SLMath;
 import com.stuypulse.robot.constants.Constants;
@@ -18,6 +19,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+import com.pathplanner.lib.util.DriveFeedforwards;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -25,7 +27,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.DifferentialDriveFeedforward;
 import edu.wpi.first.math.controller.DifferentialDriveWheelVoltages;
 import edu.wpi.first.math.controller.LTVUnicycleController;
 import edu.wpi.first.math.controller.PIDController;
@@ -47,6 +51,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -218,13 +223,12 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void configureAutoBuilder() {
-         LimelightVision vision = LimelightVision.getInstance();
+        LimelightVision vision = LimelightVision.getInstance();
         AutoBuilder.configure(
         vision::getEstimatedPose,
         vision::resetEstimatedPose,
         this::getChassisSpeeds,
         (speeds) -> {
-
             DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
                 convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
 
@@ -232,14 +236,16 @@ public class DrivetrainImpl extends Drivetrain {
             double rightSpeed = convertedSpeeds.rightMetersPerSecond;
             SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
-            driveTankVolts(leftSpeed, rightSpeed);
+            driveTankVolts(-leftSpeed, -rightSpeed);
         },
-        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 2.0), VecBuilder.fill(1.0, 2.0), 0.02, 9),
+        new PPLTVController(0.02),
+        //VecBuilder.fill(0.005, 0.05, 0.5), VecBuilder.fill(1.0, 1.0), 0.02, 5
+        //new PPLTVController(0.02),
         pathPlannerRobotConfig,
         () -> {
         var alliance = DriverStation.getAlliance();
 
-        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : false;
+        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : true;
         },
         this);
         // AutoBuilder.configureCustom(
@@ -254,9 +260,40 @@ public class DrivetrainImpl extends Drivetrain {
         //         false);
     }
 
+    public void closedLoopControl(ChassisSpeeds speeds) {
+        DifferentialDriveWheelSpeeds wheelspeeds = kinematics.toWheelSpeeds(speeds);
+        wheelspeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+
+        DifferentialDriveWheelVoltages feedbackVoltages = new DifferentialDriveWheelVoltages(
+            lPIDController.calculate(getSpeeds().leftMetersPerSecond,
+                 wheelspeeds.leftMetersPerSecond),
+            rPIDController.calculate(getSpeeds().rightMetersPerSecond,
+                wheelspeeds.rightMetersPerSecond)  
+        );
+
+
+        DifferentialDriveWheelVoltages feedFowarVoltages = new DifferentialDriveWheelVoltages(
+            ffController.calculate(
+                getSpeeds().leftMetersPerSecond,
+                    wheelspeeds.leftMetersPerSecond),
+            ffController.calculate(
+                getSpeeds().rightMetersPerSecond,
+                wheelspeeds.rightMetersPerSecond
+            )
+        );
+        driveTankVolts(
+            -MathUtil.clamp(feedbackVoltages.left + feedFowarVoltages.left, Settings.Drivetrain.DRIVE_UPPER_VOLTAGE_LIMIT, Settings.Drivetrain.DRIVE_LOWER_VOLTAGE_LIMIT), 
+            -MathUtil.clamp(feedbackVoltages.right + feedFowarVoltages.right,Settings.Drivetrain.DRIVE_UPPER_VOLTAGE_LIMIT, Settings.Drivetrain.DRIVE_LOWER_VOLTAGE_LIMIT)
+        );
+    }
+
     public ChassisSpeeds getChassisSpeeds() {
         return kinematics.toChassisSpeeds(getSpeeds());
     }
+
+    // public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    //     return kinematics.toWheelSpeeds(getSpeeds());
+    // }
 
     @Override
     public double getLeftDistance() {

@@ -36,40 +36,27 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Processor Back to Algae Wait"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PivotLollipopAlgaeIntake"
-                }
-              }
-            ]
+            "pathName": "Processor Coral Back to HP"
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "PivotAlgaeHold"
+            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AlgaeToProcessor"
+            "pathName": "Processor HP Far Back"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "ScoreProcessor"
+            "pathName": "Processor HP Far Back Score"
           }
         },
         {
@@ -77,15 +64,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "AlgaeOuttake"
+                  "name": "PivotCoralScore"
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "PivotAlgaeOuttake"
+                  "waitTime": 1.0
                 }
               }
             ]

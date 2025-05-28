@@ -176,6 +176,7 @@ public class RobotContainer {
 		autonChooser.addOption("pp Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
 		autonChooser.addOption("PP Procceser to E", new PathPlannerAuto("Procceser to E"));
 		autonChooser.addOption("PP Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
+		autonChooser.addOption("PP Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}

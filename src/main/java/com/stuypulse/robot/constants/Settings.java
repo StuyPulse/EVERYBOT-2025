@@ -113,5 +113,7 @@ public interface Settings {
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
+        public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
+        public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;
     }
 }
