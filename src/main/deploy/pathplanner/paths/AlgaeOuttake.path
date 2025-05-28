@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.983730544747082,
-        "y": 0.4100072957198422
+        "y": 0.4100072957198421
       },
       "isLocked": false,
       "linkedName": "ScoreProc"

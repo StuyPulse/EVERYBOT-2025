@@ -13,6 +13,8 @@ import com.stuypulse.robot.commands.auton.push.PushForwardsAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveDefault;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
+import com.stuypulse.robot.commands.pivot.PivotCombos.PivotLolipopAlgeaIntake;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotReseatCoral;
@@ -22,12 +24,11 @@ import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
-import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
-import com.stuypulse.robot.commands.pivot.PivotCombos.PivotLolipopAlgeaIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeHold;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
@@ -177,14 +178,14 @@ public class RobotContainer {
 		autonChooser.addOption("PP Procceser to E", new PathPlannerAuto("Procceser to E"));
 		autonChooser.addOption("PP Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
 		autonChooser.addOption("PP Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
-
+		
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
 
 	private void registerAutoCommands() {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
-						new PivotCoralScore().withTimeout(1), new PivotToCoralStow()));
+						new PivotCoralScore().withTimeout(1), new PivotToCoralStow(), new PivotRollerStop()));
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLolipopAlgeaIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",
 				new SequentialCommandGroup(new PivotAlgaeHold(), new PivotToAlgaeStow()));
