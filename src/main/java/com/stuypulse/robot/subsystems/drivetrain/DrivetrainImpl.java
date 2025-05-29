@@ -189,9 +189,9 @@ public class DrivetrainImpl extends Drivetrain {
     /**
      * returns the left motor velocity
      * 
-     * @return velocity in meters per minute
+     * @return velocity in meters per seconds
      */
-    public double getLeftVelocity() { // In Meters per minute
+    public double getLeftVelocity() { // In Meters per seconds
         return -leftEncoder.getVelocity();
     }
 
@@ -205,9 +205,7 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     private DifferentialDriveWheelSpeeds getSpeeds() {
-        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(),
-                getRightVelocity());
-        wheelspeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(),getRightVelocity());
         return wheelspeeds;
     }
 
@@ -230,17 +228,13 @@ public class DrivetrainImpl extends Drivetrain {
         this::getChassisSpeeds,
         (speeds) -> {
             DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
-                convertedSpeeds.desaturate(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
-
             double leftSpeed = convertedSpeeds.leftMetersPerSecond;
             double rightSpeed = convertedSpeeds.rightMetersPerSecond;
             SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(-leftSpeed, -rightSpeed);
         },
-        new PPLTVController(0.02),
-        //VecBuilder.fill(0.005, 0.05, 0.5), VecBuilder.fill(1.0, 1.0), 0.02, 5
-        //new PPLTVController(0.02),
+        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 2), VecBuilder.fill(1,1), 0.02, 9),
         pathPlannerRobotConfig,
         () -> {
         var alliance = DriverStation.getAlliance();
@@ -248,16 +242,6 @@ public class DrivetrainImpl extends Drivetrain {
         return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : true;
         },
         this);
-        // AutoBuilder.configureCustom(
-        //         this::followPathCommand,
-        //         vision::getEstimatedPose,
-        //         vision::resetEstimatedPose,
-        //         () -> {
-        //             var alliance = DriverStation.getAlliance();
-
-        //             return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Blue : true; 
-        //         },
-        //         false);
     }
 
     public void closedLoopControl(ChassisSpeeds speeds) {

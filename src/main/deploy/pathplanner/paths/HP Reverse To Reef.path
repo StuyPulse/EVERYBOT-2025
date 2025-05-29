@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.565652654867256,
-        "y": 6.432300884955752
+        "x": 3.7042008196721308,
+        "y": 6.452510245901639
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.099723451327433,
-        "y": 6.289933628318583
+        "x": 3.238271616132308,
+        "y": 6.31014298926447
       },
       "isLocked": false,
       "linkedName": "NonProcessor After HP Reverse"
     },
     {
       "anchor": {
-        "x": 3.320500972762646,
-        "y": 5.335274805447471
+        "x": 3.8360655737704916,
+        "y": 5.061936475409836
       },
       "prevControl": {
-        "x": 3.0422376984263626,
-        "y": 5.833560203677559
+        "x": 3.5101099832500453,
+        "y": 5.626508119202366
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,7 +38,7 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,

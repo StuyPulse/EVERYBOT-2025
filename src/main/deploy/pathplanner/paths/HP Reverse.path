@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6559824902723737,
-        "y": 7.281481031128404
+        "x": 1.4385245901639343,
+        "y": 7.255686475409835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.116926070038911,
-        "y": 6.624209630350195
+        "x": 1.8994681699304714,
+        "y": 6.5984150746316255
       },
       "isLocked": false,
       "linkedName": "NonProcessor HP"
     },
     {
       "anchor": {
-        "x": 3.565652654867256,
-        "y": 6.432300884955752
+        "x": 3.7042008196721308,
+        "y": 6.452510245901639
       },
       "prevControl": {
-        "x": 2.853816371681416,
-        "y": 6.050497787610619
+        "x": 2.9923645364862907,
+        "y": 6.070707148556506
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,7 +38,7 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,
