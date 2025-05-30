@@ -185,20 +185,12 @@ public class RobotContainer {
 	private void registerAutoCommands() {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
-						new PivotCoralScore().withTimeout(1), new PivotToCoralStow(), new PivotRollerStop()));
+						new PivotCoralScore().withTimeout(1), new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLolipopAlgeaIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",
 				new SequentialCommandGroup(new PivotAlgaeHold(), new PivotToAlgaeStow()));
 		NamedCommands.registerCommand("PivotAlgaeOuttake", new PivotAlgaeOuttake());
 	}
-
-	// private void registerEventTriggers() {
-	// new EventTrigger("Coral - Score").onTrue(new
-	// SetPivotControlMode(PivotControlMode.USING_STATES))
-	// .whileTrue(new PivotCoralScore())
-	// .onFalse(new PivotToCoralStow())
-	// .onFalse(new PivotHoldCoral());
-	// }
 
 	public void configureSysId() {
 		SysIdRoutine pivotSysIdRoutine = pivot.getSysIdRoutine();
