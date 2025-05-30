@@ -1,8 +1,10 @@
 package com.stuypulse.robot.commands.pivot.PivotCombos;
 
+import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.PivotToState;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.roller.PivotCoralOuttake;
+import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 
@@ -15,7 +17,9 @@ public class PivotCoralScore extends SequentialCommandGroup{
                 .withTimeout(0.35),
             new PivotToState(PivotState.SCORE_CORAL)
                 .alongWith(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
-                .withTimeout(2)
+                .withTimeout(2),
+            new PivotToCoralStow(),
+            new PivotHoldCoral()
         );
     }
 }

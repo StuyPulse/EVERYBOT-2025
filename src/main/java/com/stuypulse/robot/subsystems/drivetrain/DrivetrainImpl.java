@@ -17,6 +17,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.pathplanner.lib.util.DriveFeedforwards;
@@ -46,6 +47,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -368,6 +370,20 @@ public class DrivetrainImpl extends Drivetrain {
         return Commands.runOnce(() -> resetOdometry(exampleTrajectory.getInitialPose()))
                 .andThen(command)
                 .andThen(Commands.runOnce(() -> driveTankVolts(0.0, 0.0))); // Stop Drivetrain
+    }
+
+    // Don't we only need findPathToPath?
+    @Override
+    public Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed) { 
+        //TODO: test with no rotation delay, pathplanner docs out of date.
+        Command pathfindingcommand = AutoBuilder.pathfindToPose(targetPose, constraints, endSpeed);
+        return pathfindingcommand;
+    }
+
+    @Override
+    public Command findPathToPath( PathConstraints constraints, PathPlannerPath path) {
+        Command pathToPathCommand = AutoBuilder.pathfindThenFollowPath(path, constraints);
+        return pathToPathCommand;
     }
 
     private void updateVision() { // TEMPORARY

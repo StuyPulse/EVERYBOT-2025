@@ -4,6 +4,10 @@
 /**************************************************************/
 package com.stuypulse.robot.constants;
 
+import static edu.wpi.first.units.Units.Radian;
+import static edu.wpi.first.units.Units.Radians;
+
+import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -115,5 +119,8 @@ public interface Settings {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
         public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;
+        public static final PathConstraints REEF_ALIGNMENT_CONSTRAINTS = new PathConstraints(
+            3.0, 4.0,
+            Units.Radians.convertFrom(540, Radians), Units.Radians.convertFrom(720, Radians));
     }
 }

@@ -2,6 +2,7 @@ package com.stuypulse.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.auton.combinations.CoralgaeAuton;
 import com.stuypulse.robot.commands.auton.combinations.PushBackwardsCoralAuton;
 import com.stuypulse.robot.commands.auton.coral.DoubleCenterCoralAuton;
@@ -29,6 +30,7 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
+import com.stuypulse.robot.constants.Paths;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
@@ -79,22 +81,13 @@ public class RobotContainer {
 	}
 
 	/***********************/
-	/*** CONFIGURE CMDS ****/
-	/***********************/
-	// TODO: FOLLOW
-	// https://pathplanner.dev/pplib-getting-started.html#install-pathplannerlib
-
-	/***********************/
 	/*** BUTTON BINDINGS ***/
 	/***********************/
 
 	private void configureButtonBindings() {
 		// BUTTONS
 		driver.getTopButton() // Coral Score
-				// .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-				.whileTrue(new PivotCoralScore())
-				.onFalse(new PivotToCoralStow())
-				.onFalse(new PivotHoldCoral());
+				.whileTrue(new PivotCoralScore());
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb());
 		driver.getRightButton() // Stow Climb
@@ -134,6 +127,7 @@ public class RobotContainer {
 				.onTrue(new PivotLolipopAlgeaIntake())
 				.onFalse(new PivotAlgaeHold())
 				.onFalse(new PivotToAlgaeStow());
+		
 
 		// MENU BUTTONS
 		driver.getRightMenuButton() // Reset Relative Encoder
@@ -170,10 +164,15 @@ public class RobotContainer {
 		// PATHPLANNER
 		driveSubsystem.configureAutoBuilder();
 		registerAutoCommands();
-		// registerEventTriggers();
+		
+		try {
+			PathPlannerPath AB = PathPlannerPath.fromPathFile("AB Drive");
+
+			Paths.loadPath("AB", AB);
+		} catch (Exception e) {}
 
 		autonChooser.addOption("PP Coral 1PC", new PathPlannerAuto("Center 1Pc"));
-		autonChooser.addOption("pp 2 peice", new PathPlannerAuto("Non-Processor 2 Pc + AlgaePickup"));
+		autonChooser.addOption("pp 2 piece", new PathPlannerAuto("Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("pp Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
 		autonChooser.addOption("PP Procceser to E", new PathPlannerAuto("Procceser to E"));
 		autonChooser.addOption("PP Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));

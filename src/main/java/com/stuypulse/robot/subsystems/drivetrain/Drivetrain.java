@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;
 import com.stuypulse.stuylib.control.Controller;
@@ -42,11 +43,11 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract Pose2d getPose();
 
     public abstract double getOutputVoltage(SparkMax motor);
-
     public abstract Command followPathCommand(PathPlannerPath ppPath);
 
     public abstract void driveToNearestAprilTag();
-
+    public abstract Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed);
+    public abstract Command findPathToPath( PathConstraints constraints, PathPlannerPath path);
     public abstract DifferentialDriveKinematics getKinematics();
     public abstract DifferentialDriveOdometry getOdometry();
 
