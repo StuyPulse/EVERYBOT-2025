@@ -120,7 +120,7 @@ public interface Settings {
         public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
         public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;
         public static final PathConstraints REEF_ALIGNMENT_CONSTRAINTS = new PathConstraints(
-            3.0, 4.0,
+            5.4, 4.0,
             Units.Radians.convertFrom(540, Radians), Units.Radians.convertFrom(720, Radians));
     }
 }

@@ -47,7 +47,7 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract void driveToNearestAprilTag();
     public abstract Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed);
-    public abstract Command findPathToPath( PathConstraints constraints, PathPlannerPath path);
+    public abstract Command findPathToPath(PathConstraints constraints, PathPlannerPath path);
     public abstract DifferentialDriveKinematics getKinematics();
     public abstract DifferentialDriveOdometry getOdometry();
 
