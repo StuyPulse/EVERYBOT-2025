@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.pivot.PivotCombos;
+package com.stuypulse.robot.commands.pivot.pivotCombos;
 
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.PivotToState;
