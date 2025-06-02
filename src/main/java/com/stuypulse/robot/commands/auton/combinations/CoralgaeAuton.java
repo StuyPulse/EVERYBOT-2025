@@ -1,7 +1,7 @@
 package com.stuypulse.robot.commands.auton.combinations;
 
 import com.stuypulse.robot.commands.drive.DriveTank;
-import com.stuypulse.robot.commands.pivot.PivotCombos.PivotCoralScore;
+import com.stuypulse.robot.commands.pivot.pivotCombos.PivotCoralScore;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
