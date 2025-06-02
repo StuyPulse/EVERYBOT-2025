@@ -17,9 +17,7 @@ public class PivotCoralScore extends SequentialCommandGroup{
                 .withTimeout(0.35),
             new PivotToState(PivotState.SCORE_CORAL)
                 .alongWith(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
-                .withTimeout(2),
-            new PivotToCoralStow(),
-            new PivotHoldCoral()
+                .withTimeout(2)
         );
     }
 }

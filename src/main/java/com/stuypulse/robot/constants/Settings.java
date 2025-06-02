@@ -56,7 +56,7 @@ public interface Settings {
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
-        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(75);
+        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(85);
         
         public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(2);
 

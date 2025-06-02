@@ -87,7 +87,10 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// BUTTONS
 		driver.getTopButton() // Coral Score
-				.whileTrue(new PivotCoralScore());
+                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+                .whileTrue(new PivotCoralScore())
+                .onFalse(new PivotToCoralStow())
+                .onFalse(new PivotHoldCoral());
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb());
 		driver.getRightButton() // Stow Climb
