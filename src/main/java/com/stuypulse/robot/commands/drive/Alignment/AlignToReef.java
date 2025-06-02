@@ -21,5 +21,4 @@ public class AlignToReef extends Command{
     public void execute() {
         drivetrain.findPathToPath(Settings.Drivetrain.REEF_ALIGNMENT_CONSTRAINTS, this.path);
     }
-
 }

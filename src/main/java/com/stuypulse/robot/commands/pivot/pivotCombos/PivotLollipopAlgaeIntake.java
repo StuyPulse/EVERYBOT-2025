@@ -7,11 +7,9 @@ import com.stuypulse.robot.subsystems.pivot.Pivot;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class PivotLolipopAlgeaIntake extends SequentialCommandGroup {
-    public PivotLolipopAlgeaIntake() {
+public class PivotLollipopAlgaeIntake extends SequentialCommandGroup {
+    public PivotLollipopAlgaeIntake() {
         addCommands(
-            new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES)
-                .withTimeout(0.1),
             new PivotToLoliPopIntake()
                 .withTimeout(2),
             new PivotAlgaeIntake()
