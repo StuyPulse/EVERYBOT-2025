@@ -8,18 +8,21 @@ import com.stuypulse.stuylib.input.Gamepad;
 public class DriveDefault extends Command {
     private final Gamepad gamepad;
     private final boolean squared;
+    private final double xInput;
 
     public DriveDefault(Gamepad gamepad,
                         boolean squared) {
         this.gamepad = gamepad;
         this.squared = squared;
+        this.xInput = gamepad.getRightTrigger() + -gamepad.getLeftTrigger();
+        
 
         addRequirements(Drivetrain.getInstance());
     }
 
     @Override
     public void execute() {
-        Drivetrain.getInstance().driveArcade(-gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
+        Drivetrain.getInstance().driveArcade(xInput, gamepad.getLeftStick().x, squared);
     }
 
     @Override

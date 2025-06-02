@@ -80,7 +80,7 @@ public class RobotContainer {
 	/***********************/
 
 	private void configureButtonBindings() {
-		// BUTTONS
+		// // BUTTONS
 		driver.getTopButton() // Coral Score
                 .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
                 .whileTrue(new PivotCoralScore())
@@ -94,15 +94,15 @@ public class RobotContainer {
 				.whileTrue(new PivotAlgaeOuttake())
 				.onFalse(new PivotHoldCoral());
 
-		// TRIGGERS
-		driver.getLeftTriggerButton() // Pivot Up
-				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-				.whileTrue(new PivotRaise())
-				.onFalse(new PivotStop());
-		driver.getRightTriggerButton() // Pivot Down
-				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-				.whileTrue(new PivotLower())
-				.onFalse(new PivotStop());
+		// // TRIGGERS
+		// driver.getLeftTriggerButton() // Pivot Up
+		// 		.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		// 		.whileTrue(new PivotRaise())
+		// 		.onFalse(new PivotStop());
+		// driver.getRightTriggerButton() // Pivot Down
+		// 		.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		// 		.whileTrue(new PivotLower())
+		// 		.onFalse(new PivotStop());
 
 		// BUMPERS
 		driver.getRightBumper() // Algae Outtake
@@ -112,12 +112,16 @@ public class RobotContainer {
 				.whileTrue(new PivotAlgaeIntake())
 				.onFalse(new PivotAlgaeHold());
 
-		// DPAD
-		driver.getDPadRight() // Pivot to Hold Algae
-				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-				.onTrue(new PivotToAlgaeStow())
-				.onTrue(new PivotAlgaeHold());
-		driver.getDPadDown() // Pivot to Intake Algae
+		// // DPAD
+		driver.getDPadDown() // Pivot down
+				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+				.whileTrue(new PivotLower())
+				.onFalse(new PivotStop());
+		driver.getDPadUp() // Pivot up
+				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+				.whileTrue(new PivotRaise())
+				.onFalse(new PivotStop());
+		driver.getDPadRight() // Pivot to Intake Algae
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake());
 		driver.getDPadLeft() // Pivot to Lollipop Intake
@@ -126,10 +130,11 @@ public class RobotContainer {
 				.onFalse(new PivotAlgaeHold())
 				.onFalse(new PivotToAlgaeStow());
 
-		// MENU BUTTONS
-		driver.getRightMenuButton() // Drive to Nearest April Tag
-			.whileTrue(new AlignToReefAB())
-			.onFalse(new DriveArcade(0, 0, true));
+		// // MENU BUTTONS
+		// driver.getRightMenuButton() // Drive to Nearest April Tag
+		// 	.onTrue(new AlignToReefAB());
+
+
 	}
 
 	/**************/
