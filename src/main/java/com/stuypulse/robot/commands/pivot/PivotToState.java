@@ -5,7 +5,7 @@ import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class PivotToState extends InstantCommand {
+public class PivotToState extends Command {
     private Pivot pivot;
     private PivotState pivotState;
 

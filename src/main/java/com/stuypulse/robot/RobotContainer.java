@@ -62,7 +62,6 @@ public class RobotContainer {
 	// Robot container
 	public RobotContainer() {
 		driveSubsystem = Drivetrain.getInstance();
-		//limelightVision  = LimelightVision.getInstance();
 
 		configureAutons(); // MAKE SURE THIS IS RUN FIRST TO ADD IN COMMANDS INTO PATHPLANNER
 		configureDefaultCommands();
@@ -87,6 +86,7 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// BUTTONS
 		driver.getTopButton() // Coral Score
+				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.whileTrue(new PivotCoralScore());
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb());
