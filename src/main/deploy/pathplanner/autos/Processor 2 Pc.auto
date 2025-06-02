@@ -29,12 +29,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.4
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Processor HP Far Back"
