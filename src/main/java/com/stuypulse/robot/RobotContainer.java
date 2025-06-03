@@ -143,11 +143,11 @@ public class RobotContainer {
 
 	public void configureAutons() {
 		// Coral
-		autonChooser.setDefaultOption("[OLD] Single", new SingleCoralAuton());
+		autonChooser.setDefaultOption("[ABSOLUTE] Single", new SingleCoralAuton());
 
 		// Misc
-		autonChooser.addOption("[OLD] Do Nothing", new DoNothingAuton());
-		autonChooser.addOption("[OLD] Mobility", new MobilityAuton());
+		autonChooser.addOption("[ABSOLUTE] Do Nothing", new DoNothingAuton());
+		autonChooser.addOption("[ABSOLUTE] Mobility", new MobilityAuton());
 
 		// PATHPLANNER
 		driveSubsystem.configureAutoBuilder();

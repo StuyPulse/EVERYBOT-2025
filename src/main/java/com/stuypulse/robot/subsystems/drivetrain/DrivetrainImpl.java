@@ -236,7 +236,7 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(-leftSpeed, -rightSpeed);
         },
-        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 1), VecBuilder.fill(1,1), 0.02, 9),
+        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 1), VecBuilder.fill(1,1), 0.02, 6.5),
         pathPlannerRobotConfig,
         () -> {
         var alliance = DriverStation.getAlliance();
@@ -372,20 +372,6 @@ public class DrivetrainImpl extends Drivetrain {
                 .andThen(Commands.runOnce(() -> driveTankVolts(0.0, 0.0))); // Stop Drivetrain
     }
 
-    // Don't we only need findPathToPath?
-    @Override
-    public Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed) { 
-        //TODO: test with no rotation delay, pathplanner docs out of date.
-        Command pathfindingcommand = AutoBuilder.pathfindToPose(targetPose, constraints, endSpeed);
-        return pathfindingcommand;
-    }
-
-    @Override
-    public Command findPathToPath( PathConstraints constraints, PathPlannerPath path) {
-        Command pathToPathCommand = AutoBuilder.pathfindThenFollowPath(path, constraints);
-        return pathToPathCommand;
-    }
-
     private void updateVision() { // TEMPORARY
         final double STEER_K = 0.03;
         final double DRIVE_K = 0.03;
@@ -435,5 +421,17 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/ Right velocity", getRightVelocity());
+    }
+
+    @Override
+    public Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findPath'");
+    }
+
+    @Override
+    public Command findPathToPath(PathConstraints constraints, PathPlannerPath path) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findPathToPath'");
     }
 }
