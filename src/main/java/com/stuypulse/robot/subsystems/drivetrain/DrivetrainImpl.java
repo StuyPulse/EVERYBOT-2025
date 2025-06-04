@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
+import java.sql.Driver;
 import java.util.List;
 import java.util.Vector;
 
@@ -236,12 +237,13 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(-leftSpeed, -rightSpeed);
         },
-        new PPLTVController(VecBuilder.fill(0.0625, 0.125, 1), VecBuilder.fill(1,1), 0.02, 6.5),
+       new PPLTVController(VecBuilder.fill(0.0725, 0.125, 0.8), VecBuilder.fill(1,2.55), 0.02, 9),
+    //    new PPLTVController(0.02)
         pathPlannerRobotConfig,
         () -> {
         var alliance = DriverStation.getAlliance();
 
-        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : true;
+        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red  : true;
         },
         this);
     }
@@ -410,6 +412,18 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     @Override
+    public Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findPath'");
+    }
+
+    @Override
+    public Command findPathToPath(PathConstraints constraints, PathPlannerPath path) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findPathToPath'");
+    }
+
+    @Override
     public void periodic() {
         super.periodic();
 
@@ -421,17 +435,5 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/ Right velocity", getRightVelocity());
-    }
-
-    @Override
-    public Command findPath(Pose2d targetPose, PathConstraints constraints, double endSpeed) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findPath'");
-    }
-
-    @Override
-    public Command findPathToPath(PathConstraints constraints, PathPlannerPath path) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findPathToPath'");
     }
 }

@@ -133,6 +133,7 @@ public class RobotContainer {
 		// // MENU BUTTONS
 		// driver.getRightMenuButton() // Drive to Nearest April Tag
 		// 	.onTrue(new AlignToReefAB());
+		
 
 
 	}
@@ -155,9 +156,11 @@ public class RobotContainer {
 		
 		try {
 			PathPlannerPath AB = PathPlannerPath.fromPathFile("AB Drive");
-
+			
 			Paths.loadPath("AB", AB);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			SmartDashboard.putString("PathPlanner Exception", e.toString());
+		}
 
 		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
 		autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
@@ -205,4 +208,6 @@ public class RobotContainer {
 	public Command getAutonomousCommand() {
 		return autonChooser.getSelected();
 	}
+
+	
 }

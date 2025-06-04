@@ -87,8 +87,8 @@ public interface Settings {
         public static final Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(85);
 
         //PIVOT MANUAL SPEEDS
-        public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", -0.2);
-        public static SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", 0.2);
+        public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
+        public static SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.2);
         
         //ROLLER SPEEDS
         public static SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);

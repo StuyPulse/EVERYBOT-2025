@@ -16,7 +16,7 @@
   ],
   "defaultMaxVel": 10.0,
   "defaultMaxAccel": 3.0,
-  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngVel": 360.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 46.493218,

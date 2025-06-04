@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.314088884388149,
-        "y": 4.655583366445789
+        "x": 5.761711220261762,
+        "y": 5.423165219938412
       },
       "isLocked": false,
       "linkedName": "NonProcessor Coral 1"
@@ -20,12 +20,12 @@
         "y": 5.92047697368421
       },
       "prevControl": {
-        "x": 6.1963783650486715,
-        "y": 6.310152282190378
+        "x": 5.670185459527582,
+        "y": 6.080897881647809
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "IJ TO HP_S"
     }
   ],
   "rotationTargets": [],
@@ -38,7 +38,7 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
