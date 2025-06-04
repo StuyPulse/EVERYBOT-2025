@@ -3,10 +3,11 @@
   "robotLength": 1.016254,
   "holonomicMode": false,
   "pathFolders": [
-    "Reef Alignment",
+    "KL AB Non-Processor",
     "Non-Processor",
     "Processor",
     "ProcessorAlgae",
+    "Reef Alignment",
     "Starting Line to Reef"
   ],
   "autoFolders": [
