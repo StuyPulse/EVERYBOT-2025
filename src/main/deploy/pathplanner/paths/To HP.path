@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.130735500362773,
-        "y": 6.248708873911435
+        "x": 5.833197638580837,
+        "y": 6.134855236474088
       },
       "isLocked": false,
-      "linkedName": "IJ TO HP_S"
+      "linkedName": "NonProcessor After Reverse"
     },
     {
       "anchor": {
@@ -35,10 +35,10 @@
   "globalConstraints": {
     "maxVelocity": 10.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 360.0,
+    "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
