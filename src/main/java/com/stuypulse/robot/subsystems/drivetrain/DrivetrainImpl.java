@@ -237,7 +237,7 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(-leftSpeed, -rightSpeed);
         },
-       new PPLTVController(VecBuilder.fill(0.0725, 0.125, 0.8), VecBuilder.fill(1,2.55), 0.02, 9),
+       new PPLTVController(VecBuilder.fill(0.0725, 0.125, 1), VecBuilder.fill(1,2), 0.02, 9),
     //    new PPLTVController(0.02)
         pathPlannerRobotConfig,
         () -> {
@@ -419,8 +419,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Command findPathToPath(PathConstraints constraints, PathPlannerPath path) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findPathToPath'");
+        return AutoBuilder.pathfindThenFollowPath(path, constraints);    
     }
 
     @Override

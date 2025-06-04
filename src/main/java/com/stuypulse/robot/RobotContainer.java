@@ -19,6 +19,7 @@ import com.stuypulse.robot.commands.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.PivotToAlgaeStow;
 import com.stuypulse.robot.commands.pivot.PivotToCoralStow;
+import com.stuypulse.robot.commands.pivot.PivotToDefault;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.pivotCombos.PivotCoralScore;
 import com.stuypulse.robot.commands.pivot.pivotCombos.PivotLollipopAlgaeIntake;
@@ -133,7 +134,7 @@ public class RobotContainer {
 		// // MENU BUTTONS
 		// driver.getRightMenuButton() // Drive to Nearest April Tag
 		// 	.onTrue(new AlignToReefAB());
-		
+
 
 
 	}
@@ -168,6 +169,7 @@ public class RobotContainer {
 		autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
 		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
 		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
+		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
 		
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
@@ -175,11 +177,18 @@ public class RobotContainer {
 	private void registerAutoCommands() {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
-						new PivotCoralScore().withTimeout(1), new WaitCommand(1), new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
+						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1), new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",
 				new SequentialCommandGroup(new PivotAlgaeHold(), new PivotToAlgaeStow()));
 		NamedCommands.registerCommand("PivotAlgaeOuttake", new PivotAlgaeOuttake());
+		NamedCommands.registerCommand("Pivot default and Rotisserie",  
+			new SequentialCommandGroup(
+				new PivotToDefault().withTimeout(0.01),
+				new PivotHoldCoral().withTimeout(0.01)
+			)
+		);
+		
 	}
 
 	public void configureSysId() {

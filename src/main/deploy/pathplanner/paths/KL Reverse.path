@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3747500000000001,
-        "y": 7.31075
+        "x": 4.0,
+        "y": 5.058
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.84275,
-        "y": 6.49175
+        "x": 3.7564027614721143,
+        "y": 5.479922793713773
       },
       "isLocked": false,
-      "linkedName": "NonProcessor HP"
+      "linkedName": "KL"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 6.8525
       },
       "prevControl": {
-        "x": 3.8220000000000005,
-        "y": 6.35525
+        "x": 3.237000000000001,
+        "y": 6.209
       },
       "nextControl": null,
       "isLocked": false,

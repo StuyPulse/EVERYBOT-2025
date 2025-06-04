@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3747500000000001,
-        "y": 7.31075
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 1.84275,
-        "y": 6.49175
-      },
-      "isLocked": false,
-      "linkedName": "NonProcessor HP"
-    },
-    {
-      "anchor": {
         "x": 4.5825,
         "y": 6.8525
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.1492500000000003,
+        "y": 6.0725
+      },
+      "isLocked": false,
+      "linkedName": "NonProcessor After HP Reverse"
+    },
+    {
+      "anchor": {
+        "x": 1.3747500000000001,
+        "y": 7.31075
+      },
       "prevControl": {
-        "x": 3.8220000000000005,
-        "y": 6.35525
+        "x": 1.8914999999999997,
+        "y": 6.5405
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NonProcessor After HP Reverse"
+      "linkedName": "NonProcessor HP"
     }
   ],
   "rotationTargets": [],
@@ -44,7 +44,7 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "reversed": true,
+  "reversed": false,
   "folder": "Non-Processor",
   "idealStartingState": {
     "velocity": 0,

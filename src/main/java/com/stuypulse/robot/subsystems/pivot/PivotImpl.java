@@ -124,7 +124,7 @@ public class PivotImpl extends Pivot {
 
     @Override
     public void setPivotState(PivotState pivotState) { 
-        this.pivotState = pivotState; 
+        this.pivotState = pivotState;
     }
 
     @Override
@@ -133,7 +133,8 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
-    public void setPivotControlMode(PivotControlMode pivotControlMode) {
+    public void 
+    setPivotControlMode(PivotControlMode pivotControlMode) {
         this.pivotControlMode = pivotControlMode;
     }
 
@@ -161,7 +162,8 @@ public class PivotImpl extends Pivot {
             pivotMotor.setVoltage(-controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
         }
 
-        if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false && pivotControlMode.getPivotControlMode() == Pivot.PivotControlMode.USING_STATES.getPivotControlMode()) {
+        if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false 
+            && (this.getPivotState() != PivotState.STOW_CORAL || this.getPivotState() != PivotState.DEFAULT) )  {
             setPivotControlMode(PivotControlMode.MANUAL);
         }
       

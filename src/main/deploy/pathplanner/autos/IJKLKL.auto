@@ -51,6 +51,36 @@
           "data": {
             "name": "PivotCoralScore"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "KL Reverse"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kl to HP post reverse"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Reverse"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Reverse To Reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotCoralScore"
+          }
         }
       ]
     }
