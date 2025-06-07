@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.util.Color;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+    public static final boolean DEBUG_MODE = true;
+
     public interface LEDPatterns {
         // AUTON COLORS    
         // MISC

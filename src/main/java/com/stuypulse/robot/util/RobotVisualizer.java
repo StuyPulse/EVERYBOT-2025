@@ -204,7 +204,9 @@ public class RobotVisualizer {
             pivot.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));
         }
 
-        SmartDashboard.putData("Visualizers/Robot", canvas);
+        if(Settings.DEBUG_MODE) {
+            SmartDashboard.putData("Visualizers/Robot", canvas);
+        }
     }
 
     public void updateRollers(double speed) {
@@ -213,7 +215,9 @@ public class RobotVisualizer {
             rollerLigaments[i].setAngle(rollerLigaments[i].getAngle() + (-rollerSpeed) * 20);
         }
         
-        SmartDashboard.putData("Visualizers/Robot", canvas);
+        if(Settings.DEBUG_MODE) {
+            SmartDashboard.putData("Visualizers/Robot", canvas);
+        }
     }
 
     public void updateClimb(Rotation2d angle, boolean atTargetAngle) {
@@ -222,6 +226,8 @@ public class RobotVisualizer {
         climbHooks.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));
         climbStringGripper.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));
 
-        SmartDashboard.putData("Visualizers/Robot", canvas);
+        if(Settings.DEBUG_MODE) {
+            SmartDashboard.putData("Visualizers/Robot", canvas);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.stuypulse.robot.commands.drive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.stuylib.input.Gamepad;
 
@@ -22,9 +23,11 @@ public class DriveDefault extends Command {
 
     @Override
     public void execute() {
+        if(Settings.DEBUG_MODE) {
         SmartDashboard.putNumber("Drivetrain/ Left trigger", gamepad.getLeftTrigger());
         SmartDashboard.putNumber("Drivetrain/ Right trigger", gamepad.getRightTrigger());
         SmartDashboard.putNumber("Drivetrain/ xinput", xInput);
+        }
         this.xInput = gamepad.getLeftTrigger() - gamepad.getRightTrigger();
         Drivetrain.getInstance().driveArcade(xInput, gamepad.getRightStick().x, squared);
     }
