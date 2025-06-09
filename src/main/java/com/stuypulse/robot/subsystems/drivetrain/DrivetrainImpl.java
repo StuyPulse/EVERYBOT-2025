@@ -434,5 +434,7 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/ Right velocity", getRightVelocity());
+        SmartDashboard.putData("Drivetrain/Differential Drivetrain", drive);
+        SmartDashboard.putNumber("DriverStation/ match time", DriverStation.getMatchTime());
     }
 }

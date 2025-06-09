@@ -21,7 +21,7 @@ public class Gains {
 
     public interface Pivot {
          public interface FF { //NO kA, kV, kS. PID + kG only.
-            double kG = 0.21;
+            double kG = 0.3 ;
         }
         public interface PID {
             double kP = 0.08;
