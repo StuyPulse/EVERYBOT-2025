@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.869413716814161,
-        "y": 2.148340707964601
+        "x": 5.730122950819672,
+        "y": 2.1249487704918035
       },
       "isLocked": false,
       "linkedName": "AfterProcessorCoralBack"
@@ -20,8 +20,8 @@
         "y": 0.7103995901639337
       },
       "prevControl": {
-        "x": 2.4451735456259973,
-        "y": 1.9852336609603949
+        "x": 1.9779713114754096,
+        "y": 1.7413422131147547
       },
       "nextControl": null,
       "isLocked": false,
