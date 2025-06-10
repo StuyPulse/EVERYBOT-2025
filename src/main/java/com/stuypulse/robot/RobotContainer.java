@@ -164,7 +164,7 @@ public class RobotContainer {
 		registerAutoCommands();
 		
 		try {
-			PathPlannerPath AB = PathPlannerPath.fromPathFile("PLUH");
+			PathPlannerPath AB = PathPlannerPath.fromPathFile("AB Drive");
 			
 			Paths.loadPath("AB", AB);
 		} catch (Exception e) {
