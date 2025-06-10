@@ -243,7 +243,7 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(-leftSpeed, -rightSpeed);
         },
-       new PPLTVController(VecBuilder.fill(0.0725, 0.125, 1), VecBuilder.fill(1,2), 0.02, 9),
+       new PPLTVController(VecBuilder.fill(0.0725, 0.125, 0.5), VecBuilder.fill(1,2), 0.02, 9),
     //    new PPLTVController(0.02)
         pathPlannerRobotConfig,
         () -> {
@@ -424,8 +424,8 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     @Override
-    public Command findPathToPath(PathConstraints constraints, PathPlannerPath path) {
-        return AutoBuilder.pathfindThenFollowPath(path, constraints);    
+    public void findPathToPath(PathConstraints constraints, PathPlannerPath path) {
+        AutoBuilder.pathfindThenFollowPath(path, constraints).schedule();  
     }
 
     @Override

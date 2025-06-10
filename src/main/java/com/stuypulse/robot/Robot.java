@@ -102,7 +102,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+    }
 
     @Override
     public void teleopExit() {}

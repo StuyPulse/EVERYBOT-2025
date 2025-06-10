@@ -86,10 +86,10 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// // BUTTONS
 		driver.getTopButton() // Coral Score
-                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-                .whileTrue(new PivotCoralScore())
-                .onFalse(new PivotToCoralStow())
-                .onFalse(new PivotHoldCoral());
+				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+				.whileTrue(new PivotCoralScore())
+				.onFalse(new PivotToCoralStow())
+				.onFalse(new PivotHoldCoral());
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb());
 		driver.getRightButton() // Stow Climb
@@ -100,13 +100,13 @@ public class RobotContainer {
 
 		// // TRIGGERS
 		// driver.getLeftTriggerButton() // Pivot Up
-		// 		.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-		// 		.whileTrue(new PivotRaise())
-		// 		.onFalse(new PivotStop());
+		// .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		// .whileTrue(new PivotRaise())
+		// .onFalse(new PivotStop());
 		// driver.getRightTriggerButton() // Pivot Down
-		// 		.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-		// 		.whileTrue(new PivotLower())
-		// 		.onFalse(new PivotStop());
+		// .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		// .whileTrue(new PivotLower())
+		// .onFalse(new PivotStop());
 
 		// BUMPERS
 		driver.getRightBumper() // Algae Outtake
@@ -137,14 +137,9 @@ public class RobotContainer {
 				.onFalse(new PivotToAlgaeIntake())
 				.onFalse(new PivotAlgaeHold());
 
-		driver.getLeftMenuButton()
-			.onTrue(new VisionSetMegaTag2());
-		// // MENU BUTTONS
-		// driver.getRightMenuButton() // Drive to Nearest April Tag
-		// 	.onTrue(new AlignToReefAB());
-
-
-
+		// MENU BUTTONS
+		driver.getRightMenuButton() // Drive to Nearest April Tag
+				.onTrue(new AlignToReefAB());
 	}
 
 	/**************/
@@ -162,17 +157,18 @@ public class RobotContainer {
 		// PATHPLANNER
 		driveSubsystem.configureAutoBuilder();
 		registerAutoCommands();
-		
+
 		try {
-			PathPlannerPath AB = PathPlannerPath.fromPathFile("AB Drive");
-			
-			Paths.loadPath("AB", AB);
+			PathPlannerPath c = PathPlannerPath.fromPathFile("CD Drive");
+
+			Paths.loadPath("AB", c);
 		} catch (Exception e) {
 			SmartDashboard.putString("CANNOT LOAD ALIGNMENT PATHS", e.toString());
-			
-			Notification errorNotif = new Notification(Elastic.Notification.NotificationLevel.ERROR, "CANNOT LOAD ALIGNMENT PATHS", e.toString());
-			errorNotif.setDisplayTimeSeconds(30); 
-			
+
+			Notification errorNotif = new Notification(Elastic.Notification.NotificationLevel.ERROR,
+					"CANNOT LOAD ALIGNMENT PATHS", e.toString());
+			errorNotif.setDisplayTimeSeconds(30);
+
 			Elastic.sendNotification(errorNotif);
 		}
 
@@ -183,25 +179,24 @@ public class RobotContainer {
 		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
 		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
-		
+
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
 
 	private void registerAutoCommands() {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
-						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1), new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
+						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
+						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",
 				new SequentialCommandGroup(new PivotAlgaeHold(), new PivotToAlgaeStow()));
 		NamedCommands.registerCommand("PivotAlgaeOuttake", new PivotAlgaeOuttake());
-		NamedCommands.registerCommand("Pivot default and Rotisserie",  
-			new SequentialCommandGroup(
-				new PivotToDefault().withTimeout(0.01),
-				new PivotHoldCoral().withTimeout(0.01)
-			)
-		);
-		
+		NamedCommands.registerCommand("Pivot default and Rotisserie",
+				new SequentialCommandGroup(
+						new PivotToDefault().withTimeout(0.01),
+						new PivotHoldCoral().withTimeout(0.01)));
+
 	}
 
 	public void configureSysId() {
@@ -231,5 +226,4 @@ public class RobotContainer {
 		return autonChooser.getSelected();
 	}
 
-	
 }
