@@ -2,6 +2,7 @@ package com.stuypulse.robot.subsystems.vision;
 
 import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Cameras.Camera;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
 
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LimelightVisionImpl extends LimelightVision {
     private final int maxTagCount = 2;
-    private final MegaTagMode megaTagMode = MegaTagMode.MEGATAG1;
+    private  MegaTagMode megaTagMode = MegaTagMode.MEGATAG1;
 
     private boolean doRejectUpdate = false;
     private boolean apriltagDetected = false;
@@ -53,6 +54,10 @@ public class LimelightVisionImpl extends LimelightVision {
             drivetrain.getRightDistance(),
             drivetrain.getPose());
     }
+
+    public void SetMegaTagMode(MegaTagMode mtMode) {
+        this.megaTagMode = mtMode;
+    }
      
     private void updatePoseEstimator() {
         apriltagDetected = false;
@@ -61,6 +66,8 @@ public class LimelightVisionImpl extends LimelightVision {
         poseEstimator.update(drivetrain.getHeading(), 
             drivetrain.getLeftDistance(), 
             drivetrain.getRightDistance());
+
+        if(!Settings.EnabledSubsystems.VISION.get()) return;
 
         if (megaTagMode == MegaTagMode.MEGATAG1) {
             LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight"); 

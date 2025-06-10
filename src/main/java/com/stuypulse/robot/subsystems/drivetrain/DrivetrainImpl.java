@@ -163,17 +163,23 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         drive.arcadeDrive(xSpeed, zRotation, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Arcade Drive");
     }
 
     @Override
     public void driveTank(double leftSpeed, double rightSpeed, boolean squared) {
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         drive.tankDrive(leftSpeed, rightSpeed, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
     }
 
     public void driveTankVolts(Double lVolts, Double rVolts) {
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         leftMotors[0].setVoltage(lVolts);
         rightMotors[0].setVoltage(rVolts);
         drive.feed();

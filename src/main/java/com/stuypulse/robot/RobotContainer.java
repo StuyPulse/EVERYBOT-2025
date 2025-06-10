@@ -131,8 +131,8 @@ public class RobotContainer {
 		driver.getDPadLeft() // Pivot to Lollipop Intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
-				.onFalse(new PivotAlgaeHold())
-				.onFalse(new PivotToAlgaeIntake());
+				.onFalse(new PivotToAlgaeIntake())
+				.onFalse(new PivotAlgaeHold());
 
 		// // MENU BUTTONS
 		// driver.getRightMenuButton() // Drive to Nearest April Tag

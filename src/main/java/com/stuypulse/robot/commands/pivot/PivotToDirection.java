@@ -1,5 +1,6 @@
 package com.stuypulse.robot.commands.pivot;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,6 +17,8 @@ public class PivotToDirection extends Command {
     }
 
     public void initialize() {
-        pivot.setPivotMotor(pivotMotorSpeed);
+        if (Settings.EnabledSubsystems.PIVOT.getAsBoolean()) {
+            pivot.setPivotMotor(pivotMotorSpeed);
+        }
     }
 }

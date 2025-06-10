@@ -5,9 +5,20 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
+import com.stuypulse.robot.commands.pivot.PivotToDefault;
+import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
+import com.stuypulse.robot.commands.vision.VisionSetMegaTag1;
+import com.stuypulse.robot.commands.vision.VisionSetMegaTag2;
+import com.stuypulse.robot.subsystems.pivot.PivotImpl;
+import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.subsystems.vision.LimelightVisionImpl;
+import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,12 +31,15 @@ public class Robot extends TimedRobot {
     private RobotContainer robot;
     private Command auto;
 
+
     /*************************/
     /*** ROBOT SCHEDULEING ***/
     /*************************/
 
     @Override
     public void robotInit() {
+        DataLogManager.start();
+        DriverStation.startDataLog(DataLogManager.getLog());
         robot = new RobotContainer();
     }
 
@@ -42,12 +56,17 @@ public class Robot extends TimedRobot {
     /*********************/
 
     @Override
-    public void disabledInit() {
-        new LEDApplyPattern(LEDPattern.solid(Color.kFirstRed).blink(Units.Seconds.of(.5)));
+    public void disabledInit() {}
+
+    @Override
+    public void disabledPeriodic() {
+        if (!DriverStation.isFMSAttached()) {
+            new VisionSetMegaTag1();
+        }
     }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledExit() {}
 
     /***********************/
     /*** AUTONOMOUS MODE ***/
@@ -56,10 +75,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
+        new VisionSetMegaTag2();
 
         if (auto != null) {
             auto.schedule();
         }
+
     }
 
     @Override
@@ -80,8 +101,7 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void teleopPeriodic() {
-    }
+    public void teleopPeriodic() {}
 
     @Override
     public void teleopExit() {}

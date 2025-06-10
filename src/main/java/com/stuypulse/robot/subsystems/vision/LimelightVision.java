@@ -36,4 +36,6 @@ public abstract class LimelightVision extends SubsystemBase {
     public abstract Pose2d getEstimatedPose();
 
     public abstract void resetEstimatedPose(Pose2d newPose);
+
+    public abstract void SetMegaTagMode(MegaTagMode mtMode);
 }

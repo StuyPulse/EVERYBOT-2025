@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Radian;
 import static edu.wpi.first.units.Units.Radians;
 
 import com.pathplanner.lib.path.PathConstraints;
+import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -22,6 +23,14 @@ import edu.wpi.first.wpilibj.util.Color;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+    public interface EnabledSubsystems{
+        public static final SmartBoolean CLIMB = new SmartBoolean("ENABLED_SUBSYSTEMS/Is climb enabled?", true);
+        public static final SmartBoolean DRIVETRAIN = new SmartBoolean("ENABLED_SUBSYSTEMS/Is drivetrain enabled?", true);
+        public static final SmartBoolean PIVOT = new SmartBoolean("ENABLED_SUBSYSTEMS/Is pivot enabled?", true);
+        public static final SmartBoolean PIVOT_ROLLERS = new SmartBoolean("ENABLED_SUBSYSTEMS/Is pivot rollers enabled?", true);
+        public static final SmartBoolean VISION = new SmartBoolean("ENABLED_SUBSYSTEMS/Is vision enabled?", true);
+    }
+
     public interface LEDPatterns {
         // AUTON COLORS    
         // MISC
