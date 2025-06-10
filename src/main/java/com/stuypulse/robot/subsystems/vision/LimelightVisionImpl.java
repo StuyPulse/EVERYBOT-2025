@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LimelightVisionImpl extends LimelightVision {
     private final int maxTagCount = 2;
-    private  MegaTagMode megaTagMode = MegaTagMode.MEGATAG1;
+    private MegaTagMode megaTagMode = MegaTagMode.MEGATAG1;
 
     private boolean doRejectUpdate = false;
     private boolean apriltagDetected = false;
@@ -138,5 +138,6 @@ public class LimelightVisionImpl extends LimelightVision {
 
         SmartDashboard.putData("Field", field);
         SmartDashboard.putBoolean("Vision/AprilTag Detected?", apriltagDetected);
+        SmartDashboard.putString("Vision/Megatag Version", megaTagMode.toString());
      }
 }

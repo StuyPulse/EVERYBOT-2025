@@ -28,12 +28,15 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
+import com.stuypulse.robot.commands.vision.VisionSetMegaTag2;
 import com.stuypulse.robot.constants.Paths;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.util.Elastic;
+import com.stuypulse.robot.util.Elastic.Notification;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -134,6 +137,8 @@ public class RobotContainer {
 				.onFalse(new PivotToAlgaeIntake())
 				.onFalse(new PivotAlgaeHold());
 
+		driver.getLeftMenuButton()
+			.onTrue(new VisionSetMegaTag2());
 		// // MENU BUTTONS
 		// driver.getRightMenuButton() // Drive to Nearest April Tag
 		// 	.onTrue(new AlignToReefAB());
@@ -159,11 +164,16 @@ public class RobotContainer {
 		registerAutoCommands();
 		
 		try {
-			PathPlannerPath AB = PathPlannerPath.fromPathFile("AB Drive");
+			PathPlannerPath AB = PathPlannerPath.fromPathFile("PLUH");
 			
 			Paths.loadPath("AB", AB);
 		} catch (Exception e) {
-			SmartDashboard.putString("PathPlanner Exception", e.toString());
+			SmartDashboard.putString("CANNOT LOAD ALIGNMENT PATHS", e.toString());
+			
+			Notification errorNotif = new Notification(Elastic.Notification.NotificationLevel.ERROR, "CANNOT LOAD ALIGNMENT PATHS", e.toString());
+			errorNotif.setDisplayTimeSeconds(30); 
+			
+			Elastic.sendNotification(errorNotif);
 		}
 
 		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));

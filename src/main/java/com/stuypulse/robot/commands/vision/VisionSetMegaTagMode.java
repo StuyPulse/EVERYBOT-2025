@@ -16,7 +16,9 @@ public class VisionSetMegaTagMode extends Command {
     }
 
     @Override 
-    public void initialize() {
+    public void execute() {
         vision.SetMegaTagMode(megaTagMode);
     }
+
+
 }

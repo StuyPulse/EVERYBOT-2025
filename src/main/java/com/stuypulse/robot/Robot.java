@@ -4,6 +4,8 @@
 /**************************************************************/
 package com.stuypulse.robot;
 
+import java.sql.Driver;
+
 import com.stuypulse.robot.commands.leds.LEDApplyPattern;
 import com.stuypulse.robot.commands.pivot.PivotToDefault;
 import com.stuypulse.robot.commands.pivot.SetPivotControlMode;
@@ -14,6 +16,8 @@ import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVisionImpl;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
+import com.stuypulse.robot.util.Elastic;
+import com.stuypulse.robot.util.Elastic.Notification;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.Units;
@@ -41,14 +45,12 @@ public class Robot extends TimedRobot {
         DataLogManager.start();
         DriverStation.startDataLog(DataLogManager.getLog());
         robot = new RobotContainer();
+        new VisionSetMegaTag1();
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-
-        //TODO: REMOVE THE LINE BELOW DURING COMPETITIONS TO ENSURE NO LAG OCCURS, THIS IS HERE FOR LIMELIGHT TESTING
-        //NetworkTableInstance.getDefault().flush();
     }
 
     /*********************/
@@ -59,14 +61,14 @@ public class Robot extends TimedRobot {
     public void disabledInit() {}
 
     @Override
-    public void disabledPeriodic() {
-        if (!DriverStation.isFMSAttached()) {
-            new VisionSetMegaTag1();
-        }
-    }
+    public void disabledPeriodic() {}
 
     @Override
-    public void disabledExit() {}
+    public void disabledExit() {
+        if (DriverStation.isFMSAttached()) {
+            new VisionSetMegaTag2().schedule();
+        }
+    }
 
     /***********************/
     /*** AUTONOMOUS MODE ***/
@@ -75,7 +77,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
-        new VisionSetMegaTag2();
 
         if (auto != null) {
             auto.schedule();
