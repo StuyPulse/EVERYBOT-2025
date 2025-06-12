@@ -8,6 +8,11 @@
       "/SmartDashboard/Visualizers/Robot": "Mechanism2d"
     },
     "windows": {
+      "/SmartDashboard/Autonomous": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 1638,
         "height": 8.051901817321777,

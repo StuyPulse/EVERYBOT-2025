@@ -11,6 +11,7 @@ import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.Alignment.AlignToReefAB;
+import com.stuypulse.robot.commands.drive.Alignment.AlignToReefCD;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotReseatCoral;
@@ -134,7 +135,7 @@ public class RobotContainer {
 						.withTimeout(0.01),
 					new PivotToDefault()
 						.withTimeout(0.01),
-					new AlignToReefAB(driver.getRightStick().x)
+					new AlignToReefCD(driver.getRightStick().x)
 				));
 	}
 
