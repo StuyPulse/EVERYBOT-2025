@@ -98,16 +98,6 @@ public class RobotContainer {
 				.whileTrue(new PivotAlgaeOuttake())
 				.onFalse(new PivotHoldCoral());
 
-		// // TRIGGERS
-		// driver.getLeftTriggerButton() // Pivot Up
-		// .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-		// .whileTrue(new PivotRaise())
-		// .onFalse(new PivotStop());
-		// driver.getRightTriggerButton() // Pivot Down
-		// .onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-		// .whileTrue(new PivotLower())
-		// .onFalse(new PivotStop());
-
 		// BUMPERS
 		driver.getRightBumper() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake())
@@ -144,8 +134,7 @@ public class RobotContainer {
 						.withTimeout(0.01),
 					new PivotToDefault()
 						.withTimeout(0.01),
-					new AlignToReefAB(),
-					new PivotCoralScore()
+					new AlignToReefAB(driver.getRightStick().x)
 				));
 	}
 
