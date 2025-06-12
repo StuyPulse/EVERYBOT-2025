@@ -243,7 +243,7 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(-leftSpeed, -rightSpeed);
         },
-       new PPLTVController(VecBuilder.fill(0.0725, 0.125, 0.5), VecBuilder.fill(1,2), 0.02, 9),
+       new PPLTVController(VecBuilder.fill(0.0125, 0.1, 0.2), VecBuilder.fill(1,1.2), 0.02, 9),
     //    new PPLTVController(0.02)
         pathPlannerRobotConfig,
         () -> {

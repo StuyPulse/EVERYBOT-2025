@@ -139,7 +139,14 @@ public class RobotContainer {
 
 		// MENU BUTTONS
 		driver.getRightMenuButton() // Drive to Nearest April Tag
-				.onTrue(new AlignToReefAB());
+				.onTrue(new SequentialCommandGroup(
+					new SetPivotControlMode(PivotControlMode.USING_STATES)
+						.withTimeout(0.01),
+					new PivotToDefault()
+						.withTimeout(0.01),
+					new AlignToReefAB(),
+					new PivotCoralScore()
+				));
 	}
 
 	/**************/
