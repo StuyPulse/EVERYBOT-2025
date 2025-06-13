@@ -50,8 +50,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class RobotContainer {
 	// Gamepads
-	public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
-	public final Gamepad operator = new AutoGamepad(Ports.Gamepad.OPERATOR);
+	public final Gamepad d = new AutoGamepad(Ports.Gamepad.DRIVER);
 
 	// Subsystem
 	private final LEDController ledSubsystem = LEDController.getInstance();
@@ -77,7 +76,7 @@ public class RobotContainer {
 
 	private void configureDefaultCommands() {
 		pivot.setDefaultCommand(new PivotHoldCoral());
-		driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
+		driveSubsystem.setDefaultCommand(new DriveDefault(d, true));
 	}
 
 	/***********************/
@@ -85,6 +84,56 @@ public class RobotContainer {
 	/***********************/
 
 	private void configureButtonBindings() {
+		// NEW BUTTONS
+		// Triggers
+		d.getRightTriggerButton() // Algae Ground Intake
+			.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+			.onTrue(new PivotToAlgaeIntake())
+			.whileTrue(new PivotAlgaeIntake())
+			.onFalse(new PivotAlgaeHold());
+		d.getLeftTriggerButton() // Algae Outtake
+			.whileTrue(new PivotAlgaeOuttake())
+			.onFalse(new PivotHoldCoral());
+
+		// Bumpers
+		d.getRightBumper()
+			.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
+			.onTrue(new PivotLollipopAlgaeIntake())
+			.onFalse(new PivotToAlgaeIntake())
+			.onFalse(new PivotAlgaeHold());
+		d.getLeftBumper()
+			.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+			.whileTrue(new PivotCoralScore())
+			.onFalse(new PivotToCoralStow())
+			.onFalse(new PivotHoldCoral());
+
+		// Back Buttons(Remapped Joystick Buttons)
+		d.getRightStickButton()
+			.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+			.whileTrue(new PivotLower())
+			.onFalse(new PivotStop());
+		d.getLeftStickButton()
+			.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+			.whileTrue(new PivotRaise())
+			.onFalse(new PivotStop());
+
+		// ABXY Buttons
+		d.getLeftButton() // Climb
+			.whileTrue(new ClimbToClimb());
+		d.getRightButton() // Stow Climb
+			.whileTrue(new ClimbToStow());
+
+		// Menu/Center Buttons
+		d.getRightMenuButton() // Drive to Nearest April Tag
+			.onTrue(new SequentialCommandGroup(
+				new SetPivotControlMode(PivotControlMode.USING_STATES)
+					.withTimeout(0.01),
+				new PivotToDefault()
+					.withTimeout(0.01),
+				new AlignToReefCD(d.getRightStick().x)
+			));
+
+		/** OLD BUTTONS
 		// // BUTTONS
 		driver.getTopButton() // Coral Score
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
@@ -137,6 +186,9 @@ public class RobotContainer {
 						.withTimeout(0.01),
 					new AlignToReefCD(driver.getRightStick().x)
 				));
+
+
+		*/
 	}
 
 	/**************/
