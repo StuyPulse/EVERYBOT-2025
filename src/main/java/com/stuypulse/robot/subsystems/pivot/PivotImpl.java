@@ -163,9 +163,9 @@ public class PivotImpl extends Pivot {
                         -controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
             }
 
-            if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false
-                    && (this.getPivotState() != PivotState.STOW_CORAL || this.getPivotState() != PivotState.DEFAULT)) {
-                setPivotControlMode(PivotControlMode.MANUAL);
+            if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false) {
+                if(this.getPivotState() != PivotState.STOW_CORAL && this.getPivotState() != PivotState.DEFAULT)
+                    setPivotControlMode(PivotControlMode.MANUAL);
             }
         }
 

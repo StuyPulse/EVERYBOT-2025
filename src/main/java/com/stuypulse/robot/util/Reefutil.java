@@ -9,6 +9,6 @@ public class Reefutil {
     private Pose2d pose = LimelightVision.getInstance().getEstimatedPose();
 
     public enum CoralFaces{
-        AB()
+        
     }
 }
