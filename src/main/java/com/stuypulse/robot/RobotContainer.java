@@ -11,6 +11,7 @@ import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.Alignment.AlignToReefAB;
+import com.stuypulse.robot.commands.drive.Alignment.AlignToReefCD;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotReseatCoral;
@@ -134,7 +135,7 @@ public class RobotContainer {
 						.withTimeout(0.01),
 					new PivotToDefault()
 						.withTimeout(0.01),
-					new AlignToReefAB(driver.getRightStick().x)
+					new AlignToReefCD(driver.getRightStick().x)
 				));
 	}
 
@@ -155,9 +156,25 @@ public class RobotContainer {
 		registerAutoCommands();
 
 		try {
-			PathPlannerPath c = PathPlannerPath.fromPathFile("CD Drive");
+			PathPlannerPath a = PathPlannerPath.fromPathFile("A Drive");
+			PathPlannerPath b = PathPlannerPath.fromPathFile("B Drive");
+			PathPlannerPath c = PathPlannerPath.fromPathFile("C Drive");
+			PathPlannerPath d = PathPlannerPath.fromPathFile("D Drive");
+			PathPlannerPath e = PathPlannerPath.fromPathFile("E Drive");
+			PathPlannerPath f = PathPlannerPath.fromPathFile("F Drive");
+			PathPlannerPath g = PathPlannerPath.fromPathFile("G Drive");
+			PathPlannerPath h = PathPlannerPath.fromPathFile("H Drive");
+			PathPlannerPath I = PathPlannerPath.fromPathFile("I Drive");
 
-			Paths.loadPath("AB", c);
+			Paths.loadPath("A", a);
+			Paths.loadPath("B", b);
+			Paths.loadPath("C", c);
+			Paths.loadPath("D", d);
+			Paths.loadPath("E", e);
+			Paths.loadPath("F", f);
+			Paths.loadPath("G", g);
+			Paths.loadPath("H", h);
+			Paths.loadPath("I", I);
 		} catch (Exception e) {
 			SmartDashboard.putString("CANNOT LOAD ALIGNMENT PATHS", e.toString());
 
