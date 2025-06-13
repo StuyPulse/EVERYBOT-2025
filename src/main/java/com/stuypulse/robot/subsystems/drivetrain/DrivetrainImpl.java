@@ -183,8 +183,6 @@ public class DrivetrainImpl extends Drivetrain {
         leftMotors[0].setVoltage(lVolts);
         rightMotors[0].setVoltage(rVolts);
         drive.feed();
-        SmartDashboard.putNumber("Drivetrain/ left volts", lVolts);
-        SmartDashboard.putNumber("Drivetrain/ right volts", rVolts);
     }
 
     private void updateOdometry() {
@@ -237,11 +235,11 @@ public class DrivetrainImpl extends Drivetrain {
         this::getChassisSpeeds,
         (speeds) -> {
             DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
-            double leftSpeed = convertedSpeeds.leftMetersPerSecond;
-            double rightSpeed = convertedSpeeds.rightMetersPerSecond;
+            double leftSpeed = -convertedSpeeds.leftMetersPerSecond;
+            double rightSpeed = -convertedSpeeds.rightMetersPerSecond;
             SmartDashboard.putNumber("Drivetrain/ PP Right speed", rightSpeed);
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
-            driveTankVolts(-leftSpeed, -rightSpeed);
+            driveTankVolts(leftSpeed, rightSpeed);
         },
        new PPLTVController(VecBuilder.fill(0.0125, 0.1, 0.2), VecBuilder.fill(1,1.2), 0.02, 9),
     //    new PPLTVController(0.02)

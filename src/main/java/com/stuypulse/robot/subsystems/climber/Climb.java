@@ -67,7 +67,6 @@ public abstract class Climb extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putString("Climb/State", state.toString());
 
-        // RobotVisualizer.getInstance().updateClimb(this.state.getTargetAngle(), atTargetAngle());
         RobotVisualizer.getInstance().updateClimb(getCurrentAngle(), atTargetAngle());
     }
 }

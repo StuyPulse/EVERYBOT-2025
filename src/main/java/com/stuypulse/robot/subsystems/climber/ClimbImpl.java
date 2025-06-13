@@ -52,8 +52,10 @@ public class ClimbImpl extends Climb {
                 climbMotor.set(0.0);
             }
         }
-
-        SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
+        if(Settings.DEBUG_MODE) {
+            SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
+        }
+        
         SmartDashboard.putNumber("Climb/Current Angle", getCurrentAngle().getDegrees());
         SmartDashboard.putNumber("Climb/Target angle", getState().getTargetAngle().getDegrees());
         SmartDashboard.putBoolean("Climb/At target angle", atTargetAngle());

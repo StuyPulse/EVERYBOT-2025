@@ -169,10 +169,12 @@ public class PivotImpl extends Pivot {
             }
         }
 
-        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
+        if(Settings.DEBUG_MODE) {
         SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
+        }
+        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
         SmartDashboard.putBoolean("Pivot/ Bump Switch", bumpSwitchIsDepressed.getAsBoolean());
-    }
+    }       
 }

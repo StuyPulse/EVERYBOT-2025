@@ -31,6 +31,8 @@ public interface Settings {
         public static final SmartBoolean VISION = new SmartBoolean("ENABLED_SUBSYSTEMS/Is vision enabled?", true);
     }
 
+    public static final boolean DEBUG_MODE = true;
+
     public interface LEDPatterns {
         // AUTON COLORS    
         // MISC
