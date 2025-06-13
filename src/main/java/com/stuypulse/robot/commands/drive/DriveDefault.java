@@ -17,7 +17,6 @@ public class DriveDefault extends Command {
         this.gamepad = gamepad;
         this.squared = squared;
         
-
         addRequirements(Drivetrain.getInstance());
     }
 
@@ -29,6 +28,9 @@ public class DriveDefault extends Command {
         SmartDashboard.putNumber("Drivetrain/ xinput", xInput);
         }
         this.xInput = gamepad.getLeftTrigger() - gamepad.getRightTrigger();
+
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+
         Drivetrain.getInstance().driveArcade(xInput, gamepad.getRightStick().x, squared);
     }
 

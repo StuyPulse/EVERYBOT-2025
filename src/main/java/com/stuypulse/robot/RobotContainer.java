@@ -11,6 +11,7 @@ import com.stuypulse.robot.commands.climb.ClimbToStow;
 import com.stuypulse.robot.commands.drive.DriveArcade;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.Alignment.AlignToReefAB;
+import com.stuypulse.robot.commands.drive.Alignment.AlignToReefCD;
 import com.stuypulse.robot.commands.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.PivotReseatCoral;
@@ -28,12 +29,15 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
+import com.stuypulse.robot.commands.vision.VisionSetMegaTag2;
 import com.stuypulse.robot.constants.Paths;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.util.Elastic;
+import com.stuypulse.robot.util.Elastic.Notification;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -83,10 +87,10 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// // BUTTONS
 		driver.getTopButton() // Coral Score
-                .onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-                .whileTrue(new PivotCoralScore())
-                .onFalse(new PivotToCoralStow())
-                .onFalse(new PivotHoldCoral());
+				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
+				.whileTrue(new PivotCoralScore())
+				.onFalse(new PivotToCoralStow())
+				.onFalse(new PivotHoldCoral());
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb());
 		driver.getRightButton() // Stow Climb
@@ -94,16 +98,6 @@ public class RobotContainer {
 		driver.getBottomButton()
 				.whileTrue(new PivotAlgaeOuttake())
 				.onFalse(new PivotHoldCoral());
-
-		// // TRIGGERS
-		// driver.getLeftTriggerButton() // Pivot Up
-		// 		.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-		// 		.whileTrue(new PivotRaise())
-		// 		.onFalse(new PivotStop());
-		// driver.getRightTriggerButton() // Pivot Down
-		// 		.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
-		// 		.whileTrue(new PivotLower())
-		// 		.onFalse(new PivotStop());
 
 		// BUMPERS
 		driver.getRightBumper() // Algae Outtake
@@ -124,19 +118,25 @@ public class RobotContainer {
 				.onFalse(new PivotStop());
 		driver.getDPadRight() // Pivot to Intake Algae
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-				.onTrue(new PivotToAlgaeIntake());
+				.onTrue(new PivotToAlgaeIntake())
+				.whileTrue(new PivotAlgaeIntake())
+				.onFalse(new PivotAlgaeHold());
+
 		driver.getDPadLeft() // Pivot to Lollipop Intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
-				.onFalse(new PivotAlgaeHold())
-				.onFalse(new PivotToAlgaeStow());
+				.onFalse(new PivotToAlgaeIntake())
+				.onFalse(new PivotAlgaeHold());
 
-		// // MENU BUTTONS
-		// driver.getRightMenuButton() // Drive to Nearest April Tag
-		// 	.onTrue(new AlignToReefAB());
-
-
-
+		// MENU BUTTONS
+		driver.getRightMenuButton() // Drive to Nearest April Tag
+				.onTrue(new SequentialCommandGroup(
+					new SetPivotControlMode(PivotControlMode.USING_STATES)
+						.withTimeout(0.01),
+					new PivotToDefault()
+						.withTimeout(0.01),
+					new AlignToReefCD(driver.getRightStick().x)
+				));
 	}
 
 	/**************/
@@ -154,13 +154,35 @@ public class RobotContainer {
 		// PATHPLANNER
 		driveSubsystem.configureAutoBuilder();
 		registerAutoCommands();
-		
+
 		try {
-			PathPlannerPath AB = PathPlannerPath.fromPathFile("AB Drive");
-			
-			Paths.loadPath("AB", AB);
+			PathPlannerPath a = PathPlannerPath.fromPathFile("A Drive");
+			PathPlannerPath b = PathPlannerPath.fromPathFile("B Drive");
+			PathPlannerPath c = PathPlannerPath.fromPathFile("C Drive");
+			PathPlannerPath d = PathPlannerPath.fromPathFile("D Drive");
+			PathPlannerPath e = PathPlannerPath.fromPathFile("E Drive");
+			PathPlannerPath f = PathPlannerPath.fromPathFile("F Drive");
+			PathPlannerPath g = PathPlannerPath.fromPathFile("G Drive");
+			PathPlannerPath h = PathPlannerPath.fromPathFile("H Drive");
+			PathPlannerPath I = PathPlannerPath.fromPathFile("I Drive");
+
+			Paths.loadPath("A", a);
+			Paths.loadPath("B", b);
+			Paths.loadPath("C", c);
+			Paths.loadPath("D", d);
+			Paths.loadPath("E", e);
+			Paths.loadPath("F", f);
+			Paths.loadPath("G", g);
+			Paths.loadPath("H", h);
+			Paths.loadPath("I", I);
 		} catch (Exception e) {
-			SmartDashboard.putString("PathPlanner Exception", e.toString());
+			SmartDashboard.putString("CANNOT LOAD ALIGNMENT PATHS", e.toString());
+
+			Notification errorNotif = new Notification(Elastic.Notification.NotificationLevel.ERROR,
+					"CANNOT LOAD ALIGNMENT PATHS", e.toString());
+			errorNotif.setDisplayTimeSeconds(30);
+
+			Elastic.sendNotification(errorNotif);
 		}
 
 		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
@@ -170,25 +192,24 @@ public class RobotContainer {
 		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
 		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
-		
+
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
 
 	private void registerAutoCommands() {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
-						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1), new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
+						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
+						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",
 				new SequentialCommandGroup(new PivotAlgaeHold(), new PivotToAlgaeStow()));
 		NamedCommands.registerCommand("PivotAlgaeOuttake", new PivotAlgaeOuttake());
-		NamedCommands.registerCommand("Pivot default and Rotisserie",  
-			new SequentialCommandGroup(
-				new PivotToDefault().withTimeout(0.01),
-				new PivotHoldCoral().withTimeout(0.01)
-			)
-		);
-		
+		NamedCommands.registerCommand("Pivot default and Rotisserie",
+				new SequentialCommandGroup(
+						new PivotToDefault().withTimeout(0.01),
+						new PivotHoldCoral().withTimeout(0.01)));
+
 	}
 
 	public void configureSysId() {
@@ -218,5 +239,4 @@ public class RobotContainer {
 		return autonChooser.getSelected();
 	}
 
-	
 }

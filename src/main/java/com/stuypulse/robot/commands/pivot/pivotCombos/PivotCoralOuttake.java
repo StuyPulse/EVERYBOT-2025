@@ -1,5 +1,7 @@
-package com.stuypulse.robot.commands.pivot.roller;
+package com.stuypulse.robot.commands.pivot.pivotCombos;
 import com.stuypulse.robot.commands.pivot.PivotToDefault;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerToSpeed;
 import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -9,7 +11,7 @@ public class PivotCoralOuttake extends SequentialCommandGroup {
         addCommands(
             new PivotToDefault()
                 .withTimeout(1),
-            new PivotRollerToDirection(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble())
+            new PivotRollerToSpeed(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble())
                 .withTimeout(1),
             new PivotRollerStop()
         );

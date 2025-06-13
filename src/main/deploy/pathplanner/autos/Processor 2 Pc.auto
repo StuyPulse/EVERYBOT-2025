@@ -17,6 +17,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Pivot default and Rotisserie"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ProcessorScoreBack"
@@ -44,6 +50,12 @@
           "type": "named",
           "data": {
             "name": "PivotCoralScore"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot default and Rotisserie"
           }
         }
       ]

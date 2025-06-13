@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4265368852459013,
-        "y": 0.5665471311475403
+        "x": 2.095261606313343,
+        "y": 4.187476618275325
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8083399825910338,
-        "y": 1.1230736798201064
+        "x": 3.0249243945976785,
+        "y": 4.188070649028394
       },
       "isLocked": false,
-      "linkedName": "AtProcessorHP"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.3456305309734513,
-        "y": 1.4753318584070803
+        "x": 3.2795473723320585,
+        "y": 4.187476618275325
       },
       "prevControl": {
-        "x": 2.8344026548672563,
-        "y": 1.7730088495575216
+        "x": 2.589074461903736,
+        "y": 4.1879495976019765
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AfterProcessorHPReverse"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -44,8 +44,8 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "reversed": true,
-  "folder": "Processor",
+  "reversed": false,
+  "folder": "Reef Alignment",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

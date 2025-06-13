@@ -163,17 +163,23 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         drive.arcadeDrive(xSpeed, zRotation, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Arcade Drive");
     }
 
     @Override
     public void driveTank(double leftSpeed, double rightSpeed, boolean squared) {
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         drive.tankDrive(leftSpeed, rightSpeed, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
     }
 
     public void driveTankVolts(Double lVolts, Double rVolts) {
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         leftMotors[0].setVoltage(lVolts);
         rightMotors[0].setVoltage(rVolts);
         drive.feed();
@@ -235,7 +241,8 @@ public class DrivetrainImpl extends Drivetrain {
             SmartDashboard.putNumber("Drivetrain/ PP left speed ", leftSpeed);
             driveTankVolts(leftSpeed, rightSpeed);
         },
-        new PPLTVController(VecBuilder.fill(0.0725, 0.125, 1), VecBuilder.fill(1,2), 0.02, 9),
+       new PPLTVController(VecBuilder.fill(0.0125, 0.1, 0.2), VecBuilder.fill(1,1.2), 0.02, 9),
+    //    new PPLTVController(0.02)
         pathPlannerRobotConfig,
         () -> {
         var alliance = DriverStation.getAlliance();
@@ -415,8 +422,8 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     @Override
-    public Command findPathToPath(PathConstraints constraints, PathPlannerPath path) {
-        return AutoBuilder.pathfindThenFollowPath(path, constraints);    
+    public void findPathToPath(PathConstraints constraints, PathPlannerPath path) {
+        AutoBuilder.pathfindThenFollowPath(path, constraints).schedule();  
     }
 
     @Override
@@ -431,5 +438,7 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/ right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/ left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/ Right velocity", getRightVelocity());
+        SmartDashboard.putData("Drivetrain/Differential Drivetrain", drive);
+        SmartDashboard.putNumber("DriverStation/ match time", DriverStation.getMatchTime());
     }
 }

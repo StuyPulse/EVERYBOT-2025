@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4265368852459013,
-        "y": 0.5665471311475403
+        "x": 5.4280725304692865,
+        "y": 1.987088194838774
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8083399825910338,
-        "y": 1.1230736798201064
+        "x": 5.216507889340964,
+        "y": 2.3421587806944677
       },
       "isLocked": false,
-      "linkedName": "AtProcessorHP"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.3456305309734513,
-        "y": 1.4753318584070803
+        "x": 4.827083742825981,
+        "y": 3.0020030348986584
       },
       "prevControl": {
-        "x": 2.8344026548672563,
-        "y": 1.7730088495575216
+        "x": 4.954368292004433,
+        "y": 2.7868318390093423
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AfterProcessorHPReverse"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 10.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 720.0,
@@ -44,11 +44,11 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "reversed": true,
-  "folder": "Processor",
+  "reversed": false,
+  "folder": "Reef Alignment",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -45,11 +45,12 @@ public class ClimbImpl extends Climb {
     @Override
     public void periodic() {
         super.periodic();
-
-        if (!atTargetAngle()) {
-            climbMotor.set(getState().getTargetMotorSpeed());
-        } else {
-            climbMotor.set(0.0);
+        if (Settings.EnabledSubsystems.CLIMB.get()) {
+            if (!atTargetAngle()) {
+                climbMotor.set(getState().getTargetMotorSpeed());
+            } else {
+                climbMotor.set(0.0);
+            }
         }
         if(Settings.DEBUG_MODE) {
             SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
