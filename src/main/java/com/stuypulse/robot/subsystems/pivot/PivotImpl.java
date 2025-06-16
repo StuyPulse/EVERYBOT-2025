@@ -71,7 +71,7 @@ public class PivotImpl extends Pivot {
             setPivotControlMode(PivotControlMode.USING_STATES);
         }
 
-        bumpSwitch = new DigitalInput(Ports.Pivot.bumpSwitchPort);
+        bumpSwitch = new DigitalInput(Ports.Pivot.BUMP_SWITCH);
         bumpSwitchIsDepressed = BStream.create(bumpSwitch)
                 .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE))
                 .not();

@@ -26,7 +26,7 @@ import edu.wpi.first.units.Units;
 public interface Settings {
     public interface EnabledSubsystems{
         public static final SmartBoolean CLIMB = new SmartBoolean("ENABLED_SUBSYSTEMS/Is climb enabled?", true);
-        public static final SmartBoolean DRIVETRAIN = new SmartBoolean("ENABLED_SUBSYSTEMS/Is drivetrain enabled?", true);
+        public static final SmartBoolean DRIVETRAIN = new SmartBoolean("ENABLED_SUBSYSTEMS/Is drivetrain enabled?", false);
         public static final SmartBoolean PIVOT = new SmartBoolean("ENABLED_SUBSYSTEMS/Is pivot enabled?", true);
         public static final SmartBoolean PIVOT_ROLLERS = new SmartBoolean("ENABLED_SUBSYSTEMS/Is pivot rollers enabled?", true);
         public static final SmartBoolean VISION = new SmartBoolean("ENABLED_SUBSYSTEMS/Is vision enabled?", true);

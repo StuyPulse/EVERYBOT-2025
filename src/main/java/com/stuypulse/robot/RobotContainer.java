@@ -109,7 +109,7 @@ public class RobotContainer {
 		//ABXY BUTTONS
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb());
-		driver.getRightButton() // Stow Climb
+		driver.getRightButton() // Deploy Climb
 				.whileTrue(new ClimbToDeployed());
 
 		//MENU BUTTONS
