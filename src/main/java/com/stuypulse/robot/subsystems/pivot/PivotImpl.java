@@ -19,7 +19,6 @@ import com.stuypulse.stuylib.network.SmartNumber;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
-import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -56,6 +55,7 @@ public class PivotImpl extends Pivot {
                 PersistMode.kPersistParameters);
 
         pivotEncoder = pivotMotor.getEncoder();
+        
         pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO, Constants.Pivot.PIVOT_THROUGHBORE_RANGE,
                 Constants.Pivot.PIVOT_THROUGHBORE_EXPECTED_ZERO);
         pivotThroughbore.setInverted(true);
@@ -143,12 +143,8 @@ public class PivotImpl extends Pivot {
 
     @Override
     public boolean atTargetAngle() {
-        if (Math.abs(Pivot.getInstance().pivotState.getTargetAngle().getDegrees()
-                - Pivot.getInstance().getPivotRotation().getDegrees()) > 0.5) {
-            return true;
-        } else {
-            return false;
-        }
+        return Math.abs(Pivot.getInstance().pivotState.getTargetAngle().getDegrees()
+                - Pivot.getInstance().getPivotRotation().getDegrees()) < Settings.Pivot.ANGLE_TOLERANCE;
     }
 
     @Override
@@ -170,11 +166,12 @@ public class PivotImpl extends Pivot {
         }
 
         if(Settings.DEBUG_MODE) {
-        SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
+            SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
         }
+        
         SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
-        SmartDashboard.putBoolean("Pivot/ Bump Switch", bumpSwitchIsDepressed.getAsBoolean());
+        SmartDashboard.putBoolean("Pivot/Bump Switch", bumpSwitchIsDepressed.getAsBoolean());
     }       
 }

@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.pivot;
+package com.stuypulse.robot.commands.pivot.pivot;
 
 public class PivotStop extends PivotToDirection {
     public PivotStop () {

@@ -1,6 +1,7 @@
 package com.stuypulse.robot.constants;
 
-/** The class that contains controller values for all subsystems that require the use of 
+/** 
+ * The class that contains controller values for all subsystems that require the use of 
  *  one or multiple controllers such as Feed Forward (FF) and Proportional-Integral-Derivative (PID)
  */
 public class Gains {

@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK MAX [1]": {
         "header": {
@@ -103,9 +98,6 @@
           "open": true
         },
         "Climb": {
-          "open": true
-        },
-        "LEDs": {
           "open": true
         },
         "Pivot": {

@@ -1,5 +1,5 @@
 package com.stuypulse.robot.commands.pivot.pivotCombos;
-import com.stuypulse.robot.commands.pivot.PivotToDefault;
+import com.stuypulse.robot.commands.pivot.pivot.PivotToDefault;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerToSpeed;
 import com.stuypulse.robot.constants.Settings;

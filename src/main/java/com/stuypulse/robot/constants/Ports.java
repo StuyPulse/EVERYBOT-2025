@@ -11,11 +11,6 @@ public interface Ports {
         int OPERATOR = 1;
         int DEBUGGER = 2;
     }
-
-    public interface LED {
-        int LED_PORT = 4;
-        int LED_LENGTH = 10;
-    }
       
     public interface Climb {
         int CLIMB_MOTOR = 2;

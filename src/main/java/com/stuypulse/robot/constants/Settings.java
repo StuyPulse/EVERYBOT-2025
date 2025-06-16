@@ -4,17 +4,18 @@
 /**************************************************************/
 package com.stuypulse.robot.constants;
 
-import static edu.wpi.first.units.Units.Radian;
 import static edu.wpi.first.units.Units.Radians;
 
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N2;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * File containing tunable settings for every subsystem on the robot.
@@ -32,37 +33,6 @@ public interface Settings {
     }
 
     public static final boolean DEBUG_MODE = true;
-
-    public interface LEDPatterns {
-        // AUTON COLORS    
-        // MISC
-        public static final LEDPattern DO_NOTHING_AUTON = LEDPattern.solid(Color.kWheat).blink(Units.Seconds.of(1.5));
-        public static final LEDPattern MOBILITY_AUTON = LEDPattern.solid(Color.kHoneydew).blink(Units.Seconds.of(1.5));
-
-        // CORAL ONLY
-        public static final LEDPattern SINGLE_L1_AUTON = LEDPattern.rainbow(250,250).scrollAtAbsoluteSpeed(Units.MetersPerSecond.of(1), Units.Meters.of(1 / 200.0));
-        public static final LEDPattern TWO_L1_AUTON = LEDPattern.rainbow(250,250).blink(Units.Seconds.of(1.5)).reversed();
-
-        // PUSH ONLY
-        public static final LEDPattern PUSH_FORWARDS_AUTON = LEDPattern.solid(Color.kLawnGreen).blink(Units.Seconds.of(1.5));
-        public static final LEDPattern PUSH_BACKWARDS_AUTON = LEDPattern.solid(Color.kDarkSeaGreen).blink(Units.Seconds.of(1.5));
-
-        // COMBINATIONS
-        public static final LEDPattern PUSH_BACKWARDS_SINGLE_L1_AUTON = LEDPattern.solid(Color.kSeaGreen).blink(Units.Seconds.of(1.5));
-
-        // Alliance Colors
-        public static final LEDPattern RED_ALLIANCE = LEDPattern.solid(Color.kRed);
-        public static final LEDPattern BLUE_ALLIANCE = LEDPattern.solid(Color.kBlue);
-        public static final LEDPattern NO_ALLIANCE = LEDPattern.solid(Color.kGreen);
-
-        // Robot State Colors
-        public static final LEDPattern CLIMBING = LEDPattern.solid(Color.kGold).blink(Units.Seconds.of(1.5));
-
-        // Button-Related Colors
-        public static final LEDPattern CORAL_OUT = LEDPattern.solid(Color.kWhite).blink(Units.Seconds.of(1.5));
-        public static final LEDPattern ALGAE_IN = LEDPattern.solid(Color.kAqua);
-        public static final LEDPattern ALGAE_OUT = LEDPattern.solid(Color.kAqua).blink(Units.Seconds.of(1.5));
-    }
 
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
@@ -82,7 +52,6 @@ public interface Settings {
     }
     
     public interface Pivot {
-
         //PIVOT ANGLES
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(1);
         public static final Rotation2d PIVOT_ANGLE_TOLERANCE = Rotation2d.fromDegrees(3);
@@ -121,17 +90,24 @@ public interface Settings {
         //PIVOT CONTROL MODE VALUES
         public static final String CTRLMODE_MANUAL = "MANUAL";
         public static final String CTRLMODE_STATES = "USING_STATES";
-
+        
         //PIVOT BUMP SWITCH
         public static final double BUMP_SWITCH_DEBOUNCE = 0.4;
+        
+        //AT TARGET ANGLE - ANGLE TOLERANCE
+        public static final double ANGLE_TOLERANCE = 0.5;
     }
 
     public interface Drivetrain {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
         public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;
+
         public static final PathConstraints REEF_ALIGNMENT_CONSTRAINTS = new PathConstraints(
             5.4, 4.0,
             Units.Radians.convertFrom(540, Radians), Units.Radians.convertFrom(720, Radians));
+        
+        public static final Vector<N3> ppQelems = VecBuilder.fill(0.0125, 0.1, 0.2);
+        public static final Vector<N2> ppRelems = VecBuilder.fill(1,1.2);
     }
 }

@@ -4,6 +4,7 @@ import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Cameras.Camera;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
+import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
 
 import edu.wpi.first.math.Matrix;
@@ -18,21 +19,17 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LimelightVisionImpl extends LimelightVision {
-    private final int maxTagCount = 2;
     private MegaTagMode megaTagMode = MegaTagMode.MEGATAG1;
+    private Odometry odometry;
 
     private boolean doRejectUpdate = false;
     private boolean apriltagDetected = false;
 
     private final Matrix<N3, N1> visionStdDevs; //X, Y, Theta
-    private final DifferentialDrivePoseEstimator poseEstimator;
-    private Pose2d limelightPose;
-    
-    private final Field2d field = new Field2d();
-
-    private final Drivetrain drivetrain;
 
     LimelightVisionImpl() {
+        odometry = Odometry.getInstance();
+
         visionStdDevs = VecBuilder.fill(1, 1, .3);
 
         for (Camera camera : Cameras.LimelightCameras) {
@@ -46,26 +43,15 @@ public class LimelightVisionImpl extends LimelightVision {
                     Units.radiansToDegrees(robotRelativePose.getRotation().getY()),
                     Units.radiansToDegrees(robotRelativePose.getRotation().getZ()));
         }
-
-        drivetrain = Drivetrain.getInstance();
-        poseEstimator = new DifferentialDrivePoseEstimator(drivetrain.getKinematics(), 
-            drivetrain.getHeading(),
-            drivetrain.getLeftDistance(),
-            drivetrain.getRightDistance(),
-            drivetrain.getPose());
     }
 
     public void SetMegaTagMode(MegaTagMode mtMode) {
         this.megaTagMode = mtMode;
     }
      
-    private void updatePoseEstimator() {
+    private void updatePoseEstimatorVisionMeasurement() {
         apriltagDetected = false;
         doRejectUpdate = false;
-
-        poseEstimator.update(drivetrain.getHeading(), 
-            drivetrain.getLeftDistance(), 
-            drivetrain.getRightDistance());
 
         if(!Settings.EnabledSubsystems.VISION.get()) return;
 
@@ -90,14 +76,11 @@ public class LimelightVisionImpl extends LimelightVision {
             if(!doRejectUpdate) {
                 apriltagDetected = true;
 
-                poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
-                poseEstimator.addVisionMeasurement(
-                    mt1.pose,
-                    mt1.timestampSeconds);
+                odometry.updateVisionMeasurement(visionStdDevs, mt1.pose, mt1.timestampSeconds);
             }
 
         } else if (megaTagMode == MegaTagMode.MEGATAG2) {
-            LimelightHelpers.SetRobotOrientation("limelight", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0,0, 0, 0,0);
+            LimelightHelpers.SetRobotOrientation("limelight", odometry.getEstimatedPose().getRotation().getDegrees(), 0,0, 0, 0,0);
             LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
             
             if(Math.abs(Drivetrain.getInstance().getGyroRate()) > 360) {
@@ -111,32 +94,15 @@ public class LimelightVisionImpl extends LimelightVision {
             if(!doRejectUpdate) {
                 apriltagDetected = true;
 
-                poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
-                poseEstimator.addVisionMeasurement(
-                    mt2.pose,
-                    mt2.timestampSeconds
-                );             
+                odometry.updateVisionMeasurement(visionStdDevs, mt2.pose, mt2.timestampSeconds);        
             }
         }
     }
 
-    public Pose2d getEstimatedPose() {
-        updatePoseEstimator();
-        limelightPose = poseEstimator.getEstimatedPosition();
-        return limelightPose;
-    }
-
-    public void resetEstimatedPose(Pose2d newPose) {
-        poseEstimator.resetPose(newPose);
-        getEstimatedPose();
-    }
-
     @Override
     public void periodic() {
-        getEstimatedPose();
-        field.setRobotPose(limelightPose);
+        updatePoseEstimatorVisionMeasurement();
 
-        SmartDashboard.putData("Field", field);
         SmartDashboard.putBoolean("Vision/AprilTag Detected?", apriltagDetected);
         SmartDashboard.putString("Vision/Megatag Version", megaTagMode.toString());
      }

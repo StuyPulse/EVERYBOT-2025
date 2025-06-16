@@ -1,7 +1,5 @@
 package com.stuypulse.robot.commands.drive.Alignment;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -19,6 +17,6 @@ public class AlignToReef extends Command{
 
     @Override
     public void execute() {
-        drivetrain.findPathToPath(Settings.Drivetrain.REEF_ALIGNMENT_CONSTRAINTS, this.path);
+        if(path != null) drivetrain.pathfindThenFollowPath(Settings.Drivetrain.REEF_ALIGNMENT_CONSTRAINTS, this.path);
     }
 }

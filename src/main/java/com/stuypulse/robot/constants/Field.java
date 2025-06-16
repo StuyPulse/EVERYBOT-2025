@@ -1,31 +1,27 @@
 package com.stuypulse.robot.constants;
 
-import java.util.Vector;
-
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
 public class Field {
-    public AprilTag tag;
     public enum ReefTags {
-        BLUE_AB(17),
-        BLUE_CD(18),
-        BLUE_EF(19),
-        BLUE_GH(20),
-        BLUE_IJ(21),
-        BLUE_KL(22),
-
         RED_AB(6),
         RED_CD(7),
         RED_EF(8),
         RED_GH(9),
         RED_IJ(10),
-        RED_KL(11);
+        RED_KL(11),
+
+        BLUE_AB(17),
+        BLUE_CD(18),
+        BLUE_EF(19),
+        BLUE_GH(20),
+        BLUE_IJ(21),
+        BLUE_KL(22);
 
         private final int id;
 
@@ -33,7 +29,7 @@ public class Field {
             this.id = id;
         }
 
-        public final int getID() { 
+        public int getID() { 
             return this.id;
         }
     
@@ -47,9 +43,8 @@ public class Field {
         }
     }
     
-    
-    static private AprilTag REEF_APRILTAGS[] = {
-        // 2025 Field AprilTag Layout
+    private static AprilTag REEF_APRILTAGS[] = {
+        // 2025 Field Reef AprilTag Layout
         // RED
         new AprilTag(6,  new Pose3d(new Translation3d(Units.inchesToMeters(530.49), Units.inchesToMeters(130.17), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(300)))),
         new AprilTag(7,  new Pose3d(new Translation3d(Units.inchesToMeters(546.87), Units.inchesToMeters(158.50), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(0)))),
@@ -71,16 +66,16 @@ public class Field {
         final Pose3d robotpose3d = new Pose3d(robotPose);
         final Translation3d translation = robotpose3d.getTranslation();
         AprilTag closest = null;
-        Double lowest = Double.MAX_VALUE;
+        Double lowestDistance = Double.MAX_VALUE;
+
         // Loop throught Reef AprilTag list
         for (AprilTag tag : REEF_APRILTAGS) {
-            if (translation.getDistance(tag.pose.getTranslation()) < lowest) {
+            if (translation.getDistance(tag.pose.getTranslation()) < lowestDistance) {
                 closest = tag;
-                lowest = translation.getDistance(tag.pose.getTranslation());
+                lowestDistance = translation.getDistance(tag.pose.getTranslation());
             }
         }
 
         return ReefTags.intToReefTag(closest.ID);
     }
-    
 }
