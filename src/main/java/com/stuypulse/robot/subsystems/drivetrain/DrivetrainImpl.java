@@ -6,7 +6,6 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
