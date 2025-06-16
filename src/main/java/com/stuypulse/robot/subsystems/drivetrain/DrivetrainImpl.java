@@ -6,7 +6,8 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
-
+import com.stuypulse.stuylib.input.Gamepad;
+import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
@@ -46,6 +47,8 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
+    public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
+
 
     private RobotConfig pathPlannerRobotConfig;
 
@@ -280,6 +283,7 @@ public class DrivetrainImpl extends Drivetrain {
 
         updateOdometry();
 
+        SmartDashboard.putNumber("Drivetrain/ Joystick Left x", driver.getLeftStick().x);
         SmartDashboard.putNumber("Drivetrain/Left applied voltage", getOutputVoltage(leftMotors[0]));
         SmartDashboard.putNumber("Drivetrain/Right applied voltage", getOutputVoltage(rightMotors[0]));
         SmartDashboard.putNumber("Drivetrain/Left distance", getLeftDistance());

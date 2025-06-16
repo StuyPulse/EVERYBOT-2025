@@ -85,23 +85,23 @@ public class RobotContainer {
 				.onFalse(new PivotHoldCoral());
 
 		//BUMPERS
-		driver.getRightBumper()
+		driver.getRightBumper() //lolipop intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
 				.onFalse(new PivotToAlgaeIntake())
 				.onFalse(new PivotAlgaeHold());
-		driver.getLeftBumper()
+		driver.getLeftBumper()// score coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.whileTrue(new PivotCoralScore())
 				.onFalse(new PivotToCoralStow())
 				.onFalse(new PivotHoldCoral());
 
 		//BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
-		driver.getRightStickButton()
+		driver.getRightStickButton() //pivot lower
 				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
 				.whileTrue(new PivotLower())
 				.onFalse(new PivotStop());
-		driver.getLeftStickButton()
+		driver.getLeftStickButton() //pivot raise
 				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
 				.whileTrue(new PivotRaise())
 				.onFalse(new PivotStop());

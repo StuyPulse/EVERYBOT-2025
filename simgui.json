@@ -1,47 +1,5 @@
 {
   "HALProvider": {
-    "Other Devices": {
-      "SPARK MAX [1]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [2]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [2] RELATIVE ENCODER": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [3]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [4]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [5]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [6]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [7]": {
-        "header": {
-          "open": true
-        }
-      }
-    },
     "Timing": {
       "window": {
         "visible": false
@@ -52,12 +10,18 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Autonomous": "String Chooser",
+      "/SmartDashboard/Command Scheduler": "Scheduler",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/Visualizers/Robot": "Mechanism2d"
     },
     "windows": {
       "/SmartDashboard/Autonomous": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Command Scheduler": {
         "window": {
           "visible": true
         }
@@ -100,16 +64,17 @@
         "Climb": {
           "open": true
         },
+        "Drivetrain": {
+          "open": true
+        },
         "Pivot": {
           "Roller": {
             "Target Speeds": {
               "open": true
             },
             "open": true
-          },
-          "open": true
-        },
-        "open": true
+          }
+        }
       }
     }
   },
@@ -118,6 +83,9 @@
       "open": true
     },
     "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {
