@@ -160,7 +160,7 @@ public class PivotImpl extends Pivot {
             }
 
             if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false) {
-                if(this.getPivotState() != PivotState.DEFAULT)
+                if(this.getPivotState() != PivotState.DEFAULT || this.getPivotState() != PivotState.STOW_CORAL)
                     setPivotControlMode(PivotControlMode.MANUAL);
             }
         }

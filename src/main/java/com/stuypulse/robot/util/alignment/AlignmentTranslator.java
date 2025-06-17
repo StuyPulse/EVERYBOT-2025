@@ -42,51 +42,51 @@ public class AlignmentTranslator {
 
         switch (faceID) {
             case BLUE_AB:
-            branch = alignToLeftBranch ? "A" : "B";
+            branch = alignToLeftBranchint ? "A" : "B";
             break;
 
             case RED_AB:
-            branch = alignToLeftBranch ? "A" : "B";
+            branch = alignToLeftBranchint ? "A" : "B";
             break;
             
             case BLUE_CD:
-            branch = alignToLeftBranch ? "C" : "D";
+            branch = alignToLeftBranchint ? "C" : "D";
             break;
 
             case RED_CD:
-            branch = alignToLeftBranch ? "C" : "D";
+            branch = alignToLeftBranchint ? "C" : "D";
             break;
             
             case BLUE_EF:
-            branch = alignToLeftBranch ? "E" : "F";
+            branch = alignToLeftBranchint ? "E" : "F";
             break;
 
             case RED_EF:
-            branch = alignToLeftBranch ? "E" : "F";
+            branch = alignToLeftBranchint ? "E" : "F";
             break;
 
             case BLUE_GH:
-            branch = alignToLeftBranch ? "G" : "H";
+            branch = alignToLeftBranchint ? "G" : "H";
             break;
             
             case RED_GH:
-            branch = alignToLeftBranch ? "G" : "H";
+            branch = alignToLeftBranchint ? "G" : "H";
             break;
 
             case BLUE_IJ:
-            branch = alignToLeftBranch ? "I" : "J";
+            branch = alignToLeftBranchint ? "I" : "J";
             break;
 
             case RED_IJ:
-            branch = alignToLeftBranch ? "I" : "J";
+            branch = alignToLeftBranchint ? "I" : "J";
             break;
             
             case BLUE_KL:
-            branch = alignToLeftBranch ? "K" : "L";
+            branch = alignToLeftBranchint ? "K" : "L";
             break;
 
             case RED_KL:
-            branch = alignToLeftBranch ? "K" : "L";
+            branch = alignToLeftBranchint ? "K" : "L";
             break;
         }
         

@@ -92,7 +92,8 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.whileTrue(new PivotCoralScore())
 				.onFalse(new PivotToCoralStow())
-				.onFalse(new PivotHoldCoral());
+				.onFalse(new PivotHoldCoral())
+				.onFalse(new PivotToDefault());
 
 		//BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
 		driver.getRightStickButton() //pivot lower
@@ -154,7 +155,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
 						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
-						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02)));
+						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02), 
+						new PivotToDefault()));
 
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",

@@ -5,7 +5,6 @@
 package com.stuypulse.robot.constants;
 
 import static edu.wpi.first.units.Units.Radians;
-
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
@@ -37,11 +36,13 @@ public interface Settings {
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
         public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
-        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(85);
+        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(60);
         
         public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(2);
 
         public static final int CLIMB_CURRENT_LIMIT = 60;
+        public static final Double CLIMB_STALL_CURRENT = 15.0; //TODO find stall current
+        public static final double CLIMB_STALL_DEBOUNCE = 0.01; //TODO find climb debounce
 
         public static final double DEFAULT_VOLTAGE = 0.0;
         public static final double STOW_VOLTAGE = -1.0;

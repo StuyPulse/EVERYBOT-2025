@@ -21,6 +21,7 @@ public abstract class Climb extends SubsystemBase {
     }
 
     public enum ClimbState {
+        //TODO: implement Mr. Blay feedback make clinb start climbed 
         DEFAULT(Settings.Climb.DEFAULT_ANGLE, Settings.Climb.DEFAULT_VOLTAGE),
         DEPLOYED(Settings.Climb.STOW_ANGLE, Settings.Climb.STOW_VOLTAGE),
         CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.CLIMBING_VOLTAGE);

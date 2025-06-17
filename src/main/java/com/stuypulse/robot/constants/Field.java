@@ -1,11 +1,15 @@
 package com.stuypulse.robot.constants;
 
+import java.util.function.Supplier;
+
 import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,18 +69,17 @@ public class Field {
         new AprilTag(22,  new Pose3d(new Translation3d(Units.inchesToMeters(193.10), Units.inchesToMeters(130.17), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(300)))),
     };
 
-    public static ReefTags getClosestFace(Pose2d robotPose) {
-        final Pose3d robotpose3d = new Pose3d(robotPose);
-        final Translation3d translation = robotpose3d.getTranslation();
+    public static ReefTags getClosestFace(Supplier<Pose2d> robotPose) {
+        final Translation2d robotTranslation = new Translation2d(robotPose.get().getX(), robotPose.get().getY());
         AprilTag closest = null;
         Double lowestDistance = Double.MAX_VALUE;
         
         // Loop throught Reef AprilTag list
         for (AprilTag tag : REEF_APRILTAGS) {
-            if (translation.getDistance(tag.pose.getTranslation()) < lowestDistance) {
-                SmartDashboard.putNumber("Alignment/Translation Distance/Tag  " + tag.ID, translation.getDistance(tag.pose.getTranslation()));
+            if (robotTranslation.getDistance(tag.pose.getTranslation().toTranslation2d()) < lowestDistance) {
+                SmartDashboard.putNumber("Alignment/Translation Distance/Tag  " + tag.ID, robotTranslation.getDistance(tag.pose.getTranslation().toTranslation2d()));
                 closest = tag;
-                lowestDistance = translation.getDistance(tag.pose.getTranslation());
+                lowestDistance = robotTranslation.getDistance(tag.pose.getTranslation().toTranslation2d());
             }
         }
         return ReefTags.intToReefTag(closest.ID);
