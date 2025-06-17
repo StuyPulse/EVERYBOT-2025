@@ -10,20 +10,23 @@ import com.stuypulse.stuylib.input.Gamepad;
 public class DriveDefault extends Command {
     private final Gamepad gamepad;
     private final boolean squared;
+    private final Drivetrain drivetrain;
 
     public DriveDefault(Gamepad gamepad,
                         boolean squared) {
+        drivetrain = Drivetrain.getInstance();
+
         this.gamepad = gamepad;
         this.squared = squared;
 
-        addRequirements(Drivetrain.getInstance());
+        addRequirements(drivetrain);
     }
 
     @Override
     public void execute() {
         if(Settings.DEBUG_MODE) {
-        SmartDashboard.putNumber("Drivetrain/ Forward/Back", -gamepad.getLeftStick().y);
-        SmartDashboard.putNumber("Drivetrain/ Rotation", gamepad.getRightStick().x);
+        SmartDashboard.putNumber("Drivetrain/Forward & Back", -gamepad.getLeftStick().y);
+        SmartDashboard.putNumber("Drivetrain/Rotation", gamepad.getRightStick().x);
         }
 
         if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;

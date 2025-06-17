@@ -8,22 +8,25 @@ import com.stuypulse.robot.util.alignment.AlignmentTranslator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AlignToReefNearest extends AlignToReef {
-    private Double direction = 0.0;
+    private boolean alignToLeftBranch;
 
-    public AlignToReefNearest(double direction) {
+    public AlignToReefNearest(Boolean alignToLeftBranch) {
         super(Paths.paths.get(
-            AlignmentTranslator.translate(
-                Field.getClosestFace(Odometry.getInstance().getEstimatedPose()),
-                direction)));
-
-        this.direction = direction;
+                AlignmentTranslator.translate(
+                        Field.getClosestFace(Odometry.getInstance().getEstimatedPose()),
+                        alignToLeftBranch)));
+        this.alignToLeftBranch = alignToLeftBranch;
     }
 
     @Override
     public void initialize() {
-        SmartDashboard.putString("Alignment/Selected Branch" + direction.toString(), AlignmentTranslator.translate(
-            Field.getClosestFace(Odometry.getInstance().getEstimatedPose()),
-            direction));
-        SmartDashboard.putNumber("Alignment/Direction", direction);
+        SmartDashboard.putString("Alignment/Selected Branch" + alignToLeftBranch, AlignmentTranslator.translate(
+                Field.getClosestFace(Odometry.getInstance().getEstimatedPose()),
+                alignToLeftBranch));
+        SmartDashboard.putString("Alignment/Selected Path" + alignToLeftBranch, Paths.paths.get(
+            AlignmentTranslator.translate(
+                    Field.getClosestFace(Odometry.getInstance().getEstimatedPose()),
+                    alignToLeftBranch)).name);
+        SmartDashboard.putBoolean("Alignment/Is left branch", alignToLeftBranch);
     }
 }

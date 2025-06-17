@@ -3,11 +3,10 @@ package com.stuypulse.robot.util.alignment;
 import com.stuypulse.robot.constants.Field.ReefTags;
 
 public class AlignmentTranslator {
-    public static String translate(String faceID, double direction) {
+    private static boolean alignToLeftBranchint = false;
+    public static String translate(String faceID, Boolean alignToLeftBranch) {
         String branch = null;
-
-        boolean alignToLeftBranch = convertDirection(direction);
-
+        alignToLeftBranchint = alignToLeftBranch;
         switch (faceID) {
             case "AB":
                 branch = alignToLeftBranch ? "A" : "B";
@@ -37,10 +36,9 @@ public class AlignmentTranslator {
         return branch;
     }
 
-    public static String translate(ReefTags faceID, double direction) {
+    public static String translate(ReefTags faceID, boolean alignToLeftBranch) {
         String branch = null;
-        
-        boolean alignToLeftBranch = convertDirection(direction);
+        alignToLeftBranchint = alignToLeftBranch; 
 
         switch (faceID) {
             case BLUE_AB:
@@ -93,11 +91,5 @@ public class AlignmentTranslator {
         }
         
         return branch;
-    }
-
-    private static boolean convertDirection(double direction) {
-        if (direction >= 0)
-            return false; // DEFAULTS TO RIGHT BRANCH ALIGNMENT
-        return true;
     }
 }

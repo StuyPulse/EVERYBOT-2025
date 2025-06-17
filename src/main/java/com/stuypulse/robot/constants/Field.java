@@ -1,27 +1,30 @@
 package com.stuypulse.robot.constants;
 
+import com.stuypulse.stuylib.network.SmartNumber;
+
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Field {
     public enum ReefTags {
-        RED_AB(6),
-        RED_CD(7),
-        RED_EF(8),
-        RED_GH(9),
-        RED_IJ(10),
-        RED_KL(11),
+        RED_KL(6),
+        RED_AB(7),
+        RED_CD(8),
+        RED_EF(9),
+        RED_GH(10),
+        RED_IJ(11),
 
-        BLUE_AB(17),
-        BLUE_CD(18),
-        BLUE_EF(19),
-        BLUE_GH(20),
-        BLUE_IJ(21),
-        BLUE_KL(22);
+        BLUE_CD(17),
+        BLUE_AB(18),
+        BLUE_KL(19),
+        BLUE_IJ(20),
+        BLUE_GH(21),
+        BLUE_EF(22);
 
         private final int id;
 
@@ -67,15 +70,15 @@ public class Field {
         final Translation3d translation = robotpose3d.getTranslation();
         AprilTag closest = null;
         Double lowestDistance = Double.MAX_VALUE;
-
+        
         // Loop throught Reef AprilTag list
         for (AprilTag tag : REEF_APRILTAGS) {
             if (translation.getDistance(tag.pose.getTranslation()) < lowestDistance) {
+                SmartDashboard.putNumber("Alignment/Translation Distance/Tag  " + tag.ID, translation.getDistance(tag.pose.getTranslation()));
                 closest = tag;
                 lowestDistance = translation.getDistance(tag.pose.getTranslation());
             }
         }
-
         return ReefTags.intToReefTag(closest.ID);
     }
 }

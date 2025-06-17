@@ -4,7 +4,7 @@ import com.stuypulse.robot.constants.Paths;
 import com.stuypulse.robot.util.alignment.AlignmentTranslator;
 
 public class AlignToReefAB extends AlignToReef {
-    public AlignToReefAB(double direction) {
-        super(Paths.paths.get(AlignmentTranslator.translate("AB", direction)));
+    public AlignToReefAB(boolean alignToLeftBranch) {
+        super(Paths.paths.get(AlignmentTranslator.translate("AB", alignToLeftBranch)));
     }
 }

@@ -2,6 +2,7 @@ package com.stuypulse.robot.subsystems.drivetrain;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
@@ -33,6 +34,9 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.measure.Voltage;
 
 import static edu.wpi.first.units.Units.Volts;
+
+import org.opencv.core.Mat;
+
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
@@ -48,7 +52,6 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
-
 
     private RobotConfig pathPlannerRobotConfig;
 
@@ -274,14 +277,17 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void pathfindThenFollowPath(PathConstraints constraints, PathPlannerPath path) {
-        AutoBuilder.pathfindThenFollowPath(path, constraints).schedule();  
+        AutoBuilder.pathfindThenFollowPath(path, constraints)
+        .unless(() -> Math.abs(driver.getLeftStick().y) > 0.1 || Math.abs(driver.getRightStick().x) > 0.1 )
+        .schedule();  
     }
+
 
     @Override
     public void periodic() {
         super.periodic();
 
-        updateOdometry();
+        updateOdometry(); 
 
         SmartDashboard.putNumber("Drivetrain/ Joystick Left x", driver.getLeftStick().x);
         SmartDashboard.putNumber("Drivetrain/Left applied voltage", getOutputVoltage(leftMotors[0]));

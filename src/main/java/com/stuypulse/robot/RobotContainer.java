@@ -44,7 +44,7 @@ public class RobotContainer {
 	public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
 
 	// Subsystem
-	private final Drivetrain driveSubsystem;
+	private final Drivetrain driveSubsystem =  Drivetrain.getInstance();
 	private final Pivot pivot = Pivot.getInstance();
 
 	// Autons
@@ -52,8 +52,6 @@ public class RobotContainer {
 
 	// Robot container
 	public RobotContainer() {
-		driveSubsystem = Drivetrain.getInstance();
-
 		configureAutons(); // MAKE SURE THIS IS RUN FIRST TO ADD IN COMMANDS INTO PATHPLANNER
 		configureDefaultCommands();
 		configureButtonBindings();
@@ -114,13 +112,14 @@ public class RobotContainer {
 
 		//MENU BUTTONS
 		driver.getRightMenuButton() // Drive to Nearest April Tag
-				.onTrue(new SequentialCommandGroup(
+				.onTrue(
+					new SequentialCommandGroup(
 						new SetPivotControlMode(PivotControlMode.USING_STATES)
 								.withTimeout(0.01),
 						new PivotToDefault()
 								.withTimeout(0.01),
-						new AlignToReefNearest(driver.getRightStick().x)
-				));
+						new AlignToReefNearest(driver.getDPadLeft().getAsBoolean()))
+				);
 	}
 
 	/**************/
