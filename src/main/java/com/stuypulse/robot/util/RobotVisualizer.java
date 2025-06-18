@@ -180,7 +180,6 @@ public class RobotVisualizer {
             new Color8Bit(Color.kGreen)
         );
         
-
         /* Appending Stuff */
         bumper.append(bumperLine);
         superStructureBase.append(superStructureLength);
@@ -192,7 +191,6 @@ public class RobotVisualizer {
         climbRoot.append(climber);
         climber.append(climbHooks);
         climber.append(climbStringGripper);
-        
     }
 
     public void updatePivotAngle(Rotation2d angle, boolean atTargetAngle) {

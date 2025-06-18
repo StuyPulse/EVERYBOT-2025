@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.drive.setspeedmodifiers;
+package com.stuypulse.robot.commands.drive.setSpeedModifiers;
 import com.stuypulse.robot.constants.Settings;
 
 public class DriveSetFullSpeed extends DriveSetSpeedModifier{

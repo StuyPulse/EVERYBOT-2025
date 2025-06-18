@@ -31,7 +31,7 @@ public interface Settings {
         public static final SmartBoolean VISION = new SmartBoolean("ENABLED_SUBSYSTEMS/Is vision enabled?", true);
     }
 
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = true; //TODO change this to false during comps!
 
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);

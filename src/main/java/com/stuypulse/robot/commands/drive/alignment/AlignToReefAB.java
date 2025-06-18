@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.drive.Alignment;
+package com.stuypulse.robot.commands.drive.alignment;
 
 import com.stuypulse.robot.constants.Paths;
 import com.stuypulse.robot.util.alignment.AlignmentTranslator;

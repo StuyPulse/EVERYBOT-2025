@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.drive.Alignment;
+package com.stuypulse.robot.commands.drive.alignment;
 
 import edu.wpi.first.wpilibj2.command.Command;
 

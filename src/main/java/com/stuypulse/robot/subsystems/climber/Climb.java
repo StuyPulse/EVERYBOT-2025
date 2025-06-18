@@ -21,10 +21,9 @@ public abstract class Climb extends SubsystemBase {
     }
 
     public enum ClimbState {
-        //TODO: implement Mr. Blay feedback make clinb start climbed 
         DEFAULT(Settings.Climb.DEFAULT_ANGLE, Settings.Climb.DEFAULT_VOLTAGE),
-        DEPLOYED(Settings.Climb.STOW_ANGLE, Settings.Climb.CLIMB_VOLTAGE),
-        CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.DEPLOY_VOLTAGE);
+        DEPLOYED(Settings.Climb.STOW_ANGLE, Settings.Climb.DEPLOY_VOLTAGE),
+        CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.CLIMB_VOLTAGE);
 
         private Rotation2d targetAngle;
         private double targetMotorSpeed;
@@ -49,7 +48,7 @@ public abstract class Climb extends SubsystemBase {
     private ClimbState state;
 
     protected Climb() {
-        this.state = ClimbState.DEFAULT;
+        this.state = ClimbState.CLIMBING;
     }
 
     public ClimbState getState() {

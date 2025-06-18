@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.drive.Alignment;
+package com.stuypulse.robot.commands.drive.alignment;
 
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Paths;
@@ -27,7 +27,7 @@ public class AlignToReefNearest extends AlignToReef {
             AlignmentTranslator.translate(
                     Field.getClosestFace(() -> Odometry.getInstance().getEstimatedPose()),
                     alignToLeftBranch)).name);
-        SmartDashboard.putBoolean("Alignment/Is left branch", alignToLeftBranch);
-        SmartDashboard.putNumber("Alignment/closest id ", Field.getClosestFace(() -> Odometry.getInstance().getEstimatedPose()).getID());
+        SmartDashboard.putBoolean("Alignment/Align to Left Branch?", alignToLeftBranch);
+        SmartDashboard.putNumber("Alignment/Closest Tag Id", Field.getClosestFace(() -> Odometry.getInstance().getEstimatedPose()).getID());
     }
 }
