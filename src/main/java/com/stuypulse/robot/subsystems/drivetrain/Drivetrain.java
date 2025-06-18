@@ -45,6 +45,10 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract void configureAutoBuilder();
 
+    public abstract void setSpeedModifier(double targetSpeedModifier);
+
+    public abstract double getSpeedModifier();
+
     @Override
     public void periodic() {}
 }

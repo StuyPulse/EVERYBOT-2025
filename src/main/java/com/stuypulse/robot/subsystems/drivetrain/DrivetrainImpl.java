@@ -52,6 +52,7 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
+    private double driveSpeedModifier = 1;
 
     private RobotConfig pathPlannerRobotConfig;
 
@@ -280,6 +281,16 @@ public class DrivetrainImpl extends Drivetrain {
         AutoBuilder.pathfindThenFollowPath(path, constraints)
         .unless(() -> Math.abs(driver.getLeftStick().y) > 0.1 || Math.abs(driver.getRightStick().x) > 0.1 )
         .schedule();  
+    }
+
+    @Override
+    public void setSpeedModifier(double targetSpeedModifier) {
+        this.driveSpeedModifier = targetSpeedModifier;
+    }
+
+    @Override
+    public double getSpeedModifier() {
+        return driveSpeedModifier;
     }
 
 

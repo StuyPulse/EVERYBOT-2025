@@ -35,8 +35,8 @@ public interface Settings {
 
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(0);
-        public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(0);
-        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(60);
+        public static final Rotation2d STOW_ANGLE = Rotation2d.fromDegrees(-60);
+        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.fromDegrees(0);
         
         public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(2);
 
@@ -45,8 +45,8 @@ public interface Settings {
         public static final double CLIMB_STALL_DEBOUNCE = 0.01; //TODO find climb debounce
 
         public static final double DEFAULT_VOLTAGE = 0.0;
-        public static final double STOW_VOLTAGE = -1.0;
-        public static final double CLIMBING_VOLTAGE = 1.0;
+        public static final double CLIMB_VOLTAGE = 1.0;
+        public static final double DEPLOY_VOLTAGE = -1.0;
 
         public static final double CLIMB_MOTOR_GEAR_RATIO = 1.0/100.0;
         public static final double CLIMB_MOTOR_REDUCTION_FACTOR = 1.0/8.0; //Found from testing
@@ -103,6 +103,10 @@ public interface Settings {
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
         public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;
+
+        public static final double DRIVE_FULL_SPEED_MODIFIER = 1;
+        public static final double DRIVE_HALF_SPEED_MODIFIER = 0.5;
+        public static final double DRIVE_DISABLE_SPEED = 0;
 
         public static final PathConstraints REEF_ALIGNMENT_CONSTRAINTS = new PathConstraints(
             5.4, 4.0,

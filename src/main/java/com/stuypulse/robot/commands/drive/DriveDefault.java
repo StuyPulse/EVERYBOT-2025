@@ -31,7 +31,7 @@ public class DriveDefault extends Command {
 
         if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
 
-        Drivetrain.getInstance().driveArcade(-gamepad.getLeftStick().y, gamepad.getRightStick().x, squared);
+        Drivetrain.getInstance().driveArcade(-gamepad.getLeftStick().y*drivetrain.getSpeedModifier(), gamepad.getRightStick().x*drivetrain.getSpeedModifier(), squared);
     }
 
     @Override

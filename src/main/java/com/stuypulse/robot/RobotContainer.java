@@ -9,6 +9,8 @@ import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToDeployed;
 import com.stuypulse.robot.commands.drive.DriveDefault;
 import com.stuypulse.robot.commands.drive.Alignment.AlignToReefNearest;
+import com.stuypulse.robot.commands.drive.setspeedmodifiers.DriveSetFullSpeed;
+import com.stuypulse.robot.commands.drive.setspeedmodifiers.DriveSetHalfSpeed;
 import com.stuypulse.robot.commands.pivot.pivot.PivotLower;
 import com.stuypulse.robot.commands.pivot.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.pivot.PivotStop;
@@ -107,9 +109,11 @@ public class RobotContainer {
 
 		//ABXY BUTTONS
 		driver.getLeftButton() // Climb
-				.whileTrue(new ClimbToClimb());
+				.whileTrue(new ClimbToClimb())
+				.onTrue(new DriveSetHalfSpeed());
 		driver.getRightButton() // Deploy Climb
-				.whileTrue(new ClimbToDeployed());
+				.whileTrue(new ClimbToDeployed())
+				.onTrue(new DriveSetFullSpeed());
 
 		//MENU BUTTONS
 		driver.getRightMenuButton() // Drive to Nearest April Tag
