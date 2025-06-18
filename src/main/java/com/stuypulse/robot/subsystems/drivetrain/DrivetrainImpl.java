@@ -3,9 +3,12 @@ package com.stuypulse.robot.subsystems.drivetrain;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Constants;
+import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
+import com.stuypulse.stuylib.control.Controller;
+import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import com.kauailabs.navx.frc.AHRS;
@@ -33,6 +36,9 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.measure.Voltage;
 
 import static edu.wpi.first.units.Units.Volts;
+
+import java.util.function.Supplier;
+
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
@@ -49,6 +55,8 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveKinematics kinematics;
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     private double driveSpeedModifier = 1;
+    private Controller angularArcadePID;
+    private Controller velocityArcadePID;
 
     private RobotConfig pathPlannerRobotConfig;
 
@@ -113,6 +121,9 @@ public class DrivetrainImpl extends Drivetrain {
         } catch (Exception e) {
             pathPlannerRobotConfig = null;
         }
+
+        angularArcadePID = new PIDController(Gains.Drivetrain.PID.angularArcadePID.kP, Gains.Drivetrain.PID.angularArcadePID.kI, Gains.Drivetrain.PID.angularArcadePID.kD);
+        velocityArcadePID = new PIDController(Gains.Drivetrain.PID.velocityArcadePID.kP, Gains.Drivetrain.PID.angularArcadePID.kI, Gains.Drivetrain.PID.angularArcadePID.kD);
     }
 
     @Override
@@ -287,6 +298,16 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public double getSpeedModifier() {
         return driveSpeedModifier;
+    }
+
+    @Override
+    public Supplier<Double> velocityPIDCalculate(double input) {
+        return () -> velocityArcadePID.update(input, ((getLeftVelocity()+getRightVelocity())/2)/Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+    }
+
+    @Override
+    public Supplier<Double> angularPIDCalculate(double input) {
+        return () -> angularArcadePID.update(input, getGyroRate()/Constants.Drivetrain.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND.getDegrees());
     }
 
 

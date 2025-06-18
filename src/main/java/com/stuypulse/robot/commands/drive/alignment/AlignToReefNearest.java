@@ -13,8 +13,10 @@ public class AlignToReefNearest extends AlignToReef {
     public AlignToReefNearest(Boolean alignToLeftBranch) {
         super(Paths.paths.get(
                 AlignmentTranslator.translate(
-                        Field.getClosestFace(() -> Odometry.getInstance().getEstimatedPose()),
-                        alignToLeftBranch)));
+                        Field.getClosestFace(() -> Odometry.getInstance().getEstimatedPose()), 
+                        alignToLeftBranch)
+            )
+        );
         this.alignToLeftBranch = alignToLeftBranch;
     }
 

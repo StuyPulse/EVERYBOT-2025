@@ -1,5 +1,7 @@
 package com.stuypulse.robot.subsystems.drivetrain;
 
+import java.util.function.Supplier;
+
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;
@@ -47,6 +49,9 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract void setSpeedModifier(double targetSpeedModifier);
 
     public abstract double getSpeedModifier();
+
+    public abstract Supplier<Double> velocityPIDCalculate(double input);
+    public abstract Supplier<Double> angularPIDCalculate(double input);
 
     @Override
     public void periodic() {}

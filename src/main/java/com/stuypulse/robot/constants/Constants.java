@@ -23,7 +23,8 @@ public interface Constants {
         public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(21.75);
         
         public static final double DRIVETRAIN_GEAR_RATIO = 1.0/8.45;
-        
+
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5.4;
+        public static final Rotation2d MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND = Rotation2d.fromDegrees(720);
     }
 }
