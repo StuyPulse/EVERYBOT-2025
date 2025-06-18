@@ -22,7 +22,7 @@ public abstract class Climb extends SubsystemBase {
 
     public enum ClimbState {
         DEFAULT(Settings.Climb.DEFAULT_ANGLE, Settings.Climb.DEFAULT_VOLTAGE),
-        DEPLOYED(Settings.Climb.STOW_ANGLE, Settings.Climb.DEPLOY_VOLTAGE),
+        DEPLOYED(Settings.Climb.DEPLOY_ANGLE, Settings.Climb.DEPLOY_VOLTAGE),
         CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.CLIMB_VOLTAGE);
 
         private Rotation2d targetAngle;

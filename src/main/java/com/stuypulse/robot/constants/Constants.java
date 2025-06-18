@@ -6,8 +6,8 @@ import edu.wpi.first.math.util.Units;
 /** Miscellaneous constants */
 public interface Constants {
     public interface Climb {
-        Rotation2d MIN_ANGLE = Rotation2d.kZero;
-        Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(120);
+        Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(-65);
+        Rotation2d MAX_ANGLE = Rotation2d.kZero;
     }
 
     public interface Pivot {
