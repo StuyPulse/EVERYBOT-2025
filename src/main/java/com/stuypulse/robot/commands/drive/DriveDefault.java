@@ -32,7 +32,7 @@ public class DriveDefault extends Command {
         if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
 
         //TODO: Tune Pid contollers for drive
-        Drivetrain.getInstance().driveArcade(drivetrain.velocityPIDCalculate(-gamepad.getLeftStick().y*drivetrain.getSpeedModifier()).get(), drivetrain.angularPIDCalculate( gamepad.getRightStick().x*drivetrain.getSpeedModifier()).get(), squared); 
+        Drivetrain.getInstance().driveArcade(drivetrain.velocityFFCalculate(-gamepad.getLeftStick().y).get()*drivetrain.getSpeedModifier(),  gamepad.getRightStick().x*drivetrain.getSpeedModifier(), squared); 
     }
 
     @Override

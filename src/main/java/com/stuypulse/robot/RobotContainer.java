@@ -110,10 +110,10 @@ public class RobotContainer {
 		//ABXY BUTTONS
 		driver.getLeftButton() // Climb
 				.whileTrue(new ClimbToClimb())
-				.onTrue(new DriveSetHalfSpeed());
+				.onTrue(new DriveSetFullSpeed());
 		driver.getRightButton() // Deploy Climb
 				.whileTrue(new ClimbToDeployed())
-				.onTrue(new DriveSetFullSpeed());
+				.onTrue(new DriveSetHalfSpeed());
 
 		//MENU BUTTONS
 		driver.getRightMenuButton() // Drive to Nearest April Tag

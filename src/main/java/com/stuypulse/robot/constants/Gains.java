@@ -36,6 +36,18 @@ public class Gains {
             double kS = 0.19059;
             double kV = 2.2194;
             double kA = 0.44478;
+        } 
+        public interface arcadeFF {
+            public interface angularArcadeFF {
+                double kS = 0;
+                double kV = 0;
+                double kA = 0;
+            }
+            public interface velocityArcadeFF {
+                double kS = 0.1;
+                double kV = 0.98;
+                double kA = 0.4;
+            }  
         }
         public interface PID {
             public interface left {
@@ -47,16 +59,6 @@ public class Gains {
                 double kP = 0.48848;
                 double kI = 0.0;
                 double kD = 0.0;
-            }
-            public interface angularArcadePID {
-                double kP = 0;
-                double kI = 0;
-                double kD = 0;
-            }
-            public interface velocityArcadePID {
-                double kP = 0;
-                double kI = 0;
-                double kD = 0;
             }
         }
     }

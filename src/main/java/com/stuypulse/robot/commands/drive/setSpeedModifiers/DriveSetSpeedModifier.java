@@ -2,9 +2,9 @@ package com.stuypulse.robot.commands.drive.setSpeedModifiers;
 
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class DriveSetSpeedModifier extends Command{
+public class DriveSetSpeedModifier extends InstantCommand{
     private double SpeedModifier;
     private final Drivetrain drivetrain = Drivetrain.getInstance();
 
@@ -13,7 +13,7 @@ public class DriveSetSpeedModifier extends Command{
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         drivetrain.setSpeedModifier(SpeedModifier);
     }
 }

@@ -50,7 +50,7 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract double getSpeedModifier();
 
-    public abstract Supplier<Double> velocityPIDCalculate(double input);
+    public abstract Supplier<Double> velocityFFCalculate(double input);
     public abstract Supplier<Double> angularPIDCalculate(double input);
 
     @Override

@@ -23,6 +23,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.units.measure.Voltage;
 
 import static edu.wpi.first.units.Units.Volts;
@@ -55,8 +57,8 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDriveKinematics kinematics;
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     private double driveSpeedModifier = 1;
-    private Controller angularArcadePID;
-    private Controller velocityArcadePID;
+    private SimpleMotorFeedforward angularArcadeFeedforward;
+    private SimpleMotorFeedforward velocityArcadeFeedfoward;
 
     private RobotConfig pathPlannerRobotConfig;
 
@@ -122,8 +124,8 @@ public class DrivetrainImpl extends Drivetrain {
             pathPlannerRobotConfig = null;
         }
 
-        angularArcadePID = new PIDController(Gains.Drivetrain.PID.angularArcadePID.kP, Gains.Drivetrain.PID.angularArcadePID.kI, Gains.Drivetrain.PID.angularArcadePID.kD);
-        velocityArcadePID = new PIDController(Gains.Drivetrain.PID.velocityArcadePID.kP, Gains.Drivetrain.PID.angularArcadePID.kI, Gains.Drivetrain.PID.angularArcadePID.kD);
+        angularArcadeFeedforward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.angularArcadeFF.kS, Gains.Drivetrain.arcadeFF.angularArcadeFF.kV, Gains.Drivetrain.arcadeFF.angularArcadeFF.kA);
+        velocityArcadeFeedfoward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.velocityArcadeFF.kS, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kV, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kA);
     }
 
     @Override
@@ -301,13 +303,13 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     @Override
-    public Supplier<Double> velocityPIDCalculate(double input) {
-        return () -> velocityArcadePID.update(input, ((getLeftVelocity()+getRightVelocity())/2)/Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+    public Supplier<Double> velocityFFCalculate(double input) {
+        return () -> velocityArcadeFeedfoward.calculate(input);
     }
 
     @Override
     public Supplier<Double> angularPIDCalculate(double input) {
-        return () -> angularArcadePID.update(input, getGyroRate()/Constants.Drivetrain.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND.getDegrees());
+        return () -> angularArcadeFeedforward.calculate(input);
     }
 
 
@@ -324,5 +326,8 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
+        SmartDashboard.putNumber("Drivetrain/velocity pid outtake", angularArcadeFeedforward.calculate(driver.getLeftStick().y));
+        SmartDashboard.putNumber("Drivetrain/angular pid outtake", angularArcadeFeedforward.calculate(driver.getRightStick().y));
+        SmartDashboard.putNumber("Drivetrain/Speed Modifier", driveSpeedModifier);
     }
 }
