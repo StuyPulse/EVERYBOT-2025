@@ -63,7 +63,7 @@ public interface Settings {
         
         public static final Rotation2d ALGAE_LOLLIPOP_ANGLE = Rotation2d.fromDegrees(25);
         public static final Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(35);
-        public static final Rotation2d ALGAE_GROUND_ANGLE = Rotation2d.fromDegrees(70);
+        public static final Rotation2d ALGAE_GROUND_ANGLE = Rotation2d.fromDegrees(80);
         
         public static final Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(85);
 

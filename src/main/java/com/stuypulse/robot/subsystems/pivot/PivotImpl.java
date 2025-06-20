@@ -66,11 +66,6 @@ public class PivotImpl extends Pivot {
         stallDetector = BStream.create(() -> pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT)
                 .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
 
-        if (Settings.EnabledSubsystems.PIVOT.get()) {
-            setPivotState(PivotState.DEFAULT);
-            setPivotControlMode(PivotControlMode.USING_STATES);
-        }
-
         bumpSwitch = new DigitalInput(Ports.Pivot.BUMP_SWITCH);
         bumpSwitchIsDepressed = BStream.create(bumpSwitch)
                 .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE))
