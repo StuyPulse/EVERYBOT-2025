@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Gains.Drivetrain.arcadeFF.velocityArcadeFF;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.stuylib.input.Gamepad;
 

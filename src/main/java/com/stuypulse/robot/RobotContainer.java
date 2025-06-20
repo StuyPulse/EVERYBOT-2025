@@ -79,7 +79,7 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake())
 				.whileTrue(new PivotAlgaeIntake())
-                                .onFalse(new PivotToAlgaeStow())
+                .onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
 		driver.getLeftTriggerButton() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake())
@@ -89,8 +89,7 @@ public class RobotContainer {
 		driver.getRightBumper() //lolipop intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
-				.onFalse(new PivotToAlgaeIntake())
-                                .onFalse(new PivotToAlgaeStow())
+                .onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
 		driver.getLeftBumper()// score coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
@@ -118,15 +117,16 @@ public class RobotContainer {
 				.onTrue(new DriveSetHalfSpeed());
 
 		//MENU BUTTONS
-		driver.getRightMenuButton() // Drive to Nearest April Tag
-				.onTrue(
-					new SequentialCommandGroup(
-						new SetPivotControlMode(PivotControlMode.USING_STATES)
-								.withTimeout(0.01),
-						new PivotToDefault()
-								.withTimeout(0.01),
-						new AlignToReefNearest(driver.getDPadLeft().getAsBoolean()))
-				);
+		// Alignment disabled for duel
+		// driver.getRightMenuButton() // Drive to Nearest April Tag
+		// 		.onTrue(
+		// 			new SequentialCommandGroup(
+		// 				new SetPivotControlMode(PivotControlMode.USING_STATES)
+		// 						.withTimeout(0.01),
+		// 				new PivotToDefault()
+		// 						.withTimeout(0.01),
+		// 				new AlignToReefNearest(driver.getDPadLeft().getAsBoolean()))
+		// 		);
 	}
 
 	/**************/

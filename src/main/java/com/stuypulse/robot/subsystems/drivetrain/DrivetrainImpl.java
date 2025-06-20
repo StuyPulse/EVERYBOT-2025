@@ -131,7 +131,6 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
         if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
-        
         drive.arcadeDrive(xSpeed, zRotation, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Arcade Drive");
     }
