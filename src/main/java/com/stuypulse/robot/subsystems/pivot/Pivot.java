@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.pivot;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -30,8 +31,11 @@ public abstract class Pivot extends SubsystemBase {
     public enum PivotState {
         DEFAULT(Settings.Pivot.DEFAULT_ANGLE),
         STOW_CORAL(Settings.Pivot.CORAL_STOW_ANGLE),
-        INTAKE_ALGAE(Settings.Pivot.ALGAE_INTAKE_ANGLE),
-        STOW_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE);
+        SCORE_CORAL(Settings.Pivot.CORAL_SCORE_ANGLE),
+        INTAKE_ALGAE(Settings.Pivot.ALGAE_GROUND_ANGLE),
+        STOW_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE),
+        INTAKE_ALGAE_FROM_LOLIPOP(Settings.Pivot.ALGAE_LOLLIPOP_ANGLE),
+        RESEAT_CORAL(Settings.Pivot.CORAL_RESEAT_ANGLE);
 
         Rotation2d targetAngle;
 
@@ -61,6 +65,11 @@ public abstract class Pivot extends SubsystemBase {
         public String getPivotControlMode() {
             return this.controlMode;
         }
+
+    }
+
+    public PivotControlMode PivotControlMode() {
+        return this.pivotControlMode;
     }
 
     public abstract void setPivotState(PivotState pivotState);
@@ -68,6 +77,8 @@ public abstract class Pivot extends SubsystemBase {
     public abstract PivotState getPivotState();
 
     public abstract void setRollerMotor(double speed);
+
+    public abstract double getRollerMotor();
 
     public abstract void setPivotMotor(double speed);
     
@@ -77,11 +88,19 @@ public abstract class Pivot extends SubsystemBase {
 
     public abstract Rotation2d getPivotRotation();
 
+    public abstract boolean atTargetAngle();
+
     @Override
     public void periodic() {
         SmartDashboard.putString("Pivot/Pivot State", pivotState.toString());
         SmartDashboard.putNumber("Pivot/Target Angle", this.pivotState.getTargetAngle().getDegrees());
+        SmartDashboard.putBoolean("Pivot/At Target Angle", atTargetAngle());
+
+        if(Settings.DEBUG_MODE) {
+        RobotVisualizer.getInstance().updatePivotAngle(getPivotRotation(), atTargetAngle());
+        RobotVisualizer.getInstance().updateRollers(getRollerMotor());
     }
+}
 
     public abstract SysIdRoutine getSysIdRoutine();
 }

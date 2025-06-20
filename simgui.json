@@ -1,60 +1,43 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
+    "Timing": {
       "window": {
-        "visible": true
-      }
-    },
-    "Other Devices": {
-      "SPARK MAX [1]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [2]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [2] RELATIVE ENCODER": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [3]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [4]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [5]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [6]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [7]": {
-        "header": {
-          "open": true
-        }
+        "visible": false
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/Autonomous": "String Chooser"
+      "/SmartDashboard/Autonomous": "String Chooser",
+      "/SmartDashboard/Command Scheduler": "Scheduler",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/Visualizers/Robot": "Mechanism2d"
     },
     "windows": {
       "/SmartDashboard/Autonomous": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Command Scheduler": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "bottom": 1638,
+        "height": 8.051901817321777,
+        "left": 534,
+        "right": 3466,
+        "top": 291,
+        "width": 17.54825210571289,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Visualizers/Robot": {
         "window": {
           "visible": true
         }
@@ -62,6 +45,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "retained": {
       "SmartDashboard": {
         "Autonomous": {
@@ -78,7 +64,7 @@
         "Climb": {
           "open": true
         },
-        "LEDs": {
+        "Drivetrain": {
           "open": true
         },
         "Pivot": {
@@ -87,10 +73,8 @@
               "open": true
             },
             "open": true
-          },
-          "open": true
-        },
-        "open": true
+          }
+        }
       }
     }
   },
@@ -99,6 +83,9 @@
       "open": true
     },
     "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {
@@ -110,7 +97,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 0
+          "height": 127
         }
       ]
     }

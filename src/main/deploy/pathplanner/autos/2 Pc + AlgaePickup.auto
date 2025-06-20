@@ -1,0 +1,106 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to Reef"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorScoreBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor Coral Back to HP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back Back"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Processor Far Back Back to Algae Wait"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotLollipopAlgaeIntake"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Processor-Start",
+  "choreoAuto": false
+}

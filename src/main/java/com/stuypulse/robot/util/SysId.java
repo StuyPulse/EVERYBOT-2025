@@ -3,6 +3,9 @@ package com.stuypulse.robot.util;
 import com.revrobotics.spark.SparkMax;
 
 import static edu.wpi.first.units.Units.Volts;
+
+import java.util.function.Supplier;
+
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Rotations;
@@ -19,7 +22,8 @@ public class SysId {
     public static SysIdRoutine getSysIdRoutine(
         String motorname,
         SparkMax motor,
-        Rotation2d mechGetRotations,
+        Supplier<Double> getEncoderVelocity,
+        Supplier<Rotation2d> getEncoderPosition,
         Subsystem subsysteminstance,
         double quasistaticRampVoltage,  //1V by default
         double dynamicStepVoltage,      //7V by default
@@ -33,9 +37,9 @@ public class SysId {
                 motor::setVoltage,
                 log -> { 
                     log.motor(motorname)
-                        .angularVelocity(AngularVelocity.ofBaseUnits(motor.getEncoder().getVelocity() / 60, RotationsPerSecond))
+                        .angularVelocity(AngularVelocity.ofBaseUnits(getEncoderVelocity.get() / 60.0, RotationsPerSecond))
                         .voltage(Voltage.ofBaseUnits(motor.getBusVoltage(), Volts))
-                        .angularPosition((Angle.ofBaseUnits(motor.getEncoder().getPosition(), Rotations)));
+                        .angularPosition(Angle.ofBaseUnits(getEncoderPosition.get().getRotations(), Rotations));
                 },
                 subsysteminstance
             )

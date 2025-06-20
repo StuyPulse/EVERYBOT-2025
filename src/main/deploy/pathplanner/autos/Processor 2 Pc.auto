@@ -1,0 +1,67 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to Reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotCoralScore"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorScoreBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor Coral Back to HP"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot default and Rotisserie"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back Score"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotCoralScore"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Processor-Start",
+  "choreoAuto": false
+}

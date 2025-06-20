@@ -2,6 +2,7 @@ package com.stuypulse.robot.subsystems.climber;
 
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -21,8 +22,8 @@ public abstract class Climb extends SubsystemBase {
 
     public enum ClimbState {
         DEFAULT(Settings.Climb.DEFAULT_ANGLE, Settings.Climb.DEFAULT_VOLTAGE),
-        STOW(Settings.Climb.STOW_ANGLE, Settings.Climb.STOW_VOLTAGE),
-        CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.CLIMBING_VOLTAGE);
+        DEPLOYED(Settings.Climb.DEPLOY_ANGLE, Settings.Climb.DEPLOY_VOLTAGE),
+        CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.CLIMB_VOLTAGE);
 
         private Rotation2d targetAngle;
         private double targetMotorSpeed;
@@ -47,7 +48,7 @@ public abstract class Climb extends SubsystemBase {
     private ClimbState state;
 
     protected Climb() {
-        this.state = ClimbState.DEFAULT;
+        this.state = ClimbState.CLIMBING;
     }
 
     public ClimbState getState() {
@@ -65,5 +66,7 @@ public abstract class Climb extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putString("Climb/State", state.toString());
+
+        RobotVisualizer.getInstance().updateClimb(getCurrentAngle(), atTargetAngle());
     }
 }

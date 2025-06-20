@@ -164,3 +164,6 @@ bin/
 # Logs
 *.wpilog
 *.log
+
+# SYSID 2022 CONFIG
+config.json

@@ -4,17 +4,17 @@
 /**************************************************************/
 package com.stuypulse.robot;
 
-import com.stuypulse.robot.commands.leds.LEDApplyPattern;
+import com.stuypulse.robot.commands.vision.VisionSetMegaTag1;
+import com.stuypulse.robot.commands.vision.VisionSetMegaTag2;
 
-import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-
     private RobotContainer robot;
     private Command auto;
 
@@ -24,12 +24,17 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        DataLogManager.start();
+        DriverStation.startDataLog(DataLogManager.getLog());
         robot = new RobotContainer();
+        new VisionSetMegaTag1();
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+
+        SmartDashboard.putNumber("DriverStation/Match Time", DriverStation.getMatchTime());
     }
 
     /*********************/
@@ -37,12 +42,17 @@ public class Robot extends TimedRobot {
     /*********************/
 
     @Override
-    public void disabledInit() {
-        new LEDApplyPattern(LEDPattern.solid(Color.kFirstRed).blink(Units.Seconds.of(.5)));
-    }
+    public void disabledInit() {}
 
     @Override
     public void disabledPeriodic() {}
+
+    @Override
+    public void disabledExit() {
+        if (DriverStation.isFMSAttached()) {
+            new VisionSetMegaTag2().schedule();
+        }
+    }
 
     /***********************/
     /*** AUTONOMOUS MODE ***/
@@ -55,6 +65,7 @@ public class Robot extends TimedRobot {
         if (auto != null) {
             auto.schedule();
         }
+
     }
 
     @Override
@@ -75,7 +86,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+    }
 
     @Override
     public void teleopExit() {}

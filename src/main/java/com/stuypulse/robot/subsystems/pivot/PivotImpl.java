@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -19,52 +20,75 @@ import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class PivotImpl extends Pivot {
-    private SparkMax pivotMotor;
-    private SparkMax rollerMotor;
-    private RelativeEncoder pivotEncoder;
+    private final SparkMax rollerMotor;
+    private final SparkMax pivotMotor;
+    private final RelativeEncoder pivotEncoder;
+    private final DutyCycleEncoder pivotThroughbore;
+    private final DigitalInput bumpSwitch;
 
-    private Controller controller;
-    
-    private BStream stallDetector;
-    
-    private SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
-    private SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
+    private final Controller controller;
+
+    private final BStream stallDetector;
+    private final BStream bumpSwitchIsDepressed;
+
+    private final SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
+    private final SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
 
     public PivotImpl() {
         super();
-        pivotMotor = new SparkMax(Ports.Pivot.PIVOT_MOTOR,MotorType.kBrushless);
+        pivotMotor = new SparkMax(Ports.Pivot.PIVOT_MOTOR, MotorType.kBrushless);
         rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
 
         Motors.PivotConfig.PIVOT_MOTOR_CONFIG.encoder
-            .positionConversionFactor(Settings.Pivot.PIVOT_MOTOR_GEAR_RATIO * Settings.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);  
-        
-        pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        
+                .positionConversionFactor(
+                        Constants.Pivot.PIVOT_MOTOR_GEAR_RATIO * Constants.Pivot.PIVOT_MOTOR_REDUCTION_FACTOR);
+
+        pivotMotor.configure(Motors.PivotConfig.PIVOT_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
+        rollerMotor.configure(Motors.PivotConfig.PIVOT_ROLLER_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
+
         pivotEncoder = pivotMotor.getEncoder();
-      
+        
+        pivotThroughbore = new DutyCycleEncoder(Ports.Pivot.THROUGHBORE_DIO, Constants.Pivot.PIVOT_THROUGHBORE_RANGE,
+                Constants.Pivot.PIVOT_THROUGHBORE_EXPECTED_ZERO);
+        pivotThroughbore.setInverted(true);
+
         controller = new ArmFeedforward(Gains.Pivot.FF.kG)
                 .add(new PIDController(Gains.Pivot.PID.kP, Gains.Pivot.PID.kI, Gains.Pivot.PID.kD));
 
         stallDetector = BStream.create(() -> pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT)
-            .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
+                .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
+
+        if (Settings.EnabledSubsystems.PIVOT.get()) {
+            setPivotState(PivotState.DEFAULT);
+            setPivotControlMode(PivotControlMode.USING_STATES);
+        }
+
+        bumpSwitch = new DigitalInput(Ports.Pivot.BUMP_SWITCH);
+        bumpSwitchIsDepressed = BStream.create(bumpSwitch)
+                .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE))
+                .not();
     }
-    
+
     @Override
     public SysIdRoutine getSysIdRoutine() {
+        setPivotControlMode(PivotControlMode.MANUAL);
         return SysId.getSysIdRoutine(
-            pivotMotor.toString(),
-            pivotMotor,
-            getPivotRotation(),
-            Pivot.getInstance(),
-            0.5,
-            .5,
-            10
-        );
+                pivotMotor.toString(),
+                pivotMotor,
+                this::getPivotVelocity,
+                this::getPivotRotation,
+                Pivot.getInstance(),
+                1,
+                3,
+                10);
     }
 
     @Override
@@ -74,14 +98,27 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
+    public double getRollerMotor() {
+        return CurrentRollerSetSpeed.getAsDouble();
+    }
+
+    @Override
     public void setPivotMotor(double speed) {
         CurrentPivotSetSpeed.set(speed);
         pivotMotor.set(speed);
     }
 
+    public Rotation2d getPivotRotationRelative() {
+        return Rotation2d.fromRotations(pivotEncoder.getPosition());
+    }
+
     @Override
     public Rotation2d getPivotRotation() {
-        return Rotation2d.fromRotations(pivotEncoder.getPosition());
+        return Rotation2d.fromRotations(pivotThroughbore.get() / Constants.Pivot.PIVOT_THROUGHBORE_RANGE);
+    }
+
+    public double getPivotVelocity() {
+        return pivotEncoder.getVelocity();
     }
 
     @Override
@@ -90,12 +127,12 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
-    public void setPivotState(PivotState pivotState) { 
-        this.pivotState = pivotState; 
+    public void setPivotState(PivotState pivotState) {
+        this.pivotState = pivotState;
     }
 
     @Override
-    public PivotState getPivotState() { 
+    public PivotState getPivotState() {
         return pivotState;
     }
 
@@ -105,24 +142,36 @@ public class PivotImpl extends Pivot {
     }
 
     @Override
+    public boolean atTargetAngle() {
+        return Math.abs(Pivot.getInstance().pivotState.getTargetAngle().getDegrees()
+                - Pivot.getInstance().getPivotRotation().getDegrees()) < Settings.Pivot.ANGLE_TOLERANCE;
+    }
+
+    @Override
     public void periodic() {
         super.periodic();
-      
-        if (stallDetector.getAsBoolean()){
-            if(getPivotRotation().getDegrees()>-15) { //Check Stalling Direction: Check if hitting top hard stop
-                resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
-            } else if(getPivotRotation().getDegrees()<-60) { //Check Stalling Direction: Check if hitting bottom hard stop
-                resetPivotEncoder(Settings.Pivot.MAX_ANGLE.getRotations());
+
+        if (Settings.EnabledSubsystems.PIVOT.get()) {
+            if (stallDetector.getAsBoolean()) {
+                pivotMotor.set(0);
+            } else if (pivotControlMode == PivotControlMode.USING_STATES) {
+                pivotMotor.setVoltage(
+                        -controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+            }
+
+            if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false) {
+                if(this.getPivotState() != PivotState.DEFAULT || this.getPivotState() != PivotState.STOW_CORAL)
+                    setPivotControlMode(PivotControlMode.MANUAL);
             }
         }
 
-        if (pivotControlMode == PivotControlMode.USING_STATES) {
-            pivotMotor.setVoltage(controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+        if(Settings.DEBUG_MODE) {
+            SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
         }
-      
-        SmartDashboard.putNumber("Pivot/Number of Rotations", getPivotRotation().getRotations());
-        SmartDashboard.putNumber("Pivot/Current Angle", getPivotRotation().getDegrees());
+        
+        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
+        SmartDashboard.putBoolean("Pivot/Bump Switch", bumpSwitchIsDepressed.getAsBoolean());
     }       
 }
