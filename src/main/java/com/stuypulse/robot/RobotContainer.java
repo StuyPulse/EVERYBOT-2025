@@ -79,6 +79,7 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake())
 				.whileTrue(new PivotAlgaeIntake())
+                                .onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
 		driver.getLeftTriggerButton() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake())
@@ -89,6 +90,7 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
 				.onFalse(new PivotToAlgaeIntake())
+                                .onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
 		driver.getLeftBumper()// score coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
