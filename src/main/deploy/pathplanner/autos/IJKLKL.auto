@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Pivot default and Rotisserie"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Non-Processor To Reef"
