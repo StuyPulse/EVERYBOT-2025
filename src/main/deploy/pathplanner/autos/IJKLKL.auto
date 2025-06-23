@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Pivot default and Rotisserie"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Non-Processor To Reef"
@@ -32,6 +26,12 @@
           "type": "path",
           "data": {
             "pathName": "To HP"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
@@ -62,6 +62,12 @@
           "type": "path",
           "data": {
             "pathName": "Kl to HP post reverse"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
