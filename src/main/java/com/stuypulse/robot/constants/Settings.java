@@ -23,6 +23,8 @@ import edu.wpi.first.units.Units;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+    public static final boolean DEBUG_MODE = true; //TODO change this to false during comps!
+    
     public interface EnabledSubsystems{
         public static final SmartBoolean CLIMB = new SmartBoolean("ENABLED_SUBSYSTEMS/Is climb enabled?", true);
         public static final SmartBoolean DRIVETRAIN = new SmartBoolean("ENABLED_SUBSYSTEMS/Is drivetrain enabled?", true);
@@ -30,8 +32,6 @@ public interface Settings {
         public static final SmartBoolean PIVOT_ROLLERS = new SmartBoolean("ENABLED_SUBSYSTEMS/Is pivot rollers enabled?", true);
         public static final SmartBoolean VISION = new SmartBoolean("ENABLED_SUBSYSTEMS/Is vision enabled?", true);
     }
-
-    public static final boolean DEBUG_MODE = false; //TODO change this to false during comps!
 
     public interface Climb {
         public static final Rotation2d DEFAULT_ANGLE = Rotation2d.kZero;
