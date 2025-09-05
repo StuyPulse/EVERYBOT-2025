@@ -42,8 +42,8 @@ public class PivotImpl extends Pivot {
 
     public PivotImpl() {
         super();
-        pivotMotor = new SparkMax(Ports.Pivot.PIVOT_MOTOR, MotorType.kBrushless);
-        rollerMotor = new SparkMax(Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
+        pivotMotor = new SparkMax(Ports.BusIDS.pivot , Ports.Pivot.PIVOT_MOTOR, MotorType.kBrushless);
+        rollerMotor = new SparkMax(Ports.BusIDS.roller, Ports.Pivot.ROLLER_MOTOR, MotorType.kBrushed);
 
         Motors.PivotConfig.PIVOT_MOTOR_CONFIG.encoder
                 .positionConversionFactor(

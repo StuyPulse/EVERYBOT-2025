@@ -27,7 +27,7 @@ public class ClimbImpl extends Climb {
 
     public ClimbImpl() {
         super();
-        climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
+        climbMotor = new SparkMax(Ports.BusIDS.climbbusid, Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
 
         Motors.ClimbConfig.CLIMB_MOTOR_CONFIG.encoder
                 .positionConversionFactor(

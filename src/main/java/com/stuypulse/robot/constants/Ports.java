@@ -33,4 +33,13 @@ public interface Ports {
         public static final int RIGHT_LEAD = 6;
         public static final int RIGHT_FOLLOW = 7;
     }
+    public interface  BusIDS {
+        public static final int climbbusid = 0;
+        public static final int driveRightLead = 0;
+        public static final int driveRightFollow = 0;
+        public static final int driveLeftLead = 0;
+        public static final int driveLeftFollow = 0;
+        public static final int pivot = 0;
+        public static final int roller = 0;
+    }
 }
