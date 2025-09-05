@@ -3,6 +3,11 @@ plugins {
     id "edu.wpi.first.GradleRIO2027" version "2027.0.0-alpha-2"
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -72,7 +77,10 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'com.github.StuyPulse:StuyLib:v2027.0.0-alpha-2'
+
 }
+
 
 test {
     useJUnitPlatform()
