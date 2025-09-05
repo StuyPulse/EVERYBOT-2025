@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "To KL"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotCoralScore"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "KL .5HP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": ".5KL HP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP .5AB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotCoralScore"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Non-Processor-Start",
+  "choreoAuto": false
+}

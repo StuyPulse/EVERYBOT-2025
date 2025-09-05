@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.5458171206225675,
+        "y": 5.463314688715952
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.616682879377432,
+        "y": 5.514530642023346
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.078915369649805,
+        "y": 6.231553988326848
+      },
+      "prevControl": {
+        "x": 5.826282495754961,
+        "y": 6.2901710178252905
+      },
+      "nextControl": {
+        "x": 4.6435797665369645,
+        "y": 6.197410019455253
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.977772373540856,
+        "y": 5.19869892996109
+      },
+      "prevControl": {
+        "x": 3.5765849607523146,
+        "y": 6.009620279155982
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "KL"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "KL AB Non-Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

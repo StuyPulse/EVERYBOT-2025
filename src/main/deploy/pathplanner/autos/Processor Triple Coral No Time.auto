@@ -1,0 +1,124 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to Reef"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorScoreBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor Coral Back to HP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Far Back Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Far Back Coral Back to HP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor HP Back to Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Processor-Start",
+  "choreoAuto": false
+}

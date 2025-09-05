@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.3456305309734513,
+        "y": 1.4753318584070803
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.912057522123894,
+        "y": 1.6176991150442472
+      },
+      "isLocked": false,
+      "linkedName": "AfterProcessorHPReverse"
+    },
+    {
+      "anchor": {
+        "x": 3.3456305309734513,
+        "y": 2.7825221238938047
+      },
+      "prevControl": {
+        "x": 3.0414823008849554,
+        "y": 2.329535398230088
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

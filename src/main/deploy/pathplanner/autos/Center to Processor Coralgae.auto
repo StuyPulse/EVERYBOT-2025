@@ -1,0 +1,100 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center To Reef"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterCoral Back"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ToProcessorAlgae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotLollipopAlgaeIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotAlgaeHold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgaeToProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoreProcessor"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgaeOuttake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotAlgaeOuttake"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Center-Start",
+  "choreoAuto": false
+}

@@ -1,0 +1,100 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to Reef"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotCoralScore"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorScoreBack"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Processor Back to Algae Wait"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotLollipopAlgaeIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotAlgaeHold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgaeToProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoreProcessor"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgaeOuttake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotAlgaeOuttake"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Processor-Start",
+  "choreoAuto": false
+}

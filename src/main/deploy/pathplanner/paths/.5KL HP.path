@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.17410019455253,
+        "y": 6.188874027237354
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.3461189436185883,
+        "y": 6.204208289967339
+      },
+      "isLocked": false,
+      "linkedName": ".5 KL HP"
+    },
+    {
+      "anchor": {
+        "x": 1.5279426069972188,
+        "y": 7.349768968869106
+      },
+      "prevControl": {
+        "x": 2.005951918788804,
+        "y": 6.530310068743185
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HP"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "KL AB Non-Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

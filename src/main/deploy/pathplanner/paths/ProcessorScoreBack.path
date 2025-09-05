@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.299944690265486,
+        "y": 3.0931415929203543
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.586270491803279,
+        "y": 2.5924692622950816
+      },
+      "isLocked": false,
+      "linkedName": "ProcessorReef"
+    },
+    {
+      "anchor": {
+        "x": 6.490652654867256,
+        "y": 2.426603982300885
+      },
+      "prevControl": {
+        "x": 5.849999999999999,
+        "y": 2.1848872950819667
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "AfterProcessorCoralBack"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": true,
+  "folder": "ProcessorAlgae",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

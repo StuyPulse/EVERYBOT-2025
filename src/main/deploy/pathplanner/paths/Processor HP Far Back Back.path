@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.094774590163934,
+        "y": 3.036014344262295
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.224199368924995,
+        "y": 2.699509919483536
+      },
+      "isLocked": false,
+      "linkedName": "FarProcessorScore"
+    },
+    {
+      "anchor": {
+        "x": 5.791758849557522,
+        "y": 1.960674778761063
+      },
+      "prevControl": {
+        "x": 5.542312538373383,
+        "y": 1.9440453519331198
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "AfterProcessorFarCoralBack"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": true,
+  "folder": "Processor",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
