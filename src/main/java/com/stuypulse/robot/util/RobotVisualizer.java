@@ -194,7 +194,7 @@ public class RobotVisualizer {
     }
 
     public void updatePivotAngle(Rotation2d angle, boolean atTargetAngle) {
-        this.pivotAngle = 90+angle.getDegrees();
+        this.pivotAngle = 90 + angle.getDegrees();
         pivot.setAngle(pivotAngle); 
         if(Pivot.getInstance().PivotControlMode() == PivotControlMode.MANUAL){
             pivot.setColor(new Color8Bit(Color.kViolet));

@@ -41,10 +41,11 @@ public abstract class Pivot extends SubsystemBase {
 
         private PivotState(Rotation2d targetAngle) {
             this.targetAngle = 
-                Rotation2d.fromDegrees(SLMath.clamp(
-                        targetAngle.getDegrees(), 
-                        Settings.Pivot.DEFAULT_ANGLE.getDegrees(), 
-                        Settings.Pivot.MAX_ANGLE.getDegrees()));
+                Rotation2d.fromDegrees(
+                    SLMath.clamp(
+                    targetAngle.getDegrees(), 
+                    Settings.Pivot.DEFAULT_ANGLE.getDegrees(), 
+                    Settings.Pivot.MAX_ANGLE.getDegrees()));
         }
 
         public Rotation2d getTargetAngle() {
