@@ -1,13 +1,12 @@
 package com.stuypulse.robot.constants;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 
 /** Miscellaneous constants */
 public interface Constants {
     public interface Climb {
-        Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(-65);
-        Rotation2d MAX_ANGLE = Rotation2d.kZero;
+        double MIN_ANGLE_DEG = -65;
+        double MAX_ANGLE_DEG = 0;
     }
 
     public interface Pivot {
@@ -25,6 +24,6 @@ public interface Constants {
         public static final double DRIVETRAIN_GEAR_RATIO = 1.0/8.45;
 
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5.4;
-        public static final Rotation2d MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND = Rotation2d.fromDegrees(720);
+        public static final double MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND = 720;
     }
 }

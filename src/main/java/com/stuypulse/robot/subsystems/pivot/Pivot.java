@@ -4,7 +4,6 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.stuylib.math.SLMath;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -29,27 +28,26 @@ public abstract class Pivot extends SubsystemBase {
     }
     
     public enum PivotState {
-        DEFAULT(Settings.Pivot.DEFAULT_ANGLE),
-        STOW_CORAL(Settings.Pivot.CORAL_STOW_ANGLE),
-        SCORE_CORAL(Settings.Pivot.CORAL_SCORE_ANGLE),
-        INTAKE_ALGAE(Settings.Pivot.ALGAE_GROUND_ANGLE),
-        STOW_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE),
-        INTAKE_ALGAE_FROM_LOLIPOP(Settings.Pivot.ALGAE_LOLLIPOP_ANGLE),
-        RESEAT_CORAL(Settings.Pivot.CORAL_RESEAT_ANGLE);
+        DEFAULT(Settings.Pivot.DEFAULT_ANGLE_DEG),
+        STOW_CORAL(Settings.Pivot.CORAL_STOW_ANGLE_DEG),
+        SCORE_CORAL(Settings.Pivot.CORAL_SCORE_ANGLE_DEG),
+        INTAKE_ALGAE(Settings.Pivot.ALGAE_GROUND_ANGLE_DEG),
+        STOW_ALGAE(Settings.Pivot.ALGAE_HOLDING_ANGLE_DEG),
+        INTAKE_ALGAE_FROM_LOLIPOP(Settings.Pivot.ALGAE_LOLLIPOP_ANGLE_DEG),
+        RESEAT_CORAL(Settings.Pivot.CORAL_RESEAT_ANGLE_DEG);
 
-        Rotation2d targetAngle;
+        double targetAngleDeg;
 
-        private PivotState(Rotation2d targetAngle) {
-            this.targetAngle = 
-                Rotation2d.fromDegrees(
+        private PivotState(double targetAngleDeg) {
+            this.targetAngleDeg = 
                     SLMath.clamp(
-                    targetAngle.getDegrees(), 
-                    Settings.Pivot.DEFAULT_ANGLE.getDegrees(), 
-                    Settings.Pivot.MAX_ANGLE.getDegrees()));
+                    targetAngleDeg, 
+                    Settings.Pivot.DEFAULT_ANGLE_DEG, 
+                    Settings.Pivot.MAX_ANGLE_DEG);
         }
 
-        public Rotation2d getTargetAngle() {
-            return this.targetAngle;
+        public double getTargetAngleDeg() {
+            return this.targetAngleDeg;
         }
     }
 
@@ -87,18 +85,18 @@ public abstract class Pivot extends SubsystemBase {
 
     public abstract void setPivotControlMode(PivotControlMode SetPivotStateMode);
 
-    public abstract Rotation2d getPivotRotation();
+    public abstract double getPivotRotationDeg();
 
     public abstract boolean atTargetAngle();
 
     @Override
     public void periodic() {
         SmartDashboard.putString("Pivot/Pivot State", pivotState.toString());
-        SmartDashboard.putNumber("Pivot/Target Angle", this.pivotState.getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("Pivot/Target Angle", this.pivotState.getTargetAngleDeg());
         SmartDashboard.putBoolean("Pivot/At Target Angle", atTargetAngle());
 
         if(Settings.DEBUG_MODE) {
-        RobotVisualizer.getInstance().updatePivotAngle(getPivotRotation(), atTargetAngle());
+        RobotVisualizer.getInstance().updatePivotAngle(getPivotRotationDeg(), atTargetAngle());
         RobotVisualizer.getInstance().updateRollers(getRollerMotor());
     }
 }

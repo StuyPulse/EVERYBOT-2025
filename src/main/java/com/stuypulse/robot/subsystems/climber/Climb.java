@@ -5,7 +5,6 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.stuylib.math.SLMath;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -21,22 +20,22 @@ public abstract class Climb extends SubsystemBase {
     }
 
     public enum ClimbState {
-        DEFAULT(Settings.Climb.DEFAULT_ANGLE, Settings.Climb.DEFAULT_VOLTAGE),
-        DEPLOYED(Settings.Climb.DEPLOY_ANGLE, Settings.Climb.DEPLOY_VOLTAGE),
-        CLIMBING(Settings.Climb.CLIMBED_ANGLE, Settings.Climb.CLIMB_VOLTAGE);
+        DEFAULT(Settings.Climb.DEFAULT_ANGLE_DEG, Settings.Climb.DEFAULT_VOLTAGE),
+        DEPLOYED(Settings.Climb.DEPLOY_ANGLE_DEG, Settings.Climb.DEPLOY_VOLTAGE),
+        CLIMBING(Settings.Climb.CLIMBED_ANGLE_DEG, Settings.Climb.CLIMB_VOLTAGE);
 
-        private Rotation2d targetAngle;
+        private double targetAngle;
         private double targetMotorSpeed;
 
-        private ClimbState(Rotation2d targetAngle, double targetMotorSpeed) {
-            this.targetAngle = Rotation2d.fromDegrees(
-                    SLMath.clamp(targetAngle.getDegrees(), Constants.Climb.MIN_ANGLE.getDegrees(),
-                            Constants.Climb.MAX_ANGLE.getDegrees()));
+        private ClimbState(double targetAngle, double targetMotorSpeed) {
+            this.targetAngle = 
+                    SLMath.clamp(targetAngle, Constants.Climb.MIN_ANGLE_DEG,
+                            Constants.Climb.MAX_ANGLE_DEG);
 
             this.targetMotorSpeed = SLMath.clamp(targetMotorSpeed, -1.0, 1.0); // Motor speed can only be between -1 & 1
         }
 
-        public Rotation2d getTargetAngle() {
+        public double getTargetAngleDeg() {
             return this.targetAngle;
         }
 
@@ -59,7 +58,7 @@ public abstract class Climb extends SubsystemBase {
         this.state = state;
     }
 
-    public abstract Rotation2d getCurrentAngle();
+    public abstract double getCurrentAngleDeg();
 
     public abstract boolean atTargetAngle();
 
@@ -67,6 +66,6 @@ public abstract class Climb extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putString("Climb/State", state.toString());
 
-        RobotVisualizer.getInstance().updateClimb(getCurrentAngle(), atTargetAngle());
+        RobotVisualizer.getInstance().updateClimb(getCurrentAngleDeg(), atTargetAngle());
     }
 }

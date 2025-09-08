@@ -19,7 +19,6 @@ import com.stuypulse.stuylib.network.SmartNumber;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -79,7 +78,7 @@ public class PivotImpl extends Pivot {
                 pivotMotor.toString(),
                 pivotMotor,
                 this::getPivotVelocity,
-                this::getPivotRotation,
+                this::getPivotRotationDeg,
                 Pivot.getInstance(),
                 1,
                 3,
@@ -103,13 +102,13 @@ public class PivotImpl extends Pivot {
         pivotMotor.set(speed);
     }
 
-    public Rotation2d getPivotRotationRelative() {
-        return Rotation2d.fromRotations(pivotEncoder.getPosition());
+    public double getPivotRotationRelativeDeg() {
+        return 360.0 * pivotEncoder.getPosition();
     }
 
     @Override
-    public Rotation2d getPivotRotation() {
-        return Rotation2d.fromRotations(pivotThroughbore.get() / Constants.Pivot.PIVOT_THROUGHBORE_RANGE);
+    public double getPivotRotationDeg() {
+        return 360.0 * (pivotThroughbore.get() / Constants.Pivot.PIVOT_THROUGHBORE_RANGE);
     }
 
     public double getPivotVelocity() {
@@ -138,8 +137,8 @@ public class PivotImpl extends Pivot {
 
     @Override
     public boolean atTargetAngle() {
-        return Math.abs(Pivot.getInstance().pivotState.getTargetAngle().getDegrees()
-                - Pivot.getInstance().getPivotRotation().getDegrees()) < Settings.Pivot.ANGLE_TOLERANCE;
+        return Math.abs(Pivot.getInstance().pivotState.getTargetAngleDeg()
+                - Pivot.getInstance().getPivotRotationDeg()) < Settings.Pivot.ANGLE_TOLERANCE;
     }
 
     @Override
@@ -151,7 +150,7 @@ public class PivotImpl extends Pivot {
                 pivotMotor.set(0);
             } else if (pivotControlMode == PivotControlMode.USING_STATES) {
                 pivotMotor.setVoltage(
-                        -controller.update(pivotState.targetAngle.getDegrees(), getPivotRotation().getDegrees()));
+                        -controller.update(pivotState.targetAngleDeg, getPivotRotationDeg()));
             }
 
             if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false) {
@@ -161,10 +160,10 @@ public class PivotImpl extends Pivot {
         }
 
         if(Settings.DEBUG_MODE) {
-            SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelative().getDegrees());
+            SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelativeDeg());
         }
         
-        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotation().getDegrees());
+        SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotationDeg());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
         SmartDashboard.putBoolean("Pivot/Bump Switch", bumpSwitchIsDepressed.getAsBoolean());

@@ -1,10 +1,13 @@
 package com.stuypulse.robot.subsystems.odometry;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -20,14 +23,14 @@ public class OdometryImpl extends Odometry {
         drivetrain = Drivetrain.getInstance();
 
         poseEstimator = new DifferentialDrivePoseEstimator(drivetrain.getKinematics(),
-                drivetrain.getHeading(),
+                Rotation2d.fromDegrees(drivetrain.getHeadingDeg()),
                 drivetrain.getLeftDistance(),
                 drivetrain.getRightDistance(),
                 drivetrain.getPose());
     }
 
     private void updateDrivetrainMeasurement() {
-        poseEstimator.update(drivetrain.getHeading(),
+        poseEstimator.update(Rotation2d.fromDegrees(drivetrain.getHeadingDeg()),
                 drivetrain.getLeftDistance(),
                 drivetrain.getRightDistance());
     }

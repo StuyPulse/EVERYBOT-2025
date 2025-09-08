@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledExit() {
         if (DriverStation.isFMSAttached()) {
-            new VisionSetMegaTag2().schedule();
+            CommandScheduler.getInstance().schedule(new VisionSetMegaTag2());
         }
     }
 
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
         auto = robot.getAutonomousCommand();
 
         if (auto != null) {
-            auto.schedule();
+            CommandScheduler.getInstance().schedule(auto);
         }
 
     }

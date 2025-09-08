@@ -8,7 +8,6 @@ import com.stuypulse.robot.commands.oldAutons.misc.MobilityAuton;
 import com.stuypulse.robot.commands.climb.ClimbToClimb;
 import com.stuypulse.robot.commands.climb.ClimbToDeployed;
 import com.stuypulse.robot.commands.drive.DriveDefault;
-import com.stuypulse.robot.commands.drive.alignment.AlignToReefNearest;
 import com.stuypulse.robot.commands.drive.setSpeedModifiers.DriveSetFullSpeed;
 import com.stuypulse.robot.commands.drive.setSpeedModifiers.DriveSetHalfSpeed;
 import com.stuypulse.robot.commands.pivot.pivot.PivotLower;

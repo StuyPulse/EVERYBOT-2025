@@ -15,7 +15,7 @@ public class PivotResetAngle extends InstantCommand {
 
     @Override
     public void initialize() {
-        pivot.resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE.getRotations());
+        pivot.resetPivotEncoder(Settings.Pivot.DEFAULT_ANGLE_DEG / 360.0);
         addRequirements(pivot);
     }
 }

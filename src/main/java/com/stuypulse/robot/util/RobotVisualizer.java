@@ -1,6 +1,5 @@
 package com.stuypulse.robot.util;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -90,7 +89,7 @@ public class RobotVisualizer {
             new Color8Bit(Color.kLightGray)
         );
 
-        pivotAngle = 90+Settings.Pivot.DEFAULT_ANGLE.getDegrees();
+        pivotAngle = 90+Settings.Pivot.DEFAULT_ANGLE_DEG;
         
         pivotVertex = canvas.getRoot("a - Pivot Rotation Vertex", 70, 25);
         
@@ -155,7 +154,7 @@ public class RobotVisualizer {
             new Color8Bit(Color.kLightGray)
         );
 
-        climbAngle = Settings.Climb.DEFAULT_ANGLE.getDegrees();
+        climbAngle = Settings.Climb.DEFAULT_ANGLE_DEG;
         climbRoot = canvas.getRoot("a - Climb Root", 128, 25);
         climber = new MechanismLigament2d(
             "a - Climber",
@@ -193,8 +192,8 @@ public class RobotVisualizer {
         climber.append(climbStringGripper);
     }
 
-    public void updatePivotAngle(Rotation2d angle, boolean atTargetAngle) {
-        this.pivotAngle = 90 + angle.getDegrees();
+    public void updatePivotAngle(double angle, boolean atTargetAngle) {
+        this.pivotAngle = 90 + angle;
         pivot.setAngle(pivotAngle); 
         if(Pivot.getInstance().PivotControlMode() == PivotControlMode.MANUAL){
             pivot.setColor(new Color8Bit(Color.kViolet));
@@ -218,8 +217,8 @@ public class RobotVisualizer {
         }
     }
 
-    public void updateClimb(Rotation2d angle, boolean atTargetAngle) {
-        this.climbAngle = angle.getDegrees() + 90;
+    public void updateClimb(double angle, boolean atTargetAngle) {
+        this.climbAngle = angle + 90;
         climber.setAngle(this.climbAngle);
         climbHooks.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));
         climbStringGripper.setColor(atTargetAngle ? new Color8Bit(Color.kGreen) : new Color8Bit(Color.kRed));

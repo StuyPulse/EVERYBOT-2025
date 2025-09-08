@@ -11,7 +11,6 @@ import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.Units;
@@ -34,14 +33,14 @@ public interface Settings {
     }
 
     public interface Climb {
-        public static final Rotation2d DEFAULT_ANGLE = Rotation2d.kZero;
-        public static final Rotation2d DEPLOY_ANGLE = Rotation2d.fromDegrees(-65);
-        public static final Rotation2d CLIMBED_ANGLE = Rotation2d.kZero;
+        public static final double DEFAULT_ANGLE_DEG = 0.0;
+        public static final double DEPLOY_ANGLE_DEG = -65.0;
+        public static final double CLIMBED_ANGLE_DEG = 0.0;
         
-        public static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(2);
+        public static final double ANGLE_TOLERANCE_DEG = 2.0;
 
         public static final int CLIMB_CURRENT_LIMIT = 60;
-        public static final Double CLIMB_STALL_CURRENT = 15.0; //TODO find stall current
+        public static final double CLIMB_STALL_CURRENT = 15.0; //TODO find stall current
         public static final double CLIMB_STALL_DEBOUNCE = 0.01; //TODO find climb debounce
 
         public static final double DEFAULT_VOLTAGE = 0.0;
@@ -54,18 +53,18 @@ public interface Settings {
     
     public interface Pivot {
         //PIVOT ANGLES
-        public static final Rotation2d DEFAULT_ANGLE = Rotation2d.fromDegrees(1);
-        public static final Rotation2d PIVOT_ANGLE_TOLERANCE = Rotation2d.fromDegrees(3);
+        public static final double DEFAULT_ANGLE_DEG = 1.0;
+        public static final double PIVOT_ANGLE_TOLERANCE_DEG = 3.0;
         
-        public static final Rotation2d CORAL_STOW_ANGLE = Rotation2d.fromDegrees(3);
-        public static final Rotation2d CORAL_SCORE_ANGLE = Rotation2d.fromDegrees(29);
-        public static final Rotation2d CORAL_RESEAT_ANGLE = Rotation2d.fromDegrees(29);
+        public static final double CORAL_STOW_ANGLE_DEG = 3.0;
+        public static final double CORAL_SCORE_ANGLE_DEG = 29.0;
+        public static final double CORAL_RESEAT_ANGLE_DEG = 29.0;
         
-        public static final Rotation2d ALGAE_LOLLIPOP_ANGLE = Rotation2d.fromDegrees(25);
-        public static final Rotation2d ALGAE_HOLDING_ANGLE = Rotation2d.fromDegrees(35);
-        public static final Rotation2d ALGAE_GROUND_ANGLE = Rotation2d.fromDegrees(80);
+        public static final double ALGAE_LOLLIPOP_ANGLE_DEG = 25.0;
+        public static final double ALGAE_HOLDING_ANGLE_DEG = 35.0;
+        public static final double ALGAE_GROUND_ANGLE_DEG = 80.0;
         
-        public static final Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(85);
+        public static final double MAX_ANGLE_DEG = 85.0;
 
         //PIVOT MANUAL SPEEDS
         public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
