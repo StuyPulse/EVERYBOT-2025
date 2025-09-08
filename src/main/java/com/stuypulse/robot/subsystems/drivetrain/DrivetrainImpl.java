@@ -186,12 +186,12 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(-gyro.getAngle()); 
+        return gyro.getRotation2d(); 
     }
 
     @Override
     public double getGyroRate() {
-        return gyro.getRate();
+        return gyro.getAngularVelocityZWorld().getValueAsDouble();
     }
 
     @Override
