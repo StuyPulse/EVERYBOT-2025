@@ -23,14 +23,14 @@ public class OdometryImpl extends Odometry {
         drivetrain = Drivetrain.getInstance();
 
         poseEstimator = new DifferentialDrivePoseEstimator(drivetrain.getKinematics(),
-                Rotation2d.fromDegrees(drivetrain.getHeadingDeg()),
+                drivetrain.getHeading(),
                 drivetrain.getLeftDistance(),
                 drivetrain.getRightDistance(),
                 drivetrain.getPose());
     }
 
     private void updateDrivetrainMeasurement() {
-        poseEstimator.update(Rotation2d.fromDegrees(drivetrain.getHeadingDeg()),
+        poseEstimator.update(drivetrain.getHeading(),
                 drivetrain.getLeftDistance(),
                 drivetrain.getRightDistance());
     }

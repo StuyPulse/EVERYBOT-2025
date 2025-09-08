@@ -7,9 +7,12 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
+import com.stuypulse.stuylib.control.Controller;
+import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import com.ctre.phoenix6.hardware.Pigeon2;
+// import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -29,10 +32,11 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.units.measure.Voltage;
 
 import static edu.wpi.first.units.Units.Volts;
@@ -43,7 +47,7 @@ import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
 public class DrivetrainImpl extends Drivetrain {
-    private final Pigeon2 gyro;
+    private final Pigeon2 gyro = new Pigeon2(Ports.Drivetrain.GYRO); // TODO: find real gyro class, this is a placeholder
 
     private final SparkMax[] leftMotors;
     private final SparkMax[] rightMotors;
@@ -62,9 +66,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     public DrivetrainImpl() {
         super();
-
-        gyro = new Pigeon2(Ports.Drivetrain.GYRO); // TODO: SPECIFY CANBUS
-
         leftMotors = new SparkMax[] {
                 new SparkMax(Ports.BusIDS.driveLeftLead, Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
                 new SparkMax(Ports.BusIDS.driveLeftFollow, Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
@@ -104,8 +105,9 @@ public class DrivetrainImpl extends Drivetrain {
         leftMotors[0].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
 
-        // Lead Encoders
+        // Left Lead
         leftEncoder = leftMotors[0].getEncoder();
+        // Right Lead
         rightEncoder = rightMotors[0].getEncoder();
 
         leftMotors[0].setCANTimeout(250);
@@ -113,9 +115,9 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[0].setCANTimeout(250);
         rightMotors[1].setCANTimeout(250);
 
-        // Odometry + Kinematics
+        // Odometry, Kinematics, Controllers, Vision
         kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
-        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeadingDeg()), getLeftDistance(), getRightDistance());
+        odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
 
         // PathPlanner robot configuration
         try {
@@ -124,40 +126,35 @@ public class DrivetrainImpl extends Drivetrain {
             pathPlannerRobotConfig = null;
         }
 
-        angularArcadeFeedforward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.angularArcadeFF.kS,
-                Gains.Drivetrain.arcadeFF.angularArcadeFF.kV, Gains.Drivetrain.arcadeFF.angularArcadeFF.kA);
-        velocityArcadeFeedfoward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.velocityArcadeFF.kS,
-                Gains.Drivetrain.arcadeFF.velocityArcadeFF.kV, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kA);
+        angularArcadeFeedforward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.angularArcadeFF.kS, Gains.Drivetrain.arcadeFF.angularArcadeFF.kV, Gains.Drivetrain.arcadeFF.angularArcadeFF.kA);
+        velocityArcadeFeedfoward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.velocityArcadeFF.kS, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kV, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kA);
     }
 
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
-        if (!Settings.EnabledSubsystems.DRIVETRAIN.get())
-            return;
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
         drive.arcadeDrive(xSpeed, zRotation, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Arcade Drive");
     }
 
     @Override
     public void driveTank(double leftSpeed, double rightSpeed, boolean squared) {
-        if (!Settings.EnabledSubsystems.DRIVETRAIN.get())
-            return;
-
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         drive.tankDrive(leftSpeed, rightSpeed, squared);
         SmartDashboard.putString("Drivetrain/Drivetrain Mode", "Tank Drive");
     }
 
     public void driveTankVolts(Double lVolts, Double rVolts) {
-        if (!Settings.EnabledSubsystems.DRIVETRAIN.get())
-            return;
-
+        if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
+        
         leftMotors[0].setVoltage(lVolts);
         rightMotors[0].setVoltage(rVolts);
         drive.feed();
     }
 
     private void updateOdometry() {
-        odometry.update(Rotation2d.fromDegrees(getHeadingDeg()), getLeftDistance(), getRightDistance());
+        odometry.update(getHeading(), getLeftDistance(), getRightDistance());
     }
 
     public void resetOdometry(Pose2d newPose) {
@@ -183,51 +180,47 @@ public class DrivetrainImpl extends Drivetrain {
     }
 
     private DifferentialDriveWheelSpeeds getSpeeds() {
-        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(),
-                getRightVelocity());
+        DifferentialDriveWheelSpeeds wheelspeeds = new DifferentialDriveWheelSpeeds(getLeftVelocity(),getRightVelocity());
         return wheelspeeds;
     }
 
     @Override
-    public double getHeadingDeg() {
-        return gyro.getYaw().getValueAsDouble() * 360.0; // TODO: MIGHT NEED TO NEGATE THIS VALUE, MIGHT NOT NEED TO MULTIPLY BY 360.0
+    public Rotation2d getHeading() {
+        return Rotation2d.fromDegrees(-gyro.getAngle()); 
     }
 
     @Override
     public double getGyroRate() {
-        return -gyro.getAngularVelocityZWorld().getValueAsDouble(); // TODO: MIGHT NEED TO UN-NEGATE THIS VALUE
+        return gyro.getRate();
     }
 
     @Override
     public void configureAutoBuilder() {
         Odometry odometry = Odometry.getInstance();
-
+        
         AutoBuilder.configure(
-                odometry::getEstimatedPose,
-                odometry::resetEstimatedPose,
-                this::getChassisSpeeds,
-                (speeds) -> {
-                    DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
+        odometry::getEstimatedPose,
+        odometry::resetEstimatedPose,
+        this::getChassisSpeeds,
+        (speeds) -> {
+            DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
 
-                    double leftSpeed = -convertedSpeeds.left;
-                    double rightSpeed = -convertedSpeeds.right;
+            double leftSpeed = -convertedSpeeds.left;
+            double rightSpeed = -convertedSpeeds.right;
 
-                    SmartDashboard.putNumber("Drivetrain/PP Right speed", rightSpeed);
-                    SmartDashboard.putNumber("Drivetrain/PP left speed ", leftSpeed);
+            SmartDashboard.putNumber("Drivetrain/PP Right speed", rightSpeed);
+            SmartDashboard.putNumber("Drivetrain/PP left speed ", leftSpeed);
 
-                    driveTankVolts(leftSpeed, rightSpeed);
-                },
-                new PPLTVController(Settings.Drivetrain.ppQelems, Settings.Drivetrain.ppRelems, 0.02), // new
-                                                                                                       // PPLTVController(Settings.Drivetrain.ppQelems,
-                                                                                                       // Settings.Drivetrain.ppRelems,
-                                                                                                       // 0.02, 9)
-                pathPlannerRobotConfig,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
+            driveTankVolts(leftSpeed, rightSpeed);
+        },
+        new PPLTVController(Settings.Drivetrain.ppQelems, Settings.Drivetrain.ppRelems, 0.02),
+        pathPlannerRobotConfig,
+        () -> {
+            var alliance = DriverStation.getAlliance();
 
-                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : true;
-                },
-                this);
+            return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : true;
+        },
+        this);
     }
 
     private ChassisSpeeds getChassisSpeeds() {
@@ -247,8 +240,7 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void resetPose() {
         Odometry robotOdometry = Odometry.getInstance();
-        odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(),
-                robotOdometry.getEstimatedPose());
+        odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), robotOdometry.getEstimatedPose());
     }
 
     @Override
@@ -296,10 +288,9 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void pathfindThenFollowPath(PathConstraints constraints, PathPlannerPath path) {
-        CommandScheduler.getInstance().schedule(
-                AutoBuilder.pathfindThenFollowPath(path, constraints)
-                        .unless(() -> Math.abs(driver.getLeftStick().y) > 0.1
-                                || Math.abs(driver.getRightStick().x) > 0.1));
+        AutoBuilder.pathfindThenFollowPath(path, constraints)
+        .unless(() -> Math.abs(driver.getLeftStick().y) > 0.1 || Math.abs(driver.getRightStick().x) > 0.1 )
+        .schedule();  
     }
 
     @Override
@@ -322,11 +313,12 @@ public class DrivetrainImpl extends Drivetrain {
         return () -> angularArcadeFeedforward.calculate(input);
     }
 
+
     @Override
     public void periodic() {
         super.periodic();
 
-        updateOdometry();
+        updateOdometry(); 
 
         SmartDashboard.putNumber("Drivetrain/ Joystick Left x", driver.getLeftStick().x);
         SmartDashboard.putNumber("Drivetrain/Left applied voltage", getOutputVoltage(leftMotors[0]));
@@ -335,10 +327,8 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
-        SmartDashboard.putNumber("Drivetrain/velocity pid outtake",
-                angularArcadeFeedforward.calculate(driver.getLeftStick().y));
-        SmartDashboard.putNumber("Drivetrain/angular pid outtake",
-                angularArcadeFeedforward.calculate(driver.getRightStick().y));
+        SmartDashboard.putNumber("Drivetrain/velocity pid outtake", angularArcadeFeedforward.calculate(driver.getLeftStick().y));
+        SmartDashboard.putNumber("Drivetrain/angular pid outtake", angularArcadeFeedforward.calculate(driver.getRightStick().y));
         SmartDashboard.putNumber("Drivetrain/Speed Modifier", driveSpeedModifier);
     }
 }
