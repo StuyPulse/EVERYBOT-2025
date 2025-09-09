@@ -2,8 +2,6 @@ package com.stuypulse.robot.subsystems.drivetrain;
 
 import java.util.function.Supplier;
 
-import org.opencv.core.RotatedRect;
-
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;

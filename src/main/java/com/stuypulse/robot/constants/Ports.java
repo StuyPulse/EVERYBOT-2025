@@ -25,8 +25,6 @@ public interface Ports {
     }
   
     public interface Drivetrain {
-        public static final int GYRO = 1;
-
         public static final int LEFT_LEAD = 4; 
         public static final int LEFT_FOLLOW = 5;
         
