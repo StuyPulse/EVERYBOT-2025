@@ -57,6 +57,7 @@ public class ClimbImpl extends Climb {
         }
         if(Settings.DEBUG_MODE) {
             SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
+            SmartDashboard.putBoolean("Climb/Is Climb Stalling?", isClimbStalling.get());
         }
         
         SmartDashboard.putNumber("Climb/Current Angle", getCurrentAngleDeg());

@@ -34,6 +34,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.OnboardIMU;
+import edu.wpi.first.wpilibj.OnboardIMU.MountOrientation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.measure.Velocity;
@@ -43,12 +45,12 @@ import static edu.wpi.first.units.Units.Volts;
 
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.console.SystemCoreConsoleSource;
+
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
 public class DrivetrainImpl extends Drivetrain {
-    private final Pigeon2 gyro = new Pigeon2(Ports.Drivetrain.GYRO); // TODO: find real gyro class, this is a placeholder
-
     private final SparkMax[] leftMotors;
     private final SparkMax[] rightMotors;
     private final RelativeEncoder leftEncoder;
@@ -63,6 +65,8 @@ public class DrivetrainImpl extends Drivetrain {
     private SimpleMotorFeedforward velocityArcadeFeedfoward;
 
     private RobotConfig pathPlannerRobotConfig;
+
+    private OnboardIMU imu;
 
     public DrivetrainImpl() {
         super();
@@ -128,6 +132,9 @@ public class DrivetrainImpl extends Drivetrain {
 
         angularArcadeFeedforward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.angularArcadeFF.kS, Gains.Drivetrain.arcadeFF.angularArcadeFF.kV, Gains.Drivetrain.arcadeFF.angularArcadeFF.kA);
         velocityArcadeFeedfoward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.velocityArcadeFF.kS, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kV, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kA);
+    
+        //IMU
+        imu = new OnboardIMU(MountOrientation.kFlat);
     }
 
     @Override
@@ -186,12 +193,13 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return gyro.getRotation2d(); 
+        return imu.getRotation2d();
     }
 
     @Override
     public double getGyroRate() {
-        return gyro.getAngularVelocityZWorld().getValueAsDouble();
+        return imu.getGyroRateZ();
+        // return gyro.getAngularVelocityZWorld().getValueAsDouble();
     }
 
     @Override
@@ -240,7 +248,7 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void resetPose() {
         Odometry robotOdometry = Odometry.getInstance();
-        odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), robotOdometry.getEstimatedPose());
+        odometry.resetPosition(getHeading(), getLeftDistance(), getRightDistance(), robotOdometry.getEstimatedPose());
     }
 
     @Override
