@@ -8,7 +8,6 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.stuylib.input.Gamepad;
-import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -32,6 +31,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.OnboardIMU;
 import edu.wpi.first.wpilibj.OnboardIMU.MountOrientation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.measure.Voltage;
 
@@ -51,7 +52,8 @@ public class DrivetrainImpl extends Drivetrain {
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
     private final DifferentialDriveKinematics kinematics;
-    public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
+    public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
+
     private double driveSpeedModifier = 1;
     private SimpleMotorFeedforward angularArcadeFeedforward;
     private SimpleMotorFeedforward velocityArcadeFeedfoward;
@@ -62,6 +64,10 @@ public class DrivetrainImpl extends Drivetrain {
 
     public DrivetrainImpl() {
         super();
+
+        //IMU
+        imu = new OnboardIMU(MountOrientation.kFlat);
+
         leftMotors = new SparkMax[] {
                 new SparkMax(Ports.BusIDS.driveLeftLead, Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
                 new SparkMax(Ports.BusIDS.driveLeftFollow, Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
@@ -124,9 +130,6 @@ public class DrivetrainImpl extends Drivetrain {
 
         angularArcadeFeedforward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.angularArcadeFF.kS, Gains.Drivetrain.arcadeFF.angularArcadeFF.kV, Gains.Drivetrain.arcadeFF.angularArcadeFF.kA);
         velocityArcadeFeedfoward = new SimpleMotorFeedforward(Gains.Drivetrain.arcadeFF.velocityArcadeFF.kS, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kV, Gains.Drivetrain.arcadeFF.velocityArcadeFF.kA);
-    
-        //IMU
-        imu = new OnboardIMU(MountOrientation.kFlat);
     }
 
     @Override
@@ -191,7 +194,6 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public double getGyroRate() {
         return imu.getGyroRateZ();
-        // return gyro.getAngularVelocityZWorld().getValueAsDouble();
     }
 
     @Override
@@ -288,9 +290,8 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public void pathfindThenFollowPath(PathConstraints constraints, PathPlannerPath path) {
-        AutoBuilder.pathfindThenFollowPath(path, constraints)
-        .unless(() -> Math.abs(driver.getLeftStick().y) > 0.1 || Math.abs(driver.getRightStick().x) > 0.1 )
-        .schedule();  
+        CommandScheduler.getInstance().schedule(AutoBuilder.pathfindThenFollowPath(path, constraints)
+        .unless(() -> Math.abs(driver.getLeftY()) > 0.1 || Math.abs(driver.getRightX()) > 0.1 ));
     }
 
     @Override
@@ -320,15 +321,14 @@ public class DrivetrainImpl extends Drivetrain {
 
         updateOdometry(); 
 
-        SmartDashboard.putNumber("Drivetrain/ Joystick Left x", driver.getLeftStick().x);
         SmartDashboard.putNumber("Drivetrain/Left applied voltage", getOutputVoltage(leftMotors[0]));
         SmartDashboard.putNumber("Drivetrain/Right applied voltage", getOutputVoltage(rightMotors[0]));
         SmartDashboard.putNumber("Drivetrain/Left distance", getLeftDistance());
         SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
-        SmartDashboard.putNumber("Drivetrain/velocity pid outtake", angularArcadeFeedforward.calculate(driver.getLeftStick().y));
-        SmartDashboard.putNumber("Drivetrain/angular pid outtake", angularArcadeFeedforward.calculate(driver.getRightStick().y));
+        SmartDashboard.putNumber("Drivetrain/velocity pid outtake", angularArcadeFeedforward.calculate(driver.getLeftY()));
+        SmartDashboard.putNumber("Drivetrain/angular pid outtake", angularArcadeFeedforward.calculate(driver.getRightX()));
         SmartDashboard.putNumber("Drivetrain/Speed Modifier", driveSpeedModifier);
     }
 }

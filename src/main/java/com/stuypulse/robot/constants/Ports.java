@@ -20,8 +20,8 @@ public interface Ports {
     public interface Pivot {
         public static final int PIVOT_MOTOR = 1;
         public static final int ROLLER_MOTOR = 3;
-        public static final int THROUGHBORE_DIO = 5;
-        public static final int BUMP_SWITCH = 4;
+        public static final int THROUGHBORE_DIO = 0;
+        public static final int BUMP_SWITCH = 1;
     }
   
     public interface Drivetrain {
