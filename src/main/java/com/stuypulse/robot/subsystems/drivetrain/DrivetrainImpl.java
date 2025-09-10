@@ -7,7 +7,6 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
-import com.stuypulse.stuylib.input.Gamepad;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -313,7 +312,6 @@ public class DrivetrainImpl extends Drivetrain {
     public Supplier<Double> angularPIDCalculate(double input) {
         return () -> angularArcadeFeedforward.calculate(input);
     }
-
 
     @Override
     public void periodic() {

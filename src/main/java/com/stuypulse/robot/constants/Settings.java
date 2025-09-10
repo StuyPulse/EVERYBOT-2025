@@ -40,8 +40,6 @@ public interface Settings {
         public static final double ANGLE_TOLERANCE_DEG = 2.0;
 
         public static final int CLIMB_CURRENT_LIMIT = 60;
-        public static final double CLIMB_STALL_CURRENT = 15.0; //TODO find stall current
-        public static final double CLIMB_STALL_DEBOUNCE = 0.01; //TODO find climb debounce
 
         public static final double DEFAULT_VOLTAGE = 0.0;
         public static final double CLIMB_VOLTAGE = 1.0;

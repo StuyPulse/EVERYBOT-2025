@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
-import com.stuypulse.stuylib.input.Gamepad;
 
 public class DriveDefault extends Command {
     private final CommandXboxController gamepad;
@@ -32,7 +31,6 @@ public class DriveDefault extends Command {
 
         if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
 
-        //TODO: Tune Pid contollers for drive
         Drivetrain.getInstance().driveArcade(drivetrain.velocityFFCalculate(gamepad.getLeftY()).get()*drivetrain.getSpeedModifier(),  gamepad.getRightX()*drivetrain.getSpeedModifier(), squared); 
     }
 
