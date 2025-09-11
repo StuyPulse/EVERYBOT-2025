@@ -111,5 +111,6 @@ public interface Settings {
         
         public static final Vector<N3> ppQelems = VecBuilder.fill(0.0125, 0.1, 0.2);
         public static final Vector<N2> ppRelems = VecBuilder.fill(1,1.2);
+        public static final double stickDeaband = 0.05;
     }
 }

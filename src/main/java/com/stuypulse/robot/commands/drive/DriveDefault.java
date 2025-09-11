@@ -30,8 +30,9 @@ public class DriveDefault extends Command {
         }
 
         if(!Settings.EnabledSubsystems.DRIVETRAIN.get()) return;
-
-        Drivetrain.getInstance().driveArcade(drivetrain.velocityFFCalculate(gamepad.getLeftY()).get()*drivetrain.getSpeedModifier(),  gamepad.getRightX()*drivetrain.getSpeedModifier(), squared); 
+        if (Math.abs(gamepad.getLeftY()) > Settings.Drivetrain.stickDeaband || Math.abs(gamepad.getRightX()) > Settings.Drivetrain.stickDeaband ){
+        Drivetrain.getInstance().driveArcade(drivetrain.velocityFFCalculate(gamepad.getLeftY()).get()*drivetrain.getSpeedModifier(),  gamepad.getRightX()*drivetrain.getSpeedModifier(), squared);
+        } 
     }
 
     @Override
