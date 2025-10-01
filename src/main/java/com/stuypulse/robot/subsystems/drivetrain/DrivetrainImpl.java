@@ -325,8 +325,10 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
-        SmartDashboard.putNumber("Drivetrain/velocity pid outtake", angularArcadeFeedforward.calculate(driver.getLeftY()));
-        SmartDashboard.putNumber("Drivetrain/angular pid outtake", angularArcadeFeedforward.calculate(driver.getRightX()));
+        SmartDashboard.putNumber("Drivetrain/ velocity differance ", getRightVelocity() - getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/ applied voltage differance ", getOutputVoltage(leftMotors[0]) - getOutputVoltage(rightMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/velocity FF outtake", angularArcadeFeedforward.calculate(driver.getLeftY()));
+        SmartDashboard.putNumber("Drivetrain/angular FF outtake", angularArcadeFeedforward.calculate(driver.getRightX()));
         SmartDashboard.putNumber("Drivetrain/Speed Modifier", driveSpeedModifier);
     }
 }
