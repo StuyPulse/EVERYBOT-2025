@@ -145,13 +145,18 @@ public class RobotContainer {
 		autonChooser.addOption("[OLD] Mobility", new MobilityAuton());
 
 		//NEW - w/ pathplanner
-		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
-		autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
-		autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
-		autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
-		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
-		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
-		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
+			// Non-Processor
+			autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
+			autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
+			
+			// Center
+			autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
+			autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
+			
+			// Processor
+			autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
+			autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
+			autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
