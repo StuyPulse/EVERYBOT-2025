@@ -138,8 +138,8 @@ public class PivotImpl extends Pivot {
         super.periodic();
 
         double controlVoltage = -controller.update(pivotState.targetAngleDeg, getPivotRotationDeg());
-
         if (Settings.EnabledSubsystems.PIVOT.get()) {
+            if(pivotState==PivotState.DEFAULT) controlVoltage += 1;
             if (stallDetector.getAsBoolean()) {
                 pivotMotor.set(0);
             } else if (pivotControlMode == PivotControlMode.USING_STATES) {
