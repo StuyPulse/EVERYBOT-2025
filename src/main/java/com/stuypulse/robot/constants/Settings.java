@@ -51,7 +51,7 @@ public interface Settings {
     
     public interface Pivot {
         //PIVOT ANGLES
-        public static final double DEFAULT_ANGLE_DEG = 1.0;
+        public static final double DEFAULT_ANGLE_DEG = 0.5;
         public static final double PIVOT_ANGLE_TOLERANCE_DEG = 3.0;
         
         public static final double CORAL_STOW_ANGLE_DEG = 3.0;
@@ -62,11 +62,11 @@ public interface Settings {
         public static final double ALGAE_HOLDING_ANGLE_DEG = 35.0;
         public static final double ALGAE_GROUND_ANGLE_DEG = 80.0;
         
-        public static final double MAX_ANGLE_DEG = 85.0;
+        public static final double MAX_ANGLE_DEG = 96.0;
 
         //PIVOT MANUAL SPEEDS
-        public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
-        public static SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.2);
+        public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", -0.2);
+        public static SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", 0.2);
         
         //ROLLER SPEEDS
         public static SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
@@ -74,7 +74,7 @@ public interface Settings {
         public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.5); 
         public static SmartNumber ALGAE_HOLD_SPEED = new SmartNumber("Pivot/Roller/Algae/Hold Speed", -0.25); 
         
-        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.45);
+        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.55);
         public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.17);
         
         //PIVOT MOTOR AND ROLLER CURRENT LIMIT
@@ -82,7 +82,7 @@ public interface Settings {
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
         
         //PIVOT STALL DETECTION
-        public static final double PIVOT_STALL_CURRENT = 10; 
+        public static final double PIVOT_STALL_CURRENT = 10;
         public static final double PIVOT_STALL_DEBOUNCE = .25;
         
         //PIVOT CONTROL MODE VALUES
