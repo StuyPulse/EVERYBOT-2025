@@ -118,6 +118,7 @@ public interface Settings {
 
     public interface Clearances {
         public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
+        public static final double CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
         public static final double X_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
         public static final double Y_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
     }

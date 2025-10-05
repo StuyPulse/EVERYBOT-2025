@@ -23,4 +23,19 @@ public interface Clearances {
             + Constants.Robot.LENGTH_WITH_BUMPERS_M / 2f
             - Math.hypot(Settings.Clearances.X_TOLERANCE, Settings.Clearances.Y_TOLERANCE)));
     }
+
+    public static boolean isClearFromProc() {
+        Pose2d robotPose = Drivetrain.getInstance().getPose();
+
+        return ((Field.ALLIANCE_PROC_CENTER.getDistance(robotPose.getTranslation()) > 
+            (Settings.Clearances.CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M
+            + Constants.Robot.LENGTH_WITH_BUMPERS_M / 2f
+            - Math.hypot(Settings.Clearances.X_TOLERANCE, Settings.Clearances.Y_TOLERANCE))) &&
+
+            (Field.OPPOSITE_ALLIANCE_PROC_CENTER.getDistance(robotPose.getTranslation()) > 
+            (Settings.Clearances.CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M
+            + Constants.Robot.LENGTH_WITH_BUMPERS_M / 2f
+            - Math.hypot(Settings.Clearances.X_TOLERANCE, Settings.Clearances.Y_TOLERANCE)))
+        );
+    }
 }
