@@ -9,10 +9,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class PivotCoralOuttake extends SequentialCommandGroup {
     public PivotCoralOuttake() {
         addCommands(
-            new PivotToDefault()
-                .withTimeout(1),
+            new PivotToDefault(),
             new PivotRollerToSpeed(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble())
-                .withTimeout(1),
+                .withTimeout(.2),
             new PivotRollerStop()
         );
     }

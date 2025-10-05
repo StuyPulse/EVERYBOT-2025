@@ -10,11 +10,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class PivotCoralScore extends SequentialCommandGroup{
     public PivotCoralScore() {
         addCommands(
-            new PivotCoralOuttake()
-                .withTimeout(0.25),
+            new PivotCoralOuttake(),
             new PivotToState(PivotState.SCORE_CORAL)
                 .alongWith(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
-                .withTimeout(2)
         );
     }
 }

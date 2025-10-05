@@ -5,6 +5,7 @@
 package com.stuypulse.robot.constants;
 
 import static edu.wpi.first.units.Units.Radians;
+
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
@@ -116,6 +117,8 @@ public interface Settings {
     }
 
     public interface Clearances {
-        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(4); //TODO: FIND THIS VALUE
+        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
+        public static final double X_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
+        public static final double Y_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
     }
 }

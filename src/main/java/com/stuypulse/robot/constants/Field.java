@@ -12,7 +12,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Field {
+public interface Field {
     public enum ReefTags {
         RED_KL(6),
         RED_AB(7),
@@ -49,7 +49,7 @@ public class Field {
     }
     
     // 2025 Field Reef AprilTag Layout
-    private static AprilTag REEF_APRILTAGS_RED[] = {
+    public static AprilTag REEF_APRILTAGS_RED[] = {
         // RED
         new AprilTag(6,  new Pose3d(new Translation3d(Units.inchesToMeters(530.49), Units.inchesToMeters(130.17), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(300)))),
         new AprilTag(7,  new Pose3d(new Translation3d(Units.inchesToMeters(546.87), Units.inchesToMeters(158.50), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(0)))),
@@ -59,7 +59,7 @@ public class Field {
         new AprilTag(11,  new Pose3d(new Translation3d(Units.inchesToMeters(497.77), Units.inchesToMeters(130.17), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(240)))),
     };
 
-    private static AprilTag REEF_APRILTAGS_BLUE[] = {
+    public static AprilTag REEF_APRILTAGS_BLUE[] = {
         // BLUE
         new AprilTag(17,  new Pose3d(new Translation3d(Units.inchesToMeters(160.39), Units.inchesToMeters(130.17), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(240)))),
         new AprilTag(18,  new Pose3d(new Translation3d(Units.inchesToMeters(144.0), Units.inchesToMeters(158.50), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(180)))),
@@ -68,6 +68,13 @@ public class Field {
         new AprilTag(21,  new Pose3d(new Translation3d(Units.inchesToMeters(209.49), Units.inchesToMeters(158.50), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(0)))),
         new AprilTag(22,  new Pose3d(new Translation3d(Units.inchesToMeters(193.10), Units.inchesToMeters(130.17), Units.inchesToMeters(12.13)), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(0), Units.degreesToRadians(300)))),
     };
+
+    public static double WIDTH = Units.inchesToMeters(317.000); 
+    public static double LENGTH = Units.inchesToMeters(690.876);
+
+    public static Translation2d ALLIANCE_REEF_CENTER = new Translation2d(Units.inchesToMeters(144.0 + (93.5 - 14.0 * 2) / 2f), WIDTH / 2f);
+    public static Translation2d OPPOSITE_ALLIANCE_REEF_CENTER = new Translation2d(LENGTH - Units.inchesToMeters(144.0 + (93.5 - 14.0 * 2) / 2f), -WIDTH / 2f);
+    public static double CENTER_OF_REEF_TO_REEF_FACE_M = Units.inchesToMeters(32.75);
 
     public static ReefTags getClosestFace(Supplier<Pose2d> robotPose) {
         final Translation2d robotTranslation = new Translation2d(robotPose.get().getX(), robotPose.get().getY());
