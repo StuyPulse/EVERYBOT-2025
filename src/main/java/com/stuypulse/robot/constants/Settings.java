@@ -13,7 +13,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.units.Units;
+import edu.wpi.first.math.util.Units;
 
 /**
  * File containing tunable settings for every subsystem on the robot.
@@ -109,9 +109,13 @@ public interface Settings {
 
         public static final PathConstraints REEF_ALIGNMENT_CONSTRAINTS = new PathConstraints(
             5.4, 4.0,
-            Units.Radians.convertFrom(540, Radians), Units.Radians.convertFrom(720, Radians));
+            Radians.convertFrom(540, Radians), Radians.convertFrom(720, Radians));
         
         public static final Vector<N3> ppQelems = VecBuilder.fill(0.0125, 0.1, 0.2);
         public static final Vector<N2> ppRelems = VecBuilder.fill(1,1.2);
+    }
+
+    public interface Clearances {
+        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(4); //TODO: FIND THIS VALUE
     }
 }
