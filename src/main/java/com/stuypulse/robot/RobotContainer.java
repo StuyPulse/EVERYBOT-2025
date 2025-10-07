@@ -29,6 +29,7 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.util.Clearances;
 import com.stuypulse.robot.util.alignment.AlignmentPathLoader;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -37,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class RobotContainer {
@@ -44,7 +46,7 @@ public class RobotContainer {
 	public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
 
 	// Subsystem
-	private final Drivetrain driveSubsystem =  Drivetrain.getInstance();
+	private final Drivetrain driveSubsystem = Drivetrain.getInstance();
 	private final Pivot pivot = Pivot.getInstance();
 
 	// Autons
@@ -75,27 +77,28 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		//TRIGGERS
 		driver.rightTrigger() // Algae Ground Intake
+		// TRIGGERS
+		driver.getRightTriggerButton() // Algae Ground Intake
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake())
 				.whileTrue(new PivotAlgaeIntake())
-                .onFalse(new PivotToAlgaeStow())
+				.onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
 		driver.leftTrigger() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake())
 				.onFalse(new PivotHoldCoral());
 
-		//BUMPERS
-		driver.rightBumper() //lolipop intake
+		// BUMPERS
+		driver.getRightBumper() // Lolipop Intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
-                .onFalse(new PivotToAlgaeStow())
+				.onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
-		driver.leftBumper()// score coral
+		driver.getLeftBumper() // Score Coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-				.whileTrue(new PivotCoralScore())
-				.onFalse(new PivotToCoralStow())
-				.onFalse(new PivotHoldCoral())
-				.onFalse(new PivotToDefault());
+				.onTrue(new PivotCoralScore())
+				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromReef())
+						.andThen(new PivotToCoralStow().alongWith(new PivotHoldCoral())));
 
 		//BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
 		driver.rightStick() //pivot lower
@@ -115,17 +118,17 @@ public class RobotContainer {
 				.whileTrue(new ClimbToDeployed())
 				.onTrue(new DriveSetHalfSpeed());
 
-		//MENU BUTTONS
-		// Alignment disabled for duel
+		// MENU BUTTONS
+		// Alignment disabled for robo replay
 		// driver.getRightMenuButton() // Drive to Nearest April Tag
-		// 		.onTrue(
-		// 			new SequentialCommandGroup(
-		// 				new SetPivotControlMode(PivotControlMode.USING_STATES)
-		// 						.withTimeout(0.01),
-		// 				new PivotToDefault()
-		// 						.withTimeout(0.01),
-		// 				new AlignToReefNearest(driver.getDPadLeft().getAsBoolean()))
-		// 		);
+		// .onTrue(
+		// new SequentialCommandGroup(
+		// new SetPivotControlMode(PivotControlMode.USING_STATES)
+		// .withTimeout(0.01),
+		// new PivotToDefault()
+		// .withTimeout(0.01),
+		// new AlignToReefNearest(driver.getDPadLeft().getAsBoolean()))
+		// );
 	}
 
 	/**************/
@@ -136,7 +139,7 @@ public class RobotContainer {
 		// PATHPLANNER
 		driveSubsystem.configureAutoBuilder();
 		registerAutonNamedCommands();
-		
+
 		AlignmentPathLoader.loadAlignmentpaths();
 
 		// OLD - w/o pathplanner
@@ -144,19 +147,14 @@ public class RobotContainer {
 		autonChooser.addOption("[OLD] Do Nothing", new DoNothingAuton());
 		autonChooser.addOption("[OLD] Mobility", new MobilityAuton());
 
-		//NEW - w/ pathplanner
-			// Non-Processor
-			autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
-			autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
-			
-			// Center
-			autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
-			autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
-			
-			// Processor
-			autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
-			autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
-			autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
+		// NEW - w/ pathplanner
+		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
+		autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
+		autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
+		autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
+		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
+		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
+		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
@@ -165,7 +163,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("PivotCoralScore",
 				new SequentialCommandGroup(
 						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
-						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02), 
+						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02),
 						new PivotToDefault()));
 
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());

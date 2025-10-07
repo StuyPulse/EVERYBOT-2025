@@ -72,13 +72,11 @@ public abstract class Pivot extends SubsystemBase {
     }
 
     public abstract void setPivotState(PivotState pivotState);
-
     public abstract PivotState getPivotState();
 
     public abstract void setRollerMotor(double speed);
-
     public abstract double getRollerMotor();
-
+    
     public abstract void setPivotMotor(double speed);
     
     public abstract void resetPivotEncoder(double newEncoderPosition);

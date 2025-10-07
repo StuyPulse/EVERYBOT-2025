@@ -26,4 +26,8 @@ public interface Constants {
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5.4;
         public static final double MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND = 720;
     }
+    
+    public interface Robot {
+        public static final double LENGTH_WITH_BUMPERS_M = 1.016;
+    }
 }
