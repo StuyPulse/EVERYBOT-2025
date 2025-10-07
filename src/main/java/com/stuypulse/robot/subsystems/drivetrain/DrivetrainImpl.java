@@ -7,6 +7,7 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
+import com.stuypulse.robot.util.Clearances;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -325,10 +326,14 @@ public class DrivetrainImpl extends Drivetrain {
         SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
         SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
         SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
-        SmartDashboard.putNumber("Drivetrain/ velocity differance ", getRightVelocity() - getLeftVelocity());
-        SmartDashboard.putNumber("Drivetrain/ applied voltage differance ", getOutputVoltage(leftMotors[0]) - getOutputVoltage(rightMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/velocity differance ", getRightVelocity() - getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/applied voltage differance ", getOutputVoltage(leftMotors[0]) - getOutputVoltage(rightMotors[0]));
         SmartDashboard.putNumber("Drivetrain/velocity FF outtake", angularArcadeFeedforward.calculate(driver.getLeftY()));
         SmartDashboard.putNumber("Drivetrain/angular FF outtake", angularArcadeFeedforward.calculate(driver.getRightX()));
         SmartDashboard.putNumber("Drivetrain/Speed Modifier", driveSpeedModifier);
+
+        //Clearances
+        SmartDashboard.putBoolean("Clearances/From Reef", Clearances.isClearFromReef());
+        SmartDashboard.putBoolean("Clearances/From Proc", Clearances.isClearFromProc());
     }
 }

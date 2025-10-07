@@ -72,10 +72,10 @@ public interface Settings {
         //ROLLER SPEEDS
         public static SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         public static SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Intake Speed", -0.9);
-        public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.5); 
+        public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.75); 
         public static SmartNumber ALGAE_HOLD_SPEED = new SmartNumber("Pivot/Roller/Algae/Hold Speed", -0.25); 
         
-        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.45);
+        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.5);
         public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.17);
         
         //PIVOT MOTOR AND ROLLER CURRENT LIMIT
@@ -98,6 +98,9 @@ public interface Settings {
     }
 
     public interface Drivetrain {
+        public static final SmartNumber OVERRIDEX = new SmartNumber("Drivetrain/OVERRIDEX", 0);
+        public static final SmartNumber OVERRIDEY = new SmartNumber("Drivetrain/OVERRIDEY", 0);
+
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
         public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;

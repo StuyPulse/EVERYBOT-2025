@@ -77,7 +77,7 @@ public interface Field {
     public static double CENTER_OF_REEF_TO_REEF_FACE_M = Units.inchesToMeters(32.75);
     
     public static Translation2d ALLIANCE_PROC_CENTER = new Translation2d(ALLIANCE_REEF_CENTER.getX() + CENTER_OF_REEF_TO_REEF_FACE_M + Units.inchesToMeters(88 - 61.76), - Units.inchesToMeters(7.5 * 12f / 2f));
-    public static Translation2d OPPOSITE_ALLIANCE_PROC_CENTER = new Translation2d(OPPOSITE_ALLIANCE_REEF_CENTER.getX() - CENTER_OF_REEF_TO_REEF_FACE_M - Units.inchesToMeters(88 + 61.76), WIDTH + Units.inchesToMeters(7.5 * 12f / 2f));
+    public static Translation2d OPPOSITE_ALLIANCE_PROC_CENTER = new Translation2d(OPPOSITE_ALLIANCE_REEF_CENTER.getX() - CENTER_OF_REEF_TO_REEF_FACE_M - Units.inchesToMeters(88 - 61.76), WIDTH + Units.inchesToMeters(7.5 * 12f / 2f));
 
     public static ReefTags getClosestFace(Supplier<Pose2d> robotPose) {
         final Translation2d robotTranslation = new Translation2d(robotPose.get().getX(), robotPose.get().getY());

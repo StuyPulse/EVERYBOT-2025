@@ -75,10 +75,8 @@ public class RobotContainer {
 	/***********************/
 
 	private void configureButtonBindings() {
-		//TRIGGERS
-		driver.rightTrigger() // Algae Ground Intake
 		// TRIGGERS
-		driver.getRightTriggerButton() // Algae Ground Intake
+		driver.rightTrigger() // Algae Ground Intake
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake())
 				.whileTrue(new PivotAlgaeIntake())
@@ -86,19 +84,19 @@ public class RobotContainer {
 				.onFalse(new PivotAlgaeHold());
 		driver.leftTrigger() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake())
-				.onFalse(new PivotHoldCoral());
+				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromProc()).andThen(new PivotHoldCoral()));
 
 		// BUMPERS
-		driver.getRightBumper() // Lolipop Intake
+		driver.rightBumper() // Lolipop Intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.onTrue(new PivotLollipopAlgaeIntake())
 				.onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
-		driver.getLeftBumper() // Score Coral
+		driver.leftBumper() // Score Coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotCoralScore())
 				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromReef())
-						.andThen(new PivotToCoralStow().alongWith(new PivotHoldCoral())));
+						.andThen(new PivotToCoralStow().andThen(new PivotHoldCoral())));
 
 		//BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
 		driver.rightStick() //pivot lower

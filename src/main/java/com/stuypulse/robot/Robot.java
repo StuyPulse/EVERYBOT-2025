@@ -6,6 +6,9 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.vision.VisionSetMegaTag1;
 import com.stuypulse.robot.commands.vision.VisionSetMegaTag2;
+import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
+import com.stuypulse.robot.subsystems.odometry.Odometry;
+import com.stuypulse.robot.util.Clearances;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -34,6 +37,11 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("DriverStation/Match Time", DriverStation.getMatchTime());
+
+        //Clearances
+        SmartDashboard.putBoolean("Clearances/From Reef", Clearances.isClearFromReef());
+        SmartDashboard.putBoolean("Clearances/From Proc", Clearances.isClearFromProc());
+        
     }
 
     /*********************/

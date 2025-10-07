@@ -1,10 +1,13 @@
 package com.stuypulse.robot.subsystems.odometry;
 
+import com.fasterxml.jackson.databind.deser.SettableAnyProperty;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -47,7 +50,8 @@ public class OdometryImpl extends Odometry {
 
     @Override
     public Pose2d getEstimatedPose() {
-        return poseEstimator.getEstimatedPosition();
+        return new Pose2d(Settings.Drivetrain.OVERRIDEX.get(), Settings.Drivetrain.OVERRIDEY.get(), Rotation2d.kZero);
+        //return poseEstimator.getEstimatedPosition();
     }
 
     @Override
