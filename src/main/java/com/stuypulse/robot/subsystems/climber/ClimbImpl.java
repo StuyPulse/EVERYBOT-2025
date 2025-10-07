@@ -7,8 +7,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.ClimbConfig;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
@@ -17,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ClimbImpl extends Climb {
     private SparkMax climbMotor;
     private RelativeEncoder climbEncoder;
-    private BStream isClimbStalling; 
 
     public ClimbImpl() {
         super();
@@ -30,8 +27,6 @@ public class ClimbImpl extends Climb {
         climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters,
                 PersistMode.kNoPersistParameters);
         climbEncoder = climbMotor.getEncoder();
-        isClimbStalling = BStream.create(() -> climbMotor.getOutputCurrent() > Settings.Climb.CLIMB_STALL_CURRENT)
-            .filtered(new BDebounce.Rising(Settings.Climb.CLIMB_STALL_DEBOUNCE));
     }
 
     @Override

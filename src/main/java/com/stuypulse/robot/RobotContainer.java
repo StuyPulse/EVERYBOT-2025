@@ -31,20 +31,19 @@ import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
 import com.stuypulse.robot.util.Clearances;
 import com.stuypulse.robot.util.alignment.AlignmentPathLoader;
-import com.stuypulse.stuylib.input.Gamepad;
-import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class RobotContainer {
 	// Gamepads
-	public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
+	public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
 
 	// Subsystem
 	private final Drivetrain driveSubsystem = Drivetrain.getInstance();
@@ -66,6 +65,7 @@ public class RobotContainer {
 	/****************/
 
 	private void configureDefaultCommands() {
+		SmartDashboard.putNumber("Left x", driver.getLeftX());
 		pivot.setDefaultCommand(new PivotHoldCoral());
 		driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
 	}
@@ -75,6 +75,8 @@ public class RobotContainer {
 	/***********************/
 
 	private void configureButtonBindings() {
+		//TRIGGERS
+		driver.rightTrigger() // Algae Ground Intake
 		// TRIGGERS
 		driver.getRightTriggerButton() // Algae Ground Intake
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
@@ -82,7 +84,7 @@ public class RobotContainer {
 				.whileTrue(new PivotAlgaeIntake())
 				.onFalse(new PivotToAlgaeStow())
 				.onFalse(new PivotAlgaeHold());
-		driver.getLeftTriggerButton() // Algae Outtake
+		driver.leftTrigger() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake())
 				.onFalse(new PivotHoldCoral());
 
@@ -98,21 +100,21 @@ public class RobotContainer {
 				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromReef())
 						.andThen(new PivotToCoralStow().alongWith(new PivotHoldCoral())));
 
-		// JOYSTICK BUTTONS (REMAPPED ON CONTROLLER TO BE BACK BUTTONS)
-		driver.getRightStickButton() // pivot lower
-				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		//BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
+		driver.rightStick() //pivot lower
+				//.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
 				.whileTrue(new PivotLower())
 				.onFalse(new PivotStop());
-		driver.getLeftStickButton() // pivot raise
-				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		driver.leftStick() //pivot raise
+				//.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
 				.whileTrue(new PivotRaise())
 				.onFalse(new PivotStop());
 
-		// ABXY BUTTONS
-		driver.getLeftButton() // Climb
+		//ABXY BUTTONS
+		driver.x() // Climb
 				.whileTrue(new ClimbToClimb())
 				.onTrue(new DriveSetFullSpeed());
-		driver.getRightButton() // Deploy Climb
+		driver.b() // Deploy Climb
 				.whileTrue(new ClimbToDeployed())
 				.onTrue(new DriveSetHalfSpeed());
 

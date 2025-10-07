@@ -19,7 +19,6 @@ import com.stuypulse.stuylib.network.SmartNumber;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -29,12 +28,10 @@ public class PivotImpl extends Pivot {
     private final SparkMax pivotMotor;
     private final RelativeEncoder pivotEncoder;
     private final DutyCycleEncoder pivotThroughbore;
-    private final DigitalInput bumpSwitch;
 
     private final Controller controller;
 
     private final BStream stallDetector;
-    private final BStream bumpSwitchIsDepressed;
 
     private final SmartNumber CurrentRollerSetSpeed = new SmartNumber("CurrentRollerSetSpeed", 0);
     private final SmartNumber CurrentPivotSetSpeed = new SmartNumber("CurrentPivotSetSpeed", 0);
@@ -64,11 +61,6 @@ public class PivotImpl extends Pivot {
 
         stallDetector = BStream.create(() -> pivotMotor.getOutputCurrent() > Settings.Pivot.PIVOT_STALL_CURRENT)
                 .filtered(new BDebounce.Rising(Settings.Pivot.PIVOT_STALL_DEBOUNCE));
-
-        bumpSwitch = new DigitalInput(Ports.Pivot.BUMP_SWITCH);
-        bumpSwitchIsDepressed = BStream.create(bumpSwitch)
-                .filtered(new BDebounce.Rising(Settings.Pivot.BUMP_SWITCH_DEBOUNCE))
-                .not();
     }
 
     @Override
@@ -145,27 +137,31 @@ public class PivotImpl extends Pivot {
     public void periodic() {
         super.periodic();
 
+        double controlVoltage = -controller.update(pivotState.targetAngleDeg, getPivotRotationDeg());
         if (Settings.EnabledSubsystems.PIVOT.get()) {
+            if(pivotState==PivotState.DEFAULT) controlVoltage += 1;
             if (stallDetector.getAsBoolean()) {
                 pivotMotor.set(0);
             } else if (pivotControlMode == PivotControlMode.USING_STATES) {
-                pivotMotor.setVoltage(
-                        -controller.update(pivotState.targetAngleDeg, getPivotRotationDeg()));
+                pivotMotor.setVoltage(controlVoltage);
             }
 
-            if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false) {
-                if(this.getPivotState() != PivotState.DEFAULT || this.getPivotState() != PivotState.STOW_CORAL)
-                    setPivotControlMode(PivotControlMode.MANUAL);
-            }
+            // if (bumpSwitchIsDepressed.getAsBoolean() == true && atTargetAngle() == false) {
+            //     if(this.getPivotState() != PivotState.DEFAULT || this.getPivotState() != PivotState.STOW_CORAL)
+            //         setPivotControlMode(PivotControlMode.MANUAL);
+            // }
+            // if (bumpSwitchIsDepressed.getAsBoolean() == true ) {
+            //     pivotMotor.set(0);
+            // }
         }
 
         if(Settings.DEBUG_MODE) {
             SmartDashboard.putNumber("Pivot/Current Relative Angle", getPivotRotationRelativeDeg());
+            SmartDashboard.putNumber("Pivot/Control Voltage", controlVoltage);
         }
         
         SmartDashboard.putNumber("Pivot/Current Absolute Angle", getPivotRotationDeg());
         SmartDashboard.putNumber("Pivot/Supply Current", pivotMotor.getOutputCurrent());
         SmartDashboard.putString("Pivot/Control mode", pivotControlMode.getPivotControlMode());
-        SmartDashboard.putBoolean("Pivot/Bump Switch", bumpSwitchIsDepressed.getAsBoolean());
     }       
 }

@@ -41,8 +41,6 @@ public interface Settings {
         public static final double ANGLE_TOLERANCE_DEG = 2.0;
 
         public static final int CLIMB_CURRENT_LIMIT = 60;
-        public static final double CLIMB_STALL_CURRENT = 15.0; //TODO find stall current
-        public static final double CLIMB_STALL_DEBOUNCE = 0.01; //TODO find climb debounce
 
         public static final double DEFAULT_VOLTAGE = 0.0;
         public static final double CLIMB_VOLTAGE = 1.0;
@@ -54,7 +52,7 @@ public interface Settings {
     
     public interface Pivot {
         //PIVOT ANGLES
-        public static final double DEFAULT_ANGLE_DEG = 1.0;
+        public static final double DEFAULT_ANGLE_DEG = 0.5;
         public static final double PIVOT_ANGLE_TOLERANCE_DEG = 3.0;
         
         public static final double CORAL_STOW_ANGLE_DEG = 3.0;
@@ -65,11 +63,11 @@ public interface Settings {
         public static final double ALGAE_HOLDING_ANGLE_DEG = 35.0;
         public static final double ALGAE_GROUND_ANGLE_DEG = 80.0;
         
-        public static final double MAX_ANGLE_DEG = 85.0;
+        public static final double MAX_ANGLE_DEG = 96.0;
 
         //PIVOT MANUAL SPEEDS
-        public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", 0.2);
-        public static SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", -0.2);
+        public static SmartNumber PIVOT_RAISE_SPEED = new SmartNumber("Pivot/Raise Speed", -0.2);
+        public static SmartNumber PIVOT_LOWER_SPEED = new SmartNumber("Pivot/Lower Speed", 0.2);
         
         //ROLLER SPEEDS
         public static SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
@@ -85,7 +83,7 @@ public interface Settings {
         public static final int PIVOT_ROLLER_MOTOR_CURRENT_LIMIT = 60;
         
         //PIVOT STALL DETECTION
-        public static final double PIVOT_STALL_CURRENT = 10; 
+        public static final double PIVOT_STALL_CURRENT = 10;
         public static final double PIVOT_STALL_DEBOUNCE = .25;
         
         //PIVOT CONTROL MODE VALUES
@@ -114,6 +112,7 @@ public interface Settings {
         
         public static final Vector<N3> ppQelems = VecBuilder.fill(0.0125, 0.1, 0.2);
         public static final Vector<N2> ppRelems = VecBuilder.fill(1,1.2);
+        public static final double stickDeaband = 0.05;
     }
 
     public interface Clearances {
