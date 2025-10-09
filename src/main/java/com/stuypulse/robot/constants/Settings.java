@@ -57,7 +57,7 @@ public interface Settings {
         
         public static final double CORAL_STOW_ANGLE_DEG = 3.0;
         public static final double CORAL_SCORE_ANGLE_DEG = 29.0;
-        public static final double CORAL_RESEAT_ANGLE_DEG = 29.0;
+        public static final double CORAL_RESEAT_ANGLE_DEG = 10.0;
         
         public static final double ALGAE_LOLLIPOP_ANGLE_DEG = 25.0;
         public static final double ALGAE_HOLDING_ANGLE_DEG = 35.0;
@@ -77,6 +77,7 @@ public interface Settings {
         
         public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.5);
         public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.17);
+        public static SmartNumber ROLLER_RESEAT_SPEED = new SmartNumber("Pivot/Roller/Coral/Reseat Speed", 0.7);
         
         //PIVOT MOTOR AND ROLLER CURRENT LIMIT
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
@@ -117,7 +118,7 @@ public interface Settings {
 
     public interface Clearances {
         public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(10f); //TODO: FIND THIS VALUE
-        public static final double CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
+        public static final double CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M = Units.inchesToMeters(80f); //TODO: FIND THIS VALUE
         public static final double X_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
         public static final double Y_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
     }

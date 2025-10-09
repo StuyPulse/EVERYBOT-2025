@@ -1,5 +1,6 @@
 package com.stuypulse.robot.commands.pivot.pivot;
 
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 
@@ -23,6 +24,6 @@ public class PivotToState extends Command {
 
     @Override
     public boolean isFinished() {
-        return pivot.atTargetAngle();
+        return Robot.isReal() ? pivot.atTargetAngle() : true;
     }
 }
