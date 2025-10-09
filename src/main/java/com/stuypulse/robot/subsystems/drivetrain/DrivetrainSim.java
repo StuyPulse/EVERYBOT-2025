@@ -16,7 +16,6 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.constants.Gains.Drivetrain.PID.left;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 
 import edu.wpi.first.math.VecBuilder;
@@ -63,15 +62,15 @@ public class DrivetrainSim extends Drivetrain {
         rightEncoderSim = new EncoderSim(new Encoder(0, Ports.Drivetrain.RIGHT_LEAD));
 
         leftMotor = new PWMSparkMax(Ports.Drivetrain.LEFT_LEAD);
+
         rightMotor = new PWMSparkMax(Ports.Drivetrain.RIGHT_LEAD);
 
-        leftEncoderSim.setDistancePerPulse(2f * Math.PI * 3f / 42f);
-        rightEncoderSim.setDistancePerPulse(2f * Math.PI * 3f / 42f);
-
+        leftEncoderSim.setDistancePerPulse(2f * Math.PI * 3f / 8400f);
+        rightEncoderSim.setDistancePerPulse(2f * Math.PI * 3f / 8400f);
         // gyro = new SimDevice(4);
 
         driveSim = new DifferentialDrivetrainSim(
-                DCMotor.getNEO(2), // 2 NEO motors on each side of the drivetrain.
+                DCMotor.getNEO(1), // 2 NEO motors on each side of the drivetrain.
                 1f/Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO,
                 6.883, // MOI of 7.5 kg m^2 (from CAD model).
                 46.493, // The mass of the robot is 60 kg.
@@ -96,21 +95,21 @@ public class DrivetrainSim extends Drivetrain {
     }
 
     @Override
-    public void simulationPeriodic() {
-        driveSim.setInputs(leftMotor.get()  * RobotController.getInputVoltage(), rightMotor.get() * RobotController.getInputVoltage());
-        driveSim.update(0.02);
+    public void periodic() {
+        super.periodic();
+        
+        driveSim.setInputs(leftMotor.get() * 12, rightMotor.get() * 12);
+        driveSim.update(.02);
+
         leftEncoderSim.setDistance(driveSim.getLeftPosition());
         leftEncoderSim.setRate(driveSim.getLeftVelocity());
         rightEncoderSim.setDistance(driveSim.getRightPosition());
         rightEncoderSim.setRate(driveSim.getRightVelocity());
-//         int dev = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[4]");
-// SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(dev, "Yaw"));
-// angle.set(5.0);
     }
 
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
-        driveTank(kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation)).left, kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation)).right, true);
+        driveTank(kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation * 15)).left, kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation * 15)).right, true);
     }
 
     @Override
@@ -121,7 +120,7 @@ public class DrivetrainSim extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return Rotation2d.fromRotations(kinematics.toTwist2d(getLeftDistance(), getRightDistance()).dtheta/50f);
+        return Rotation2d.fromRotations(kinematics.toTwist2d(getLeftDistance(), getRightDistance()).dtheta/30f);
     }
     
     @Override
