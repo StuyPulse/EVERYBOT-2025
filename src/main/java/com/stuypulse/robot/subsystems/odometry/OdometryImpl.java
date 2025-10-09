@@ -50,8 +50,7 @@ public class OdometryImpl extends Odometry {
 
     @Override
     public Pose2d getEstimatedPose() {
-        return new Pose2d(Settings.Drivetrain.OVERRIDEX.get(), Settings.Drivetrain.OVERRIDEY.get(), Rotation2d.kZero);
-        //return poseEstimator.getEstimatedPosition();
+        return poseEstimator.getEstimatedPosition();
     }
 
     @Override

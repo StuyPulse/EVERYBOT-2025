@@ -94,13 +94,10 @@ public interface Settings {
         public static final double BUMP_SWITCH_DEBOUNCE = 0.4;
         
         //AT TARGET ANGLE - ANGLE TOLERANCE
-        public static final double ANGLE_TOLERANCE = 0.5;
+        public static final double ANGLE_TOLERANCE = 1.5;
     }
 
     public interface Drivetrain {
-        public static final SmartNumber OVERRIDEX = new SmartNumber("Drivetrain/OVERRIDEX", 0);
-        public static final SmartNumber OVERRIDEY = new SmartNumber("Drivetrain/OVERRIDEY", 0);
-
         public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
         public static final double DRIVE_UPPER_VOLTAGE_LIMIT = 12;
         public static final double DRIVE_LOWER_VOLTAGE_LIMIT = -12;
@@ -119,7 +116,7 @@ public interface Settings {
     }
 
     public interface Clearances {
-        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
+        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(10f); //TODO: FIND THIS VALUE
         public static final double CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
         public static final double X_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
         public static final double Y_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE

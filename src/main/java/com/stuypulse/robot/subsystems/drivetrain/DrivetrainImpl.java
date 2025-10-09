@@ -51,7 +51,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
-    private final DifferentialDriveKinematics kinematics;
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
 
     private double driveSpeedModifier = 1;
@@ -118,7 +117,6 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[1].setCANTimeout(250);
 
         // Odometry, Kinematics, Controllers, Vision
-        kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
         odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
 
         // PathPlanner robot configuration
@@ -168,7 +166,8 @@ public class DrivetrainImpl extends Drivetrain {
      * 
      * @return velocity in meters per seconds
      */
-    public double getLeftVelocity() {
+    @Override
+    protected double getLeftVelocity() {
         return -leftEncoder.getVelocity();
     }
 
@@ -177,7 +176,8 @@ public class DrivetrainImpl extends Drivetrain {
      * 
      * @return velocity in meters per seconds
      */
-    public double getRightVelocity() {
+    @Override
+    protected double getRightVelocity() {
         return -rightEncoder.getVelocity();
     }
 
@@ -225,7 +225,8 @@ public class DrivetrainImpl extends Drivetrain {
         this);
     }
 
-    private ChassisSpeeds getChassisSpeeds() {
+    @Override
+    protected ChassisSpeeds getChassisSpeeds() {
         return kinematics.toChassisSpeeds(getSpeeds());
     }
 

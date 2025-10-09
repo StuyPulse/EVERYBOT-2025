@@ -66,7 +66,7 @@ public class RobotContainer {
 
 	private void configureDefaultCommands() {
 		SmartDashboard.putNumber("Left x", driver.getLeftX());
-		pivot.setDefaultCommand(new PivotHoldCoral());
+		//pivot.setDefaultCommand(new PivotHoldCoral());
 		driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
 	}
 
