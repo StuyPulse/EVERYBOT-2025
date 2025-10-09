@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -66,5 +67,11 @@ public abstract class Drivetrain extends SubsystemBase {
     public abstract Supplier<Double> angularPIDCalculate(double input);
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        SmartDashboard.putNumber("Drivetrain/Left distance", getLeftDistance());
+        SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
+        SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
+        SmartDashboard.putNumber("Drivetrain/velocity differance ", getRightVelocity() - getLeftVelocity());
+    }
 }

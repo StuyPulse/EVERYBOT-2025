@@ -16,6 +16,7 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Gains.Drivetrain.PID.left;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 
 import edu.wpi.first.math.VecBuilder;
@@ -58,8 +59,8 @@ public class DrivetrainSim extends Drivetrain {
     public DrivetrainSim() {
         super();
 
-        leftEncoderSim = new EncoderSim(new Encoder(0, 1));
-        rightEncoderSim = new EncoderSim(new Encoder(2, 3));
+        leftEncoderSim = new EncoderSim(new Encoder(0, Ports.Drivetrain.LEFT_LEAD));
+        rightEncoderSim = new EncoderSim(new Encoder(0, Ports.Drivetrain.RIGHT_LEAD));
 
         leftMotor = new PWMSparkMax(Ports.Drivetrain.LEFT_LEAD);
         rightMotor = new PWMSparkMax(Ports.Drivetrain.RIGHT_LEAD);
@@ -71,7 +72,7 @@ public class DrivetrainSim extends Drivetrain {
 
         driveSim = new DifferentialDrivetrainSim(
                 DCMotor.getNEO(2), // 2 NEO motors on each side of the drivetrain.
-                Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO,
+                1f/Constants.Drivetrain.DRIVETRAIN_GEAR_RATIO,
                 6.883, // MOI of 7.5 kg m^2 (from CAD model).
                 46.493, // The mass of the robot is 60 kg.
                 Units.inchesToMeters(3), // The robot uses 3" radius wheels.
@@ -101,7 +102,7 @@ public class DrivetrainSim extends Drivetrain {
         leftEncoderSim.setDistance(driveSim.getLeftPosition());
         leftEncoderSim.setRate(driveSim.getLeftVelocity());
         rightEncoderSim.setDistance(driveSim.getRightPosition());
-        rightEncoderSim.setDistance(driveSim.getRightVelocity());
+        rightEncoderSim.setRate(driveSim.getRightVelocity());
 //         int dev = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[4]");
 // SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(dev, "Yaw"));
 // angle.set(5.0);
@@ -114,13 +115,13 @@ public class DrivetrainSim extends Drivetrain {
 
     @Override
     public void driveTank(double leftSpeed, double rightSpeed, boolean squared) {
-        leftMotor.set(leftSpeed);
-        rightMotor.set(rightSpeed);
+        leftMotor.set(-leftSpeed);
+        rightMotor.set(-rightSpeed);
     }
-    
+
     @Override
     public Rotation2d getHeading() {
-        return Rotation2d.kZero;
+        return Rotation2d.fromRotations(kinematics.toTwist2d(getLeftDistance(), getRightDistance()).dtheta/50f);
     }
     
     @Override
@@ -133,9 +134,13 @@ public class DrivetrainSim extends Drivetrain {
         return rightEncoderSim.getDistance();
     }
         
+    private Rotation2d prevHeading;
+
     @Override
     public double getGyroRate() {
-        return 0;
+        double rate = getHeading().minus(prevHeading).getRotations()*50;
+        prevHeading = getHeading();
+        return rate;
     }    
 
     @Override
