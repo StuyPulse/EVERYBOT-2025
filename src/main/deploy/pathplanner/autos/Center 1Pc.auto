@@ -11,15 +11,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PivotCoralScore"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 1.0
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "PivotCoralScore"
+            "pathName": "Back From Reef"
           }
         }
       ]

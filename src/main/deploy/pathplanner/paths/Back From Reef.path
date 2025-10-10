@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.562889105058366,
-        "y": 4.012196011673152
+        "x": 5.821,
+        "y": 4.015
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.087239730639009,
-        "y": 4.012618040660968
+        "x": 6.820999999999996,
+        "y": 4.015
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.821,
-        "y": 4.012
+        "x": 6.7860000000000005,
+        "y": 4.015
       },
       "prevControl": {
-        "x": 6.201006617211603,
-        "y": 4.0115486607846575
+        "x": 5.7860000000000005,
+        "y": 4.015
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Center Coral"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,9 +42,9 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 28.072486935852986
+    "rotation": 0.0
   },
-  "reversed": false,
+  "reversed": true,
   "folder": "Starting Line to Reef",
   "idealStartingState": {
     "velocity": 0,

@@ -31,6 +31,7 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 import com.stuypulse.robot.util.Clearances;
 import com.stuypulse.robot.util.alignment.AlignmentPathLoader;
 
@@ -85,7 +86,7 @@ public class RobotContainer {
 				.onTrue(new PivotToAlgaeIntake())
 				.whileTrue(new PivotAlgaeIntake().repeatedly())
 				.onFalse(new PivotToAlgaeStow())
-				.onFalse(new PivotAlgaeHold());
+				.onFalse(new PivotAlgaeHold().repeatedly());
 		driver.leftTrigger() // Algae Outtake
 				.whileTrue(new PivotAlgaeOuttake().repeatedly())
 				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromProc())
@@ -98,20 +99,19 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
 				.whileTrue(new PivotLollipopAlgaeIntake())
 				.onFalse(new PivotToAlgaeStow())
-				.onFalse(new PivotAlgaeHold());
+				.onFalse(new PivotAlgaeHold().repeatedly());
 		driver.leftBumper() // Score Coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 
-				.onTrue(new ConditionalCommand(
+				.toggleOnTrue(new ConditionalCommand(
 						new SequentialCommandGroup(new PivotRollerReseat(), Commands.repeatingSequence(new PivotToCoralReseat(), new PivotToCoralStow()))
 								.onlyWhile(() -> driver.leftBumper().getAsBoolean()),
 
 						new PivotCoralScore().onlyWhile(() -> !Clearances.isClearFromReef())
-								.andThen(new WaitUntilCommand(() -> Clearances.isClearFromReef())
-									.onlyWhile(() -> !driver.leftBumper().getAsBoolean()))
+								.andThen(new WaitUntilCommand(() -> Clearances.isClearFromReef()))
 								.andThen(new PivotToCoralStow().andThen(new PivotHoldCoral())),
-
-						() -> Clearances.isClearFromReef()));
+								
+						() -> (Clearances.isClearFromReef())));
 
 		// BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
 		driver.rightStick() // pivot lower
@@ -161,12 +161,12 @@ public class RobotContainer {
 		autonChooser.addOption("[OLD] Mobility", new MobilityAuton());
 
 		// NEW - w/ pathplanner
-		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
+		autonChooser.addOption("[COMP] Center 1PC", new PathPlannerAuto("Center 1Pc"));
+		autonChooser.addOption("[COMP] Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
+		autonChooser.addOption("[COMP] Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
 		autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
 		autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
-		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
-		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);

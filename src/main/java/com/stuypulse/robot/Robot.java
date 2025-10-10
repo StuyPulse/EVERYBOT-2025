@@ -4,15 +4,20 @@
 /**************************************************************/
 package com.stuypulse.robot;
 
+import java.util.ArrayList;
+
+import com.stuypulse.robot.commands.pivot.pivot.PivotSetControlUsingStates;
 import com.stuypulse.robot.commands.vision.VisionSetMegaTag1;
 import com.stuypulse.robot.commands.vision.VisionSetMegaTag2;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
+import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.util.Clearances;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private RobotContainer robot;
     private Command auto;
+    private ArrayList<Double> cycleTimes;
+    private Timer timer;
 
     /*************************/
     /*** ROBOT SCHEDULEING ***/
@@ -31,6 +38,10 @@ public class Robot extends TimedRobot {
         DriverStation.startDataLog(DataLogManager.getLog());
         robot = new RobotContainer();
         new VisionSetMegaTag1();
+
+        timer = new Timer();
+        timer.reset();
+        timer.start();
     }
 
     @Override
@@ -38,10 +49,12 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("DriverStation/Match Time", DriverStation.getMatchTime());
 
+        SmartDashboard.putNumber("Periodic/Cycle time", timer.get());
+        timer.reset();
+
         //Clearances
         SmartDashboard.putBoolean("Clearances/From Reef", Clearances.isClearFromReef());
         SmartDashboard.putBoolean("Clearances/From Proc", Clearances.isClearFromProc());
-        
     }
 
     /*********************/
@@ -68,8 +81,9 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
-
+        
         if (auto != null) {
+            CommandScheduler.getInstance().schedule(new PivotSetControlUsingStates());
             CommandScheduler.getInstance().schedule(auto);
         }
 
