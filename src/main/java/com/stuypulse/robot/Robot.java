@@ -46,15 +46,16 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        timer.reset();
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("DriverStation/Match Time", DriverStation.getMatchTime());
         PortForwarder.add(5801, "10.99.99.2", 5801);
-        SmartDashboard.putNumber("Periodic/Cycle time", timer.get());
-        timer.reset();
-
+        
         //Clearances
         SmartDashboard.putBoolean("Clearances/From Reef", Clearances.isClearFromReef());
         SmartDashboard.putBoolean("Clearances/From Proc", Clearances.isClearFromProc());
+        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        SmartDashboard.putNumber("Periodic/Cycle time", timer.get());
     }
 
     /*********************/
@@ -108,7 +109,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 
     @Override

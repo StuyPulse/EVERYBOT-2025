@@ -29,15 +29,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "To HP"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "To HP"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pivot default and Rotisserie"
+                }
+              }
+            ]
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.7
           }
         },
         {
