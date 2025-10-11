@@ -30,11 +30,7 @@ public interface Clearances {
     public static boolean isClearFromProc() {
         Pose2d robotPose = Odometry.getInstance().getEstimatedPose();
         
-        SmartDashboard.putNumber("Clearances/Dist from proc", Field.ALLIANCE_PROC_CENTER.getDistance(robotPose.getTranslation()));
-    
-        SmartDashboard.putNumber("Clearances/Dist req from proc", (Settings.Clearances.CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M
-            + Constants.Robot.LENGTH_WITH_BUMPERS_M / 2f
-            - Math.hypot(Settings.Clearances.X_TOLERANCE, Settings.Clearances.Y_TOLERANCE)));
+        if(Settings.DEBUG_MODE) SmartDashboard.putNumber("Clearances/Dist from proc", Field.ALLIANCE_PROC_CENTER.getDistance(robotPose.getTranslation()));
 
         return ((Field.ALLIANCE_PROC_CENTER.getDistance(robotPose.getTranslation()) > 
             (Settings.Clearances.CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M

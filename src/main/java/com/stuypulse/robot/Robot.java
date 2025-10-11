@@ -14,6 +14,7 @@ import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.util.Clearances;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,7 +39,6 @@ public class Robot extends TimedRobot {
         DriverStation.startDataLog(DataLogManager.getLog());
         robot = new RobotContainer();
         new VisionSetMegaTag1();
-
         timer = new Timer();
         timer.reset();
         timer.start();
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("DriverStation/Match Time", DriverStation.getMatchTime());
-
+        PortForwarder.add(5801, "10.99.99.2", 5801);
         SmartDashboard.putNumber("Periodic/Cycle time", timer.get());
         timer.reset();
 
