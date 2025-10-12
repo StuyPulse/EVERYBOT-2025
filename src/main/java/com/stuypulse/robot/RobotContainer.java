@@ -105,13 +105,14 @@ public class RobotContainer {
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 
 				.toggleOnTrue(new ConditionalCommand(
-						new SequentialCommandGroup(new PivotRollerReseat(), Commands.repeatingSequence(new PivotToCoralReseat(), new PivotToCoralStow()))
+						new SequentialCommandGroup(new PivotRollerReseat(),
+								Commands.repeatingSequence(new PivotToCoralReseat(), new PivotToCoralStow()))
 								.onlyWhile(() -> driver.leftBumper().getAsBoolean()),
 
 						new PivotCoralScore().onlyWhile(() -> !Clearances.isClearFromReef())
 								.andThen(new WaitUntilCommand(() -> Clearances.isClearFromReef()))
 								.andThen(new PivotToCoralStow().andThen(new PivotHoldCoral())),
-								
+
 						() -> (Clearances.isClearFromReef())));
 
 		// BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
@@ -161,11 +162,11 @@ public class RobotContainer {
 		autonChooser.addOption("[OLD] Do Nothing", new DoNothingAuton());
 		autonChooser.addOption("[OLD] Mobility", new MobilityAuton());
 
-		
 		// NEW - w/ pathplanner
 		autonChooser.addOption("COMP Center 1PC", new PathPlannerAuto("Center 1Pc"));
 		autonChooser.setDefaultOption("COMP Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
-		autonChooser.addOption("COMP Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
+		autonChooser.addOption("COMP Non-Processor 2 Pc",
+				new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
 		autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
 		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
@@ -175,10 +176,14 @@ public class RobotContainer {
 
 	private void registerAutonNamedCommands() {
 		NamedCommands.registerCommand("PivotCoralScore", new PivotCoralScoreAuto());
-				//new SequentialCommandGroup(
-				//		new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
-				//		new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02),
-				//		new PivotToDefault()));
+		NamedCommands.registerCommand("PivotCoralScore2nd",
+				new SequentialCommandGroup(new WaitUntilCommand(() -> !Clearances.isClearFromReef()),
+						new PivotCoralScoreAuto()));
+		// new SequentialCommandGroup(
+		// new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
+		// new PivotToCoralStow().withTimeout(.02), new
+		// PivotRollerStop().withTimeout(0.02),
+		// new PivotToDefault()));
 
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",

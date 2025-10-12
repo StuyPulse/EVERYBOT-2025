@@ -5,15 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Pivot default and Rotisserie"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Non-Processor To Reef"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pivot default and Rotisserie"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Non-Processor To Reef"
+                }
+              }
+            ]
           }
         },
         {
@@ -50,7 +57,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.7
+            "waitTime": 0.6
           }
         },
         {
