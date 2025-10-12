@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3747500000000001,
-        "y": 7.31075
+        "x": 1.2946721311475409,
+        "y": 7.399538934426229
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.84275,
-        "y": 6.49175
+        "x": 1.7626721311475408,
+        "y": 6.580538934426229
       },
       "isLocked": false,
       "linkedName": "NonProcessor HP"

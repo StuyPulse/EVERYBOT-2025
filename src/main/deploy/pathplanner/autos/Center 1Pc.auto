@@ -25,7 +25,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Center-Start",
   "choreoAuto": false
 }
