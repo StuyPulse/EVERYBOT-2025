@@ -27,12 +27,10 @@ import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerReseat;
-import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
-import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 import com.stuypulse.robot.util.Clearances;
 import com.stuypulse.robot.util.alignment.AlignmentPathLoader;
 
@@ -41,9 +39,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -179,11 +175,6 @@ public class RobotContainer {
 		NamedCommands.registerCommand("PivotCoralScore2nd",
 				new SequentialCommandGroup(new WaitUntilCommand(() -> !Clearances.isClearFromReef()),
 						new PivotCoralScoreAuto()));
-		// new SequentialCommandGroup(
-		// new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
-		// new PivotToCoralStow().withTimeout(.02), new
-		// PivotRollerStop().withTimeout(0.02),
-		// new PivotToDefault()));
 
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",

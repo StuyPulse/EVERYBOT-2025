@@ -1,6 +1,5 @@
 package com.stuypulse.robot.util;
 
-import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
 import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Field;

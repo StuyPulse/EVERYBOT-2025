@@ -3,9 +3,6 @@ package com.stuypulse.robot.commands.pivot.pivotCombos;
 import com.stuypulse.robot.commands.pivot.pivot.PivotToState;
 import com.stuypulse.robot.commands.pivot.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
-import com.stuypulse.robot.commands.pivot.roller.PivotRollerReseat;
-import com.stuypulse.robot.commands.pivot.roller.PivotRollerToSpeed;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 

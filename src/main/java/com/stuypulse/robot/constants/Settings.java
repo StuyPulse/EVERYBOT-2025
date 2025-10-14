@@ -23,7 +23,7 @@ import edu.wpi.first.math.util.Units;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-    public static final boolean DEBUG_MODE = false; //TODO change this to false during comps!
+    public static final boolean DEBUG_MODE = true; //TODO change this to false during comps!
     
     public interface EnabledSubsystems{
         public static final SmartBoolean CLIMB = new SmartBoolean("ENABLED_SUBSYSTEMS/Is climb enabled?", true);
