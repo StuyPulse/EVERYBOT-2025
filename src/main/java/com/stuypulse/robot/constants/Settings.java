@@ -23,7 +23,7 @@ import edu.wpi.first.math.util.Units;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-    public static final boolean DEBUG_MODE = true; //TODO change this to false during comps!
+    public static final boolean DEBUG_MODE = false; //TODO change this to false during comps!
     
     public interface EnabledSubsystems{
         public static final SmartBoolean CLIMB = new SmartBoolean("ENABLED_SUBSYSTEMS/Is climb enabled?", true);
@@ -57,10 +57,10 @@ public interface Settings {
         
         public static final double CORAL_STOW_ANGLE_DEG = 3.0;
         public static final double CORAL_SCORE_ANGLE_DEG = 29.0;
-        public static final double CORAL_RESEAT_ANGLE_DEG = 29.0;
+        public static final double CORAL_RESEAT_ANGLE_DEG = 19.0;
         
         public static final double ALGAE_LOLLIPOP_ANGLE_DEG = 25.0;
-        public static final double ALGAE_HOLDING_ANGLE_DEG = 35.0;
+        public static final double ALGAE_HOLDING_ANGLE_DEG = 45.0;
         public static final double ALGAE_GROUND_ANGLE_DEG = 80.0;
         
         public static final double MAX_ANGLE_DEG = 96.0;
@@ -72,11 +72,12 @@ public interface Settings {
         //ROLLER SPEEDS
         public static SmartNumber ROLLER_STOP_SPEED = new SmartNumber("Pivot/Roller/Stop Speed", 0);
         public static SmartNumber ALGAE_INTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Intake Speed", -0.9);
-        public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.5); 
+        public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.75); 
         public static SmartNumber ALGAE_HOLD_SPEED = new SmartNumber("Pivot/Roller/Algae/Hold Speed", -0.25); 
         
-        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.45);
+        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.47);
         public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.17);
+        public static SmartNumber ROLLER_RESEAT_SPEED = new SmartNumber("Pivot/Roller/Coral/Reseat Speed", 0.7);
         
         //PIVOT MOTOR AND ROLLER CURRENT LIMIT
         public static final int PIVOT_MOTOR_CURRENT_LIMIT = 60;
@@ -94,7 +95,7 @@ public interface Settings {
         public static final double BUMP_SWITCH_DEBOUNCE = 0.4;
         
         //AT TARGET ANGLE - ANGLE TOLERANCE
-        public static final double ANGLE_TOLERANCE = 0.5;
+        public static final double ANGLE_TOLERANCE = 1.5;
     }
 
     public interface Drivetrain {
@@ -112,12 +113,12 @@ public interface Settings {
         
         public static final Vector<N3> ppQelems = VecBuilder.fill(0.0125, 0.1, 0.2);
         public static final Vector<N2> ppRelems = VecBuilder.fill(1,1.2);
-        public static final double stickDeaband = 0.05;
+        public static final double stickDeaband = 0.09;
     }
 
     public interface Clearances {
-        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
-        public static final double CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M = Units.inchesToMeters(4f); //TODO: FIND THIS VALUE
+        public static final double CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M = Units.inchesToMeters(14f); //TODO: FIND THIS VALUE
+        public static final double CLEARANCE_DISTANCE_FROM_PROC_PIVOT_M = Units.inchesToMeters(70f); //TODO: FIND THIS VALUE
         public static final double X_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
         public static final double Y_TOLERANCE = Units.inchesToMeters(2f); //TODO: FIND THIS VALUE
     }

@@ -7,6 +7,7 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Motors.DrivetrainConfig;
 import com.stuypulse.robot.subsystems.odometry.Odometry;
+import com.stuypulse.robot.util.Clearances;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -50,7 +51,6 @@ public class DrivetrainImpl extends Drivetrain {
 
     private final DifferentialDrive drive;
     private final DifferentialDriveOdometry odometry;
-    private final DifferentialDriveKinematics kinematics;
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
 
     private double driveSpeedModifier = 1;
@@ -117,7 +117,6 @@ public class DrivetrainImpl extends Drivetrain {
         rightMotors[1].setCANTimeout(250);
 
         // Odometry, Kinematics, Controllers, Vision
-        kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
         odometry = new DifferentialDriveOdometry(getHeading(), getLeftDistance(), getRightDistance());
 
         // PathPlanner robot configuration
@@ -167,7 +166,8 @@ public class DrivetrainImpl extends Drivetrain {
      * 
      * @return velocity in meters per seconds
      */
-    public double getLeftVelocity() {
+    @Override
+    protected double getLeftVelocity() {
         return -leftEncoder.getVelocity();
     }
 
@@ -176,7 +176,8 @@ public class DrivetrainImpl extends Drivetrain {
      * 
      * @return velocity in meters per seconds
      */
-    public double getRightVelocity() {
+    @Override
+    protected double getRightVelocity() {
         return -rightEncoder.getVelocity();
     }
 
@@ -224,7 +225,8 @@ public class DrivetrainImpl extends Drivetrain {
         this);
     }
 
-    private ChassisSpeeds getChassisSpeeds() {
+    @Override
+    protected ChassisSpeeds getChassisSpeeds() {
         return kinematics.toChassisSpeeds(getSpeeds());
     }
 
@@ -321,14 +323,13 @@ public class DrivetrainImpl extends Drivetrain {
 
         SmartDashboard.putNumber("Drivetrain/Left applied voltage", getOutputVoltage(leftMotors[0]));
         SmartDashboard.putNumber("Drivetrain/Right applied voltage", getOutputVoltage(rightMotors[0]));
-        SmartDashboard.putNumber("Drivetrain/Left distance", getLeftDistance());
-        SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
-        SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
-        SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
-        SmartDashboard.putNumber("Drivetrain/ velocity differance ", getRightVelocity() - getLeftVelocity());
-        SmartDashboard.putNumber("Drivetrain/ applied voltage differance ", getOutputVoltage(leftMotors[0]) - getOutputVoltage(rightMotors[0]));
+        SmartDashboard.putNumber("Drivetrain/applied voltage differance ", getOutputVoltage(leftMotors[0]) - getOutputVoltage(rightMotors[0]));
         SmartDashboard.putNumber("Drivetrain/velocity FF outtake", angularArcadeFeedforward.calculate(driver.getLeftY()));
         SmartDashboard.putNumber("Drivetrain/angular FF outtake", angularArcadeFeedforward.calculate(driver.getRightX()));
         SmartDashboard.putNumber("Drivetrain/Speed Modifier", driveSpeedModifier);
+
+        //Clearances
+        SmartDashboard.putBoolean("Clearances/From Reef", Clearances.isClearFromReef());
+        SmartDashboard.putBoolean("Clearances/From Proc", Clearances.isClearFromProc());
     }
 }

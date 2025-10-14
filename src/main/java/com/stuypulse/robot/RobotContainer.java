@@ -15,26 +15,33 @@ import com.stuypulse.robot.commands.pivot.pivot.PivotRaise;
 import com.stuypulse.robot.commands.pivot.pivot.PivotStop;
 import com.stuypulse.robot.commands.pivot.pivot.PivotToAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.pivot.PivotToAlgaeStow;
+import com.stuypulse.robot.commands.pivot.pivot.PivotToCoralReseat;
 import com.stuypulse.robot.commands.pivot.pivot.PivotToCoralStow;
 import com.stuypulse.robot.commands.pivot.pivot.PivotToDefault;
 import com.stuypulse.robot.commands.pivot.pivot.SetPivotControlMode;
 import com.stuypulse.robot.commands.pivot.pivotCombos.PivotCoralScore;
+import com.stuypulse.robot.commands.pivot.pivotCombos.PivotCoralScoreAuto;
 import com.stuypulse.robot.commands.pivot.pivotCombos.PivotLollipopAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeHold;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeIntake;
 import com.stuypulse.robot.commands.pivot.roller.PivotAlgaeOuttake;
 import com.stuypulse.robot.commands.pivot.roller.PivotHoldCoral;
+import com.stuypulse.robot.commands.pivot.roller.PivotRollerReseat;
 import com.stuypulse.robot.commands.pivot.roller.PivotRollerStop;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 import com.stuypulse.robot.subsystems.pivot.Pivot;
 import com.stuypulse.robot.subsystems.pivot.Pivot.PivotControlMode;
+import com.stuypulse.robot.subsystems.pivot.Pivot.PivotState;
 import com.stuypulse.robot.util.Clearances;
 import com.stuypulse.robot.util.alignment.AlignmentPathLoader;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -65,7 +72,6 @@ public class RobotContainer {
 	/****************/
 
 	private void configureDefaultCommands() {
-		SmartDashboard.putNumber("Left x", driver.getLeftX());
 		pivot.setDefaultCommand(new PivotHoldCoral());
 		driveSubsystem.setDefaultCommand(new DriveDefault(driver, true));
 	}
@@ -75,42 +81,51 @@ public class RobotContainer {
 	/***********************/
 
 	private void configureButtonBindings() {
-		//TRIGGERS
-		driver.rightTrigger() // Algae Ground Intake
 		// TRIGGERS
-		driver.getRightTriggerButton() // Algae Ground Intake
+		driver.rightTrigger() // Algae Ground Intake
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
 				.onTrue(new PivotToAlgaeIntake())
-				.whileTrue(new PivotAlgaeIntake())
+				.whileTrue(new PivotAlgaeIntake().repeatedly())
 				.onFalse(new PivotToAlgaeStow())
-				.onFalse(new PivotAlgaeHold());
+				.onFalse(new PivotAlgaeHold().repeatedly());
 		driver.leftTrigger() // Algae Outtake
-				.whileTrue(new PivotAlgaeOuttake())
-				.onFalse(new PivotHoldCoral());
+				.whileTrue(new PivotAlgaeOuttake().repeatedly())
+				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromProc())
+						.andThen(new SetPivotControlMode(PivotControlMode.USING_STATES))
+						.andThen(new PivotToCoralStow())
+						.andThen(new PivotHoldCoral()));
 
 		// BUMPERS
-		driver.getRightBumper() // Lolipop Intake
+		driver.rightBumper() // Lolipop Intake
 				.onTrue(new SetPivotControlMode(Pivot.PivotControlMode.USING_STATES))
-				.onTrue(new PivotLollipopAlgaeIntake())
+				.whileTrue(new PivotLollipopAlgaeIntake())
 				.onFalse(new PivotToAlgaeStow())
-				.onFalse(new PivotAlgaeHold());
-		driver.getLeftBumper() // Score Coral
+				.onFalse(new PivotAlgaeHold().repeatedly());
+		driver.leftBumper() // Score Coral
 				.onTrue(new SetPivotControlMode(PivotControlMode.USING_STATES))
-				.onTrue(new PivotCoralScore())
-				.onFalse(new WaitUntilCommand(() -> Clearances.isClearFromReef())
-						.andThen(new PivotToCoralStow().alongWith(new PivotHoldCoral())));
 
-		//BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
-		driver.rightStick() //pivot lower
-				//.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+				.toggleOnTrue(new ConditionalCommand(
+						new SequentialCommandGroup(new PivotRollerReseat(),
+								Commands.repeatingSequence(new PivotToCoralReseat(), new PivotToCoralStow()))
+								.onlyWhile(() -> driver.leftBumper().getAsBoolean()),
+
+						new PivotCoralScore().onlyWhile(() -> !Clearances.isClearFromReef())
+								.andThen(new WaitUntilCommand(() -> Clearances.isClearFromReef()))
+								.andThen(new PivotToCoralStow().andThen(new PivotHoldCoral())),
+
+						() -> (Clearances.isClearFromReef())));
+
+		// BACK BUTTONS (REMAPPED ON CONTROLLER TO BE JOYSTICK BUTTONS)
+		driver.rightStick() // pivot lower
+				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
 				.whileTrue(new PivotLower())
 				.onFalse(new PivotStop());
-		driver.leftStick() //pivot raise
-				//.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
+		driver.leftStick() // pivot raise
+				.onTrue(new SetPivotControlMode(PivotControlMode.MANUAL))
 				.whileTrue(new PivotRaise())
 				.onFalse(new PivotStop());
 
-		//ABXY BUTTONS
+		// ABXY BUTTONS
 		driver.x() // Climb
 				.whileTrue(new ClimbToClimb())
 				.onTrue(new DriveSetFullSpeed());
@@ -143,28 +158,32 @@ public class RobotContainer {
 		AlignmentPathLoader.loadAlignmentpaths();
 
 		// OLD - w/o pathplanner
-		autonChooser.setDefaultOption("[OLD] Single", new SingleCoralAuton());
+		autonChooser.addOption("[OLD] Single", new SingleCoralAuton());
 		autonChooser.addOption("[OLD] Do Nothing", new DoNothingAuton());
 		autonChooser.addOption("[OLD] Mobility", new MobilityAuton());
 
 		// NEW - w/ pathplanner
-		autonChooser.addOption("Center 1PC", new PathPlannerAuto("Center 1Pc"));
-		autonChooser.addOption("Processor Coralgae", new PathPlannerAuto("Processor Coralgae"));
+		autonChooser.addOption("COMP Center 1PC", new PathPlannerAuto("Center 1Pc"));
+		autonChooser.setDefaultOption("COMP Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
+		autonChooser.addOption("COMP Non-Processor 2 Pc",
+				new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("Procceser to E", new PathPlannerAuto("Procceser to E"));
 		autonChooser.addOption("Center to Reef curve", new PathPlannerAuto("Center to Reef curve"));
-		autonChooser.addOption("Processor 2 Pc", new PathPlannerAuto("Processor 2 Pc"));
-		autonChooser.addOption("Non-Processor 2 Pc", new PathPlannerAuto("Testing Non-Processor 2 Pc + AlgaePickup"));
 		autonChooser.addOption("PP IJKLKL (non-proc 3pc 25 sec)", new PathPlannerAuto("IJKLKL"));
 
 		SmartDashboard.putData("Autonomous", autonChooser);
 	}
 
 	private void registerAutonNamedCommands() {
-		NamedCommands.registerCommand("PivotCoralScore",
-				new SequentialCommandGroup(
-						new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
-						new PivotToCoralStow().withTimeout(.02), new PivotRollerStop().withTimeout(0.02),
-						new PivotToDefault()));
+		NamedCommands.registerCommand("PivotCoralScore", new PivotCoralScoreAuto());
+		NamedCommands.registerCommand("PivotCoralScore2nd",
+				new SequentialCommandGroup(new WaitUntilCommand(() -> !Clearances.isClearFromReef()),
+						new PivotCoralScoreAuto()));
+		// new SequentialCommandGroup(
+		// new PivotCoralScore().withTimeout(1.5), new WaitCommand(1),
+		// new PivotToCoralStow().withTimeout(.02), new
+		// PivotRollerStop().withTimeout(0.02),
+		// new PivotToDefault()));
 
 		NamedCommands.registerCommand("PivotLollipopAlgaeIntake", new PivotLollipopAlgaeIntake());
 		NamedCommands.registerCommand("PivotAlgaeHold",

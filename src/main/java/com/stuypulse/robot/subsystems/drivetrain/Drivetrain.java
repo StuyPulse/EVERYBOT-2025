@@ -5,19 +5,29 @@ import java.util.function.Supplier;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;
+import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.constants.Constants;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Drivetrain extends SubsystemBase {
     private static final Drivetrain instance;
 
+    protected final DifferentialDriveKinematics kinematics;
+
     static {
-        instance = new DrivetrainImpl();
+        instance = (Robot.isReal()) ? new DrivetrainImpl() : new DrivetrainSim();
+    }
+
+    public Drivetrain() {
+        kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
     }
 
     public static Drivetrain getInstance() {
@@ -48,11 +58,20 @@ public abstract class Drivetrain extends SubsystemBase {
 
     public abstract void setSpeedModifier(double targetSpeedModifier);
 
+    protected abstract double getLeftVelocity();
+    protected abstract double getRightVelocity();
+    protected abstract ChassisSpeeds getChassisSpeeds(); 
     public abstract double getSpeedModifier();
 
     public abstract Supplier<Double> velocityFFCalculate(double input);
     public abstract Supplier<Double> angularPIDCalculate(double input);
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        SmartDashboard.putNumber("Drivetrain/Left distance", getLeftDistance());
+        SmartDashboard.putNumber("Drivetrain/Right distance", getRightDistance());
+        SmartDashboard.putNumber("Drivetrain/Left velocity", getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/Right velocity", getRightVelocity());
+        SmartDashboard.putNumber("Drivetrain/velocity differance ", getRightVelocity() - getLeftVelocity());
+    }
 }

@@ -14,7 +14,7 @@ public interface Constants {
         public static final double PIVOT_MOTOR_REDUCTION_FACTOR = 1.0/2.0;
         
         public static final double PIVOT_THROUGHBORE_RANGE = 1.0/0.241;
-        public static final double PIVOT_THROUGHBORE_EXPECTED_ZERO = 1.9;
+        public static final double PIVOT_THROUGHBORE_EXPECTED_ZERO = 1.9 + .02;
     }
 
     public interface Drivetrain {

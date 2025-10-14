@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.11875,
-        "y": 3.024026639344262
+        "x": 5.821,
+        "y": 4.015
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.4903688524590155,
-        "y": 2.424641393442623
+        "x": 6.820999999999996,
+        "y": 4.015
       },
       "isLocked": false,
-      "linkedName": "ProcessorReef"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.490652654867256,
-        "y": 2.426603982300885
+        "x": 6.586,
+        "y": 4.015
       },
       "prevControl": {
-        "x": 5.849999999999999,
-        "y": 2.1848872950819667
+        "x": 5.586,
+        "y": 4.015
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AfterProcessorCoralBack"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": true,
-  "folder": "ProcessorAlgae",
+  "folder": "Starting Line to Reef",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

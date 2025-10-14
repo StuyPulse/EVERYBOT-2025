@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.odometry;
 
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.drivetrain.Drivetrain;
 
 import edu.wpi.first.math.Matrix;
@@ -34,6 +35,7 @@ public class OdometryImpl extends Odometry {
 
     @Override
     public void updateVisionMeasurement(Matrix<N3, N1> visionStdDevs, Pose2d pose, double timestampSeconds) {
+        if(!Robot.isReal()) return;
         poseEstimator.setVisionMeasurementStdDevs(visionStdDevs);
         poseEstimator.addVisionMeasurement(
                 pose,

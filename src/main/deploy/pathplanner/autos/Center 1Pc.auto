@@ -11,21 +11,21 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "PivotCoralScore"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back From Reef"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Center-Start",
   "choreoAuto": false
 }

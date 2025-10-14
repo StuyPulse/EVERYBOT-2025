@@ -9,7 +9,7 @@ public class PivotLollipopAlgaeIntake extends SequentialCommandGroup {
     public PivotLollipopAlgaeIntake() {
         addCommands(
             new PivotToLollipopIntake(),
-            new PivotAlgaeIntake()
+            new PivotAlgaeIntake().repeatedly()
         );
     }
 }
