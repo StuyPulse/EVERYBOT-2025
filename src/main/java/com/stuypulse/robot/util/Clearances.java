@@ -12,7 +12,6 @@ public interface Clearances {
     public static boolean isClearFromReef() {
         Pose2d robotPose = Odometry.getInstance().getEstimatedPose();
 
-        
         return (Field.ALLIANCE_REEF_CENTER.getDistance(robotPose.getTranslation()) >
         (Settings.Clearances.CLEARANCE_DISTANCE_FROM_REEF_PIVOT_M
         + Field.CENTER_OF_REEF_TO_REEF_FACE_M
