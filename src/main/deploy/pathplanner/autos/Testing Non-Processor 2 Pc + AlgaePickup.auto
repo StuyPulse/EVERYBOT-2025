@@ -81,7 +81,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Non-Processor-Start",
   "choreoAuto": false
 }

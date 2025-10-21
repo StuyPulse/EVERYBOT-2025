@@ -23,7 +23,7 @@ import edu.wpi.first.math.util.Units;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-    public static final boolean DEBUG_MODE = true; //TODO change this to false during comps!
+    public static final boolean DEBUG_MODE = false; //TODO change this to false during comps!
     
     public interface EnabledSubsystems{
         public static final SmartBoolean CLIMB = new SmartBoolean("ENABLED_SUBSYSTEMS/Is climb enabled?", true);
@@ -75,7 +75,7 @@ public interface Settings {
         public static SmartNumber ALGAE_OUTTAKE_SPEED = new SmartNumber("Pivot/Roller/Algae/Outtake Speed", 0.75); 
         public static SmartNumber ALGAE_HOLD_SPEED = new SmartNumber("Pivot/Roller/Algae/Hold Speed", -0.25); 
         
-        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.47);
+        public static SmartNumber CORAL_SHOOT_SPEED = new SmartNumber("Pivot/Roller/Coral/Shoot Speed", -0.6);
         public static SmartNumber ROLLER_ROTISSERIE_SPEED = new SmartNumber("Pivot/Roller/Coral/Hold Speed", 0.17);
         public static SmartNumber ROLLER_RESEAT_SPEED = new SmartNumber("Pivot/Roller/Coral/Reseat Speed", 0.7);
         

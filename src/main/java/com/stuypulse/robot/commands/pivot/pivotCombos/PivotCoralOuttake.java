@@ -12,7 +12,7 @@ public class PivotCoralOuttake extends SequentialCommandGroup {
         addCommands(
             new PivotToDefault().withTimeout(0.2),
             new PivotRollerToSpeed(Settings.Pivot.CORAL_SHOOT_SPEED.getAsDouble()).withTimeout(1),
-            new WaitCommand(.26).withTimeout(.26),
+            new WaitCommand(.2).withTimeout(.2),
             new PivotRollerStop().withTimeout(0.01)
         );
     }

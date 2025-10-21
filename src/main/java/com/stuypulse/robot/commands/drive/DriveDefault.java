@@ -35,6 +35,7 @@ public class DriveDefault extends Command {
         double effectiveY = Math.abs(gamepad.getLeftY()) > Settings.Drivetrain.stickDeaband ? gamepad.getLeftY() : 0;
 
         Drivetrain.getInstance().driveArcade(drivetrain.velocityFFCalculate(effectiveY).get()*drivetrain.getSpeedModifier(),  effectiveX*drivetrain.getSpeedModifier(), squared);
+        //Drivetrain.getInstance().driveArcade(effectiveY*drivetrain.getSpeedModifier(), effectiveX*drivetrain.getSpeedModifier(), squared);
     }
 
     @Override

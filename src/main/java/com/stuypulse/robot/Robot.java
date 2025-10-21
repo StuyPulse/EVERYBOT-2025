@@ -37,21 +37,21 @@ public class Robot extends TimedRobot {
         // Testing for Port Forwarding
 
         
-        for (int LMport = 5801; LMport<= 5810; LMport ++){
-            for (int SCport = 4901; SCport <= 4910; SCport ++) {
-                PortForwarder.add(SCport, "10.99.99.11", LMport);
-                PortForwarder.add(SCport, "10.99.99.2", LMport); 
-                PortForwarder.add(LMport, "10.99.99.11", SCport);
-                PortForwarder.add(LMport, "10.99.99.2", SCport);
-                PortForwarder.add(SCport, "10.99.99.11", SCport);
-                PortForwarder.add(LMport, "10.99.99.11", LMport);
+       // for (int LMport = 5801; LMport<= 5810; LMport ++){
+            // for (int SCport = 4901; SCport <= 4910; SCport ++) {
+            //     PortForwarder.add(SCport, "10.99.99.11", LMport);
+            //     PortForwarder.add(SCport, "10.99.99.2", LMport); 
+            //     PortForwarder.add(LMport, "10.99.99.11", SCport);
+            //     PortForwarder.add(LMport, "10.99.99.2", SCport);
+            //     PortForwarder.add(SCport, "10.99.99.11", SCport);
+            //     PortForwarder.add(LMport, "10.99.99.11", LMport);
                
                 
                 //Add more to Portforwarder with different combinations and find IPs
                 // figure out how to display the port that works in Smart Dashboard
                 //Maybe do 4901 only in for loop like the 5801 only above
-            }
-        } 
+            //}
+        //} 
        
         timer = new Timer();
         timer.reset();

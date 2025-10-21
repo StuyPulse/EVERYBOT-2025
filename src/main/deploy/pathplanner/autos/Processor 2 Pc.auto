@@ -67,7 +67,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Processor-Start",
   "choreoAuto": false
 }
