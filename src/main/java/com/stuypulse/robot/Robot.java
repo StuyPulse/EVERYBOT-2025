@@ -48,7 +48,6 @@ public class Robot extends TimedRobot {
         timer.reset();
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("DriverStation/Match Time", DriverStation.getMatchTime());
-        PortForwarder.add(5801, "10.99.99.2", 5801);
         
         //Clearances
         SmartDashboard.putBoolean("Clearances/From Reef", Clearances.isClearFromReef());
