@@ -14,10 +14,10 @@ import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,8 +28,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.OnboardIMU;
-import edu.wpi.first.wpilibj.OnboardIMU.MountOrientation;
+import com.kauailabs.navx.frc.AHRS;                                                               
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -59,21 +58,18 @@ public class DrivetrainImpl extends Drivetrain {
 
     private RobotConfig pathPlannerRobotConfig;
 
-    private OnboardIMU imu;
+    private final AHRS gyro = new AHRS();
 
     public DrivetrainImpl() {
         super();
 
-        //IMU
-        imu = new OnboardIMU(MountOrientation.kFlat);
-
         leftMotors = new SparkMax[] {
-                new SparkMax(Ports.BusIDS.driveLeftLead, Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
-                new SparkMax(Ports.BusIDS.driveLeftFollow, Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
+                new SparkMax(Ports.Drivetrain.LEFT_LEAD, MotorType.kBrushless),
+                new SparkMax(Ports.Drivetrain.LEFT_FOLLOW, MotorType.kBrushless)
         };
         rightMotors = new SparkMax[] {
-                new SparkMax(Ports.BusIDS.driveRightLead, Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
-                new SparkMax(Ports.BusIDS.driveLeftFollow, Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushless)
+                new SparkMax(Ports.Drivetrain.RIGHT_LEAD, MotorType.kBrushless),
+                new SparkMax(Ports.Drivetrain.RIGHT_FOLLOW, MotorType.kBrushless)
         };
 
         drive = new DifferentialDrive(leftMotors[0], rightMotors[0]);
@@ -87,7 +83,7 @@ public class DrivetrainImpl extends Drivetrain {
 
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(leftMotors[0]);
         leftMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
-                PersistMode.kPersistParameters);
+        PersistMode.kPersistParameters);
 
         DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG.follow(rightMotors[0]);
         rightMotors[1].configure(DrivetrainConfig.DRIVETRAIN_MOTOR_CONFIG, ResetMode.kResetSafeParameters,
@@ -188,12 +184,12 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Rotation2d getHeading() {
-        return imu.getRotation2d();
+        return gyro.getRotation2d();
     }
 
     @Override
     public double getGyroRate() {
-        return imu.getGyroRateZ();
+        return gyro.getRate();
     }
 
     @Override
@@ -243,7 +239,7 @@ public class DrivetrainImpl extends Drivetrain {
     @Override
     public void resetPose() {
         Odometry robotOdometry = Odometry.getInstance();
-        odometry.resetPosition(getHeading(), getLeftDistance(), getRightDistance(), robotOdometry.getEstimatedPose());
+        odometry.resetPosition(gyro.getRotation2d(), getLeftDistance(), getRightDistance(), robotOdometry.getEstimatedPose());
     }
 
     @Override
