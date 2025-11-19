@@ -203,8 +203,8 @@ public class DrivetrainImpl extends Drivetrain {
         (speeds) -> {
             DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
 
-            double leftSpeed = -convertedSpeeds.left;
-            double rightSpeed = -convertedSpeeds.right;
+            double leftSpeed = -convertedSpeeds.leftMetersPerSecond;
+            double rightSpeed = -convertedSpeeds.rightMetersPerSecond;
 
             SmartDashboard.putNumber("Drivetrain/PP Right speed", rightSpeed);
             SmartDashboard.putNumber("Drivetrain/PP left speed ", leftSpeed);
@@ -244,7 +244,7 @@ public class DrivetrainImpl extends Drivetrain {
 
     @Override
     public Pose2d getPose() {
-        return odometry.getPose();
+        return odometry.getPoseMeters();
     }
 
     @Override

@@ -1,12 +1,19 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2025.3.2"
+    id "com.diffplug.spotless" version "6.22.0"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+final String STUYLIB_VERSION = 'v2025.1.2'
 
 def ROBOT_MAIN_CLASS = "com.stuypulse.robot.Main"
 
@@ -72,6 +79,7 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation "com.github.StuyPulse:StuyLib:${STUYLIB_VERSION}";
 }
 
 test {

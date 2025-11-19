@@ -100,15 +100,15 @@ public class DrivetrainSim extends Drivetrain {
         driveSim.setInputs(leftMotor.get() * 12, rightMotor.get() * 12);
         driveSim.update(.02);
 
-        leftEncoderSim.setDistance(driveSim.getLeftPosition());
-        leftEncoderSim.setRate(driveSim.getLeftVelocity());
-        rightEncoderSim.setDistance(driveSim.getRightPosition());
-        rightEncoderSim.setRate(driveSim.getRightVelocity());
+        leftEncoderSim.setDistance(driveSim.getLeftPositionMeters());
+        leftEncoderSim.setRate(driveSim.getLeftVelocityMetersPerSecond());
+        rightEncoderSim.setDistance(driveSim.getRightPositionMeters());
+        rightEncoderSim.setRate(driveSim.getRightVelocityMetersPerSecond());
     }
 
     @Override
     public void driveArcade(double xSpeed, double zRotation, boolean squared) {
-        driveTank(kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation * 15)).left, kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation * 15)).right, true);
+        driveTank(kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation * 15)).leftMetersPerSecond, kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, xSpeed, zRotation * 15)).rightMetersPerSecond, true);
     }
 
     @Override
@@ -218,8 +218,8 @@ public class DrivetrainSim extends Drivetrain {
         (speeds) -> {
             DifferentialDriveWheelSpeeds convertedSpeeds = kinematics.toWheelSpeeds(speeds);
 
-            double leftSpeed = -convertedSpeeds.left;
-            double rightSpeed = -convertedSpeeds.right;
+            double leftSpeed = -convertedSpeeds.leftMetersPerSecond;
+            double rightSpeed = -convertedSpeeds.rightMetersPerSecond;
 
             SmartDashboard.putNumber("Drivetrain/PP Right speed", rightSpeed);
             SmartDashboard.putNumber("Drivetrain/PP left speed ", leftSpeed);
