@@ -121,13 +121,13 @@ public class RobotContainer {
 				.whileTrue(new PivotRaise())
 				.onFalse(new PivotStop());
 
-		// ABXY BUTTONS
-		driver.x() // Climb
-				.whileTrue(new ClimbToClimb())
-				.onTrue(new DriveSetFullSpeed());
-		driver.b() // Deploy Climb
-				.whileTrue(new ClimbToDeployed())
-				.onTrue(new DriveSetHalfSpeed());
+		// // ABXY BUTTONS
+		// driver.x() // Climb
+		// 		.whileTrue(new ClimbToClimb())
+		// 		.onTrue(new DriveSetFullSpeed());
+		// driver.b() // Deploy Climb
+		// 		.whileTrue(new ClimbToDeployed())
+		// 		.onTrue(new DriveSetHalfSpeed());
 
 		// MENU BUTTONS
 		// Alignment disabled for robo replay
