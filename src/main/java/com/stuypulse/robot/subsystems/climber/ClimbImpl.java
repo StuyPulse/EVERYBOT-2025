@@ -13,25 +13,26 @@ import com.stuypulse.robot.constants.Settings;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbImpl extends Climb {
-    private SparkMax climbMotor;
-    private RelativeEncoder climbEncoder;
+    //private SparkMax climbMotor;
+    //private RelativeEncoder climbEncoder;
 
     public ClimbImpl() {
         super();
-        climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
+        //climbMotor = new SparkMax(Ports.Climb.CLIMB_MOTOR, MotorType.kBrushless);
 
         Motors.ClimbConfig.CLIMB_MOTOR_CONFIG.encoder
                 .positionConversionFactor(
                         Settings.Climb.CLIMB_MOTOR_GEAR_RATIO * Settings.Climb.CLIMB_MOTOR_REDUCTION_FACTOR);
 
-        climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters,
-                PersistMode.kNoPersistParameters);
-        climbEncoder = climbMotor.getEncoder();
+        //climbMotor.configure(ClimbConfig.CLIMB_MOTOR_CONFIG, ResetMode.kNoResetSafeParameters,
+        //        PersistMode.kNoPersistParameters);
+       // climbEncoder = climbMotor.getEncoder();
     }
 
-    @Override
-    public double getCurrentAngleDeg() {
-        return climbEncoder.getPosition() * 360.0;
+    // @Override
+     public double getCurrentAngleDeg() {
+        return 0.0;
+    //     return climbEncoder.getPosition() * 360.0;
     }
 
     @Override
@@ -45,18 +46,18 @@ public class ClimbImpl extends Climb {
         super.periodic();
         if (Settings.EnabledSubsystems.CLIMB.get()) {
             if (!atTargetAngle()) {
-                climbMotor.set(getState().getTargetMotorSpeed());
+                //climbMotor.set(getState().getTargetMotorSpeed());
             } else {
-                climbMotor.set(0.0);
+               // climbMotor.set(0.0);
             }
         }
-        if(Settings.DEBUG_MODE) {
-            SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
-        }
+        // if(Settings.DEBUG_MODE) {
+        //     SmartDashboard.putNumber("Climb/Angular Velocity", climbEncoder.getVelocity());
+        // }
         
         SmartDashboard.putNumber("Climb/Current Angle", getCurrentAngleDeg());
         SmartDashboard.putNumber("Climb/Target angle", getState().getTargetAngleDeg());
         SmartDashboard.putBoolean("Climb/At target angle", atTargetAngle());
-        SmartDashboard.putNumber("Climb/Climb Current", climbMotor.getOutputCurrent());
+        //SmartDashboard.putNumber("Climb/Climb Current", climbMotor.getOutputCurrent());
     }
 }
